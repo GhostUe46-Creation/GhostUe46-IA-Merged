@@ -1,0 +1,7 @@
+GhostUe46 Multiplataforma v10
+
+Base: fusión v9 (Inteligencia v7 + botón Creator INFO + Ko-fi).
+Integrado de la edición Multicolor: galería de agradecimientos, estilos multicolor y logotipos.
+Retirada: integración multimedia heredada, campo de clave y referencias a dicho proveedor.
+Creator INFO apunta a creator.html. Ko-fi conserva el identificador existente.
+El proyecto conserva la estructura plana de archivos para que las rutas locales de v7 sigan funcionando.

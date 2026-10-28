@@ -1,0 +1,23 @@
+GhostUe46 Multiplataforma v12
+
+NOVEDADES
+
+1) Texto a voz (TTS) local del navegador, sin servidor propio ni API key de voz.
+   - En Configuración > Texto a voz se activa/desactiva la lectura automática de respuestas normales del bot.
+   - Se puede seleccionar voz femenina o masculina; la disponibilidad y los nombres de voz dependen del dispositivo y del navegador.
+   - Cada respuesta de GhostUe46 tiene un botón “Escuchar”. Hay controles para probar, pausar, reanudar y detener voz en Configuración.
+   - No se leen mensajes del usuario. Se eliminan bloques de código, código inline, imágenes y líneas que parezcan código antes de hablar.
+   - La lectura automática está apagada de forma predeterminada.
+
+2) Generación de imágenes sin Pollinations.
+   - Cuando el usuario pide explícitamente “genera/crea/dibuja una imagen…”, se activa la herramienta openrouter:image_generation.
+   - Requiere seleccionar OpenRouter, tener una API key válida y conexión a Internet.
+   - OpenRouter factura el uso según su cuenta/modelo; la generación puede tener coste adicional.
+   - No se activa para preguntas que solo explican cómo programar una función de imágenes.
+
+3) Se mantienen Creator INFO, Ko-fi, temas, errores/reportes y ajustes de la fusión v11.
+
+NOTAS
+- TTS usa el motor SpeechSynthesis disponible en cada navegador/OS: puede no existir una voz española femenina y otra masculina separadas en algunos dispositivos. En ese caso se intenta usar voces distintas o ajustar el tono.
+- El envío de imagen no se puede verificar sin una API key válida de OpenRouter.
+- Como en versiones anteriores, las llamadas a los proveedores se hacen directamente desde el navegador; no publiques tu clave de API en repositorios públicos.

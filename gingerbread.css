@@ -1,0 +1,121 @@
+/* =====================================================================
+   GhostUe46 · Tema FRUTIGER AERO — edición nostalgia ANDROID 2.3 "GINGERBREAD"
+   - Todos los botones: degradado gris oscuro con brillo, borde negro y resalte
+     naranja al tocar (como los botones de Gingerbread). Botones principales en
+     verde Android.
+   - Los iconos van en icon-sets.css (set "ginger").
+   Solo afecta cuando data-theme="frutiger-aero".
+   ===================================================================== */
+:root[data-theme="frutiger-aero"] {
+  --gb-robot:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2024%2024%22%3E%3Cg%20fill=%22black%22%3E%3Cpath%20d=%22M5%2010a7%207%200%200%201%2014%200z%22/%3E%3Crect%20x=%225%22%20y=%2211.500%22%20width=%2214%22%20height=%228%22%20rx=%222%22/%3E%3Crect%20x=%222%22%20y=%2211.500%22%20width=%222.200%22%20height=%226%22%20rx=%221.100%22/%3E%3Crect%20x=%2219.800%22%20y=%2211.500%22%20width=%222.200%22%20height=%226%22%20rx=%221.100%22/%3E%3C/g%3E%3C/svg%3E");
+  --gb-green-1:#c6ee3f; --gb-green-2:#99cc00; --gb-green-3:#5f8a00;
+  --gb-orange:#ff9f1a; --gb-orange-2:#cc6f00;
+  --gb-btn-top:#5e5e5e; --gb-btn-mid:#3d3d3d; --gb-btn-mid2:#2a2a2a; --gb-btn-bot:#1c1c1c;
+}
+/* ---------- Botones ---------- */
+:root[data-theme="frutiger-aero"] button:not(.gb-skip):not([role="tab"]),
+:root[data-theme="frutiger-aero"] .theme-choice,
+:root[data-theme="frutiger-aero"] .pref-chip,
+:root[data-theme="frutiger-aero"] .settings-cancel {
+  background: linear-gradient(to bottom, var(--gb-btn-top) 0%, var(--gb-btn-mid) 48%, var(--gb-btn-mid2) 52%, var(--gb-btn-bot) 100%) !important;
+  border: 1px solid #0a0a0a !important;
+  border-radius: 6px !important;
+  color: #f2f2f2 !important;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.8) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.04), 0 1px 2px rgba(0,0,0,.45) !important;
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  filter: none;
+}
+:root[data-theme="frutiger-aero"] button:not(.gb-skip) span:not(.theme-preview),
+:root[data-theme="frutiger-aero"] button:not(.gb-skip) b,
+:root[data-theme="frutiger-aero"] .theme-choice-title,
+:root[data-theme="frutiger-aero"] .theme-choice-desc { color: inherit !important; }
+:root[data-theme="frutiger-aero"] .theme-choice-desc { opacity:.75; }
+:root[data-theme="frutiger-aero"] button:not(.gb-skip):hover,
+:root[data-theme="frutiger-aero"] .theme-choice:hover,
+:root[data-theme="frutiger-aero"] .pref-chip:hover {
+  background: linear-gradient(to bottom, #707070 0%, #4a4a4a 48%, #353535 52%, #232323 100%) !important;
+  border-color: #000 !important; transform: none !important;
+}
+/* Foco / pulsado: resalte naranja de Gingerbread */
+:root[data-theme="frutiger-aero"] button:not(.gb-skip):focus-visible,
+:root[data-theme="frutiger-aero"] button:not(.gb-skip):active,
+:root[data-theme="frutiger-aero"] .theme-choice:active,
+:root[data-theme="frutiger-aero"] .pref-chip:active {
+  background: linear-gradient(to bottom, #ffc15a 0%, var(--gb-orange) 50%, var(--gb-orange-2) 100%) !important;
+  border-color: #7a4300 !important; color:#201000 !important; text-shadow: 0 1px 0 rgba(255,255,255,.35) !important;
+  outline: none !important;
+}
+/* Seleccionado / activo: verde Android */
+:root[data-theme="frutiger-aero"] .theme-choice.selected,
+:root[data-theme="frutiger-aero"] .pref-chip.selected,
+:root[data-theme="frutiger-aero"] button[aria-pressed="true"]:not(.gb-skip),
+:root[data-theme="frutiger-aero"] button.active:not(.gb-skip),
+:root[data-theme="frutiger-aero"] button.selected:not(.gb-skip) {
+  background: linear-gradient(to bottom, var(--gb-green-1) 0%, var(--gb-green-2) 50%, var(--gb-green-3) 100%) !important;
+  border-color: #2e4400 !important; color:#10200a !important; text-shadow: 0 1px 0 rgba(255,255,255,.4) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 1px 3px rgba(0,0,0,.5) !important;
+}
+/* Botones principales (enviar, guardar) */
+:root[data-theme="frutiger-aero"] #send-btn,
+:root[data-theme="frutiger-aero"] .settings-save {
+  background: linear-gradient(to bottom, var(--gb-green-1) 0%, var(--gb-green-2) 50%, var(--gb-green-3) 100%) !important;
+  border: 1px solid #2e4400 !important; color:#10200a !important; text-shadow: 0 1px 0 rgba(255,255,255,.45) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 1px 3px rgba(0,0,0,.5) !important;
+}
+:root[data-theme="frutiger-aero"] #send-btn:hover,
+:root[data-theme="frutiger-aero"] .settings-save:hover { filter: brightness(1.08); }
+
+/* =====================================================================
+   Más nostalgia Gingerbread: interruptores, barras, scroll y carga
+   ===================================================================== */
+/* --- Interruptores: pastilla oscura con zona verde «ON» --- */
+:root[data-theme="frutiger-aero"] .setting-switch {
+  width: 58px !important; height: 26px !important; border-radius: 5px !important;
+  background: linear-gradient(to bottom, #151515, #2c2c2c) !important; border: 1px solid #000 !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.8), 0 1px 0 rgba(255,255,255,.35) !important;
+}
+:root[data-theme="frutiger-aero"] .setting-switch::after {
+  left: 2px !important; top: 2px !important; width: 28px !important; height: 20px !important; border-radius: 3px !important;
+  background: linear-gradient(to bottom, #8a8a8a 0%, #5b5b5b 48%, #3c3c3c 52%, #2a2a2a 100%) !important;
+  border: 1px solid #000; box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+  transition: transform .18s ease !important;
+}
+:root[data-theme="frutiger-aero"] .setting-switch:checked {
+  background: linear-gradient(to bottom, #b6e03a 0%, #8cbf00 50%, #5f8a00 100%) !important;
+}
+:root[data-theme="frutiger-aero"] .setting-switch:checked::after { transform: translateX(26px) !important; background: linear-gradient(to bottom, #8a8a8a 0%, #5b5b5b 48%, #3c3c3c 52%, #2a2a2a 100%) !important; }
+/* --- Casillas de verificación (checkbox) como en Android 2.3 --- */
+:root[data-theme="frutiger-aero"] input[type="checkbox"]:not(.setting-switch) {
+  appearance: none; -webkit-appearance: none; width: 20px; height: 20px; border-radius: 4px; position: relative; flex: none;
+  background: linear-gradient(to bottom, #f4f4f4, #bdbdbd); border: 1px solid #1c1c1c; box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0,0,0,.4);
+}
+:root[data-theme="frutiger-aero"] input[type="checkbox"]:not(.setting-switch):checked { background: linear-gradient(to bottom, #d3f56a, #99cc00 55%, #5f8a00); }
+:root[data-theme="frutiger-aero"] input[type="checkbox"]:not(.setting-switch):checked::after {
+  content: ""; position: absolute; left: 6px; top: 1px; width: 5px; height: 11px; border: solid #10200a; border-width: 0 3px 3px 0; transform: rotate(40deg);
+}
+/* --- Barras deslizantes (seekbar) con pulgar naranja --- */
+:root[data-theme="frutiger-aero"] input[type="range"] { -webkit-appearance: none; appearance: none; height: 14px; background: transparent; }
+:root[data-theme="frutiger-aero"] input[type="range"]::-webkit-slider-runnable-track { height: 10px; border-radius: 5px; border: 1px solid #000; background: linear-gradient(to bottom, #0d0d0d, #3a3a3a); box-shadow: inset 0 2px 3px rgba(0,0,0,.8), 0 1px 0 rgba(255,255,255,.4); }
+:root[data-theme="frutiger-aero"] input[type="range"]::-moz-range-track { height: 10px; border-radius: 5px; border: 1px solid #000; background: linear-gradient(to bottom, #0d0d0d, #3a3a3a); }
+:root[data-theme="frutiger-aero"] input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -8px; border-radius: 50%; border: 1px solid #5a3200; background: radial-gradient(circle at 35% 30%, #ffd58a, #ff9f1a 55%, #cc6f00); box-shadow: 0 1px 3px rgba(0,0,0,.6); }
+:root[data-theme="frutiger-aero"] input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; border: 1px solid #5a3200; background: radial-gradient(circle at 35% 30%, #ffd58a, #ff9f1a 55%, #cc6f00); }
+/* --- Barras de progreso/medidores en verde brillante --- */
+:root[data-theme="frutiger-aero"] .usage-meter, :root[data-theme="frutiger-aero"] #usage-banner .ub-bar { border: 1px solid #000; background: linear-gradient(to bottom, #0d0d0d, #333); border-radius: 4px; box-shadow: inset 0 2px 3px rgba(0,0,0,.7); }
+:root[data-theme="frutiger-aero"] .usage-meter i, :root[data-theme="frutiger-aero"] #usage-banner .ub-bar i { background: linear-gradient(to bottom, #d3f56a, #99cc00 50%, #5f8a00) !important; border-radius: 3px; }
+/* --- Barras de desplazamiento brillantes --- */
+:root[data-theme="frutiger-aero"] ::-webkit-scrollbar { width: 12px; height: 12px; }
+:root[data-theme="frutiger-aero"] ::-webkit-scrollbar-track { background: #111; border-left: 1px solid #000; }
+:root[data-theme="frutiger-aero"] ::-webkit-scrollbar-thumb { background: linear-gradient(to right, #d3f56a, #99cc00 55%, #5f8a00); border: 1px solid #2e4400; border-radius: 6px; }
+:root[data-theme="frutiger-aero"] ::-webkit-scrollbar-thumb:hover { background: linear-gradient(to right, #ffd58a, #ff9f1a 55%, #cc6f00); border-color: #5a3200; }
+/* --- Indicador de carga: el robot verde que se mueve --- */
+:root[data-theme="frutiger-aero"] #typing-indicator .typing-dots,
+:root[data-theme="frutiger-aero"] #typing-indicator .typing-orbit { display: none !important; }
+:root[data-theme="frutiger-aero"] #typing-indicator::before {
+  content: ""; flex: none; width: 30px; height: 30px; order: -1;
+  background: linear-gradient(to bottom, #d8f56a 0%, #99cc00 55%, #5f8a00 100%);
+  -webkit-mask: var(--gb-robot) center/contain no-repeat; mask: var(--gb-robot) center/contain no-repeat;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,.65)); animation: gbRobot 1.1s ease-in-out infinite;
+}
+@keyframes gbRobot { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-4px) rotate(6deg); } }
+@media (prefers-reduced-motion: reduce) { :root[data-theme="frutiger-aero"] #typing-indicator::before { animation: none; } }

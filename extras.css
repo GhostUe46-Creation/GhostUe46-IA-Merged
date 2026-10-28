@@ -1,0 +1,33 @@
+/* ===== Buscador y acciones de chats ===== */
+.session-search { position: relative; }
+.session-search i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 11px; opacity: .7; pointer-events: none; }
+.session-search input { width: 100%; padding: 8px 10px 8px 32px; border-radius: 14px; font-size: 11px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); color: inherit; outline: none; }
+.session-search input:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-primary) 30%, transparent); }
+.session-actions button { opacity: 0; transition: opacity .15s; }
+.group:hover .session-actions button, .group:focus-within .session-actions button { opacity: 1; }
+@media (hover: none) { .session-actions button { opacity: .8; } }
+.session-pin-mark { color: var(--accent-primary); font-size: 12px; width: 18px; text-align: center; flex: none; }
+.session-rename-input { width: 100%; min-width: 0; font-size: 12px; padding: 3px 8px; border-radius: 8px; background: rgba(0,0,0,.35); color: #fff; border: 1px solid var(--accent-primary); outline: none; }
+/* Cursor de la respuesta en vivo */
+.stream-caret { display: inline-block; width: 7px; height: 1.05em; margin-left: 2px; vertical-align: -0.15em; border-radius: 2px; background: var(--accent-primary); animation: caretBlink 1s steps(2, start) infinite; }
+@keyframes caretBlink { to { visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .stream-caret { animation: none; } }
+/* ===== Uso por proveedor ===== */
+.usage-table table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.usage-table th { text-align: left; font-weight: 600; opacity: .75; padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,.15); }
+.usage-table td { padding: 7px 8px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.usage-table tr.is-current td { background: color-mix(in srgb, var(--accent-primary) 14%, transparent); font-weight: 600; }
+/* ===== Temas guardados ===== */
+.preset-list { display: grid; gap: 6px; margin-top: 8px; }
+.preset-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 12px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); }
+.preset-swatch { position: relative; flex: none; width: 34px; height: 24px; border-radius: 8px; border: 1px solid rgba(255,255,255,.3); overflow: hidden; display: flex; align-items: flex-end; gap: 2px; padding: 3px; }
+.preset-swatch i { display: block; width: 8px; height: 8px; border-radius: 50%; }
+.preset-name { flex: 1; min-width: 0; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.preset-btn { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); font-size: 12px; }
+.preset-btn:hover { background: color-mix(in srgb, var(--accent-primary) 25%, transparent); }
+/* ===== Aviso de legibilidad ===== */
+.ct-contrast-box { padding: 10px 12px; border-radius: 14px; font-size: 11px; background: rgba(245,158,11,.14); border: 1px solid rgba(245,158,11,.55); }
+.ct-contrast-box strong { display: block; margin-bottom: 4px; font-size: 12px; color: #fbbf24; }
+.ct-contrast-box ul { margin: 4px 0 8px 16px; list-style: disc; }
+.ct-contrast-ok { font-size: 11px; padding: 8px 12px; border-radius: 12px; background: rgba(16,185,129,.13); border: 1px solid rgba(16,185,129,.45); color: #6ee7b7; }
+.hidden.ct-contrast-box, .hidden.ct-contrast-ok { display: none !important; }

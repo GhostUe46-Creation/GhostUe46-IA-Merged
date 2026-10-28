@@ -1,0 +1,17 @@
+GhostUe46 Multiplataforma v13
+
+NOVEDAD PRINCIPAL: PARAR RESPUESTA
+- Mientras GhostUe46 genera una respuesta, el botón Enviar cambia por un botón rojo “Parar respuesta”.
+- Al pulsarlo, se cancela la petición de red en curso (incluidos SSE/streaming y la generación de imágenes compatibles con fetch abortable).
+- Se detiene el TTS si estuviera hablando y se elimina la burbuja de respuesta parcial del chat.
+- Al terminar la cancelación, el botón vuelve a ser Enviar.
+- Durante la generación se esconden temporalmente los controles auxiliares de adjuntos para que el botón de parar quepa en móvil.
+
+SE CONSERVA DE v12
+- TTS del navegador con selección femenina/masculina cuando el dispositivo dispone de voces adecuadas. La lectura omite bloques de código y solo lee respuestas del bot cuando se solicita o se activa lectura automática.
+- Generación explícita de imágenes por OpenRouter; requiere API key válida y conexión a Internet, y puede generar costes.
+- Creator INFO, Ko-fi, reporte de errores, temas y personalización.
+
+NOTAS
+- La cancelación aborta las peticiones fetch que controla esta app; no puede retirar una petición que el proveedor ya haya procesado en su servidor.
+- No publiques una API key real en un repositorio público.

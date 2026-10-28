@@ -1,0 +1,16 @@
+GhostUe46 Multiplataforma v16 — Consola Debugger + Liquid Glass mejorado
+
+CONSOLa DEBUGG
+- consolA-debugg.js se carga al principio de index.html y creator.html.
+- Captura errores JS, promesas rechazadas, recursos fallidos, console.*, fetch/XHR (solo metadatos), carga de CSS/JS, CSSOM accesible, eventos de interfaz, mutaciones DOM, tareas largas y cambios de layout.
+- No registra valores escritos en inputs, contenido del chat, cuerpos de peticiones, cookies ni almacenamiento local. Quita query strings para evitar filtrar tokens.
+- En DevTools puedes usar: GhostConsoleDebug.help(), snapshot(), inspectLiquidGlass(), inspectCSS(), inspect('.water-glass'), assets(), dumpLogs(), downloadReport() o copyReport().
+- Para listar todas las reglas CSS accesibles: GhostConsoleDebug.config.logEveryCSSRule = true; GhostConsoleDebug.inspectCSS(). Hojas cross-origin pueden bloquear su CSSOM por seguridad del navegador.
+- Para enviar el reporte técnico a soporte, ejecuta GhostConsoleDebug.downloadReport() y revisa el JSON antes de compartirlo.
+
+LIQUID GLASS
+- Los brillos refractivos ya no desaparecen cuando la interfaz está casi totalmente transparente.
+- Aumenta la legibilidad del efecto sobre imágenes de fondo y con blur elevado; se conserva la distorsión visual en la capa de reflejos.
+- Limitación técnica: la capa SVG distorsiona el reflejo dibujado encima; CSS/HTML estándar no desplaza los píxeles reales del backdrop de forma interoperable.
+
+Instalación: desplaza todos los archivos de esta carpeta al hosting, no solo index.html. Recarga con Ctrl+F5.

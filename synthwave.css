@@ -1,0 +1,101 @@
+/* =====================================================================
+   GhostUe46 · Tema SYNTHWAVE (neón retro años 80)
+   Atardecer con sol rayado, rejilla en perspectiva, magenta y cian.
+   Es solo el tema: las burbujas son un estilo aparte («Synthwave» en estilo de burbujas).
+   Siempre oscuro. Efectos hechos solo con CSS (ligero).
+   ===================================================================== */
+:root[data-theme="synthwave"] { --accent-primary: #ff2bd6; --accent-secondary: #22d3ee; --sw-pink: #ff2bd6; --sw-cyan: #22d3ee; --sw-orange: #ff9f1c; --sw-violet: #7c3aed; --sw-night: #0b0221; color-scheme: dark; }
+
+/* ---------- Cielo y suelo ---------- */
+:root[data-theme="synthwave"] body,
+:root[data-mode="light"][data-theme="synthwave"] body {
+  background: linear-gradient(180deg, #0b0221 0%, #1b0540 30%, #4a0e6b 50%, #b3158f 59%, #ff5f6d 61.4%, #ff9f1c 62%, #12012b 62.1%, #12012b 100%) fixed !important;
+  color: #f5e9ff !important;
+}
+:root[data-theme="synthwave"] #bg-canvas { z-index: 2; mix-blend-mode: screen; opacity: .95; }
+:root[data-theme="synthwave"] #fx-circles { overflow: hidden; background: radial-gradient(ellipse 60% 22% at 50% 62%, rgba(255,43,214,.38), transparent 70%); mix-blend-mode: normal; }
+/* Sol rayado en el horizonte */
+:root[data-theme="synthwave"] #fx-circles::before {
+  content: ""; position: absolute; left: 50%; top: 62%; width: min(46vmin, 430px); aspect-ratio: 1; transform: translate(-50%, -70%); border-radius: 50%;
+  background: linear-gradient(to bottom, #fff3a1 0%, #ffd23f 24%, #ff9f1c 44%, #ff2bd6 74%, #7c3aed 100%);
+  box-shadow: 0 0 70px rgba(255,43,214,.55), 0 0 160px rgba(255,159,28,.25);
+  -webkit-mask: linear-gradient(#000, #000) top / 100% 46% no-repeat, repeating-linear-gradient(to bottom, #000 0 7px, transparent 7px 12px) bottom / 100% 54% no-repeat;
+  mask: linear-gradient(#000, #000) top / 100% 46% no-repeat, repeating-linear-gradient(to bottom, #000 0 7px, transparent 7px 12px) bottom / 100% 54% no-repeat;
+}
+/* Suelo con rejilla en perspectiva que avanza */
+:root[data-theme="synthwave"] #fx-circles::after {
+  content: ""; position: absolute; left: -60%; width: 220%; top: 62%; height: 220vh; transform-origin: top center; transform: perspective(430px) rotateX(66deg);
+  background:
+    linear-gradient(rgba(255,43,214,.9) 2px, transparent 2px) 0 0 / 84px 84px,
+    linear-gradient(90deg, rgba(34,211,238,.75) 2px, transparent 2px) 0 0 / 84px 84px,
+    linear-gradient(#14022e, #2a0a52 60%, #14022e);
+  box-shadow: 0 -2px 26px rgba(255,43,214,.85);
+  animation: synthGrid 2.6s linear infinite;
+}
+@keyframes synthGrid { to { background-position: 0 84px, 0 0, 0 0; } }
+:root[data-theme="synthwave"] .fx-circle { background: transparent; border: 2px solid rgba(255,43,214,.45); box-shadow: 0 0 16px rgba(255,43,214,.35), inset 0 0 12px rgba(34,211,238,.25); }
+
+/* ---------- Paneles ---------- */
+:root[data-theme="synthwave"] .water-glass,
+:root[data-theme="synthwave"] .water-glass-card,
+:root[data-theme="synthwave"] .settings-section {
+  background: linear-gradient(160deg, rgba(34,8,70,.72), rgba(12,2,34,.78)) !important;
+  border: 1px solid rgba(255,43,214,.5) !important;
+  box-shadow: 0 0 26px rgba(255,43,214,.28), 0 20px 50px rgba(0,0,0,.5), inset 0 0 26px rgba(34,211,238,.08) !important;
+}
+:root[data-theme="synthwave"] .settings-section-title i { color: var(--sw-cyan); }
+:root[data-theme="synthwave"] .font-audiowide, :root[data-theme="synthwave"] h1, :root[data-theme="synthwave"] h2 { text-shadow: 0 0 12px rgba(255,43,214,.55); }
+:root[data-theme="synthwave"] .crystal-input, :root[data-theme="synthwave"] input[type="text"], :root[data-theme="synthwave"] input[type="search"], :root[data-theme="synthwave"] input[type="password"], :root[data-theme="synthwave"] input[type="number"], :root[data-theme="synthwave"] select, :root[data-theme="synthwave"] textarea {
+  background: rgba(8,2,24,.82) !important; border: 1px solid rgba(34,211,238,.55) !important; color: #f5e9ff;
+}
+:root[data-theme="synthwave"] .crystal-input:focus, :root[data-theme="synthwave"] input:focus, :root[data-theme="synthwave"] textarea:focus, :root[data-theme="synthwave"] select:focus { border-color: var(--sw-pink) !important; outline: none; box-shadow: 0 0 0 2px rgba(255,43,214,.3), 0 0 18px rgba(255,43,214,.45) !important; }
+
+/* ---------- Botones neón ---------- */
+:root[data-theme="synthwave"] button:not(.gb-skip):not([role="tab"]),
+:root[data-theme="synthwave"] .theme-choice, :root[data-theme="synthwave"] .pref-chip, :root[data-theme="synthwave"] .settings-cancel {
+  background: linear-gradient(to bottom, rgba(60,14,110,.9), rgba(20,4,50,.95)) !important;
+  border: 1px solid var(--sw-cyan) !important; color: #f5e9ff !important; text-shadow: 0 0 8px rgba(34,211,238,.6) !important;
+  box-shadow: 0 0 12px rgba(34,211,238,.35), inset 0 0 10px rgba(34,211,238,.12) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+}
+:root[data-theme="synthwave"] button:not(.gb-skip) span:not(.theme-preview), :root[data-theme="synthwave"] .theme-choice-title, :root[data-theme="synthwave"] .theme-choice-desc { color: inherit !important; }
+:root[data-theme="synthwave"] .theme-choice-desc { opacity: .75; }
+:root[data-theme="synthwave"] button:not(.gb-skip):not([role="tab"]):hover, :root[data-theme="synthwave"] .theme-choice:hover, :root[data-theme="synthwave"] .pref-chip:hover {
+  border-color: var(--sw-pink) !important; box-shadow: 0 0 18px rgba(255,43,214,.7), inset 0 0 12px rgba(255,43,214,.2) !important; transform: none !important;
+}
+:root[data-theme="synthwave"] button:not(.gb-skip):not([role="tab"]):active, :root[data-theme="synthwave"] button:not(.gb-skip):focus-visible, :root[data-theme="synthwave"] .theme-choice:active, :root[data-theme="synthwave"] .pref-chip:active {
+  background: linear-gradient(135deg, #ff2bd6, #7c3aed) !important; border-color: #fff !important; color: #fff !important; outline: none !important;
+}
+:root[data-theme="synthwave"] .theme-choice.selected, :root[data-theme="synthwave"] .pref-chip.selected,
+:root[data-theme="synthwave"] button[aria-pressed="true"]:not(.gb-skip), :root[data-theme="synthwave"] button.active:not(.gb-skip),
+:root[data-theme="synthwave"] #send-btn, :root[data-theme="synthwave"] .settings-save {
+  background: linear-gradient(135deg, #ff2bd6 0%, #ff6a3d 55%, #ff9f1c 100%) !important; border: 1px solid rgba(255,255,255,.75) !important; color: #1a0536 !important; text-shadow: none !important;
+  box-shadow: 0 0 20px rgba(255,43,214,.7), inset 0 1px 0 rgba(255,255,255,.5) !important;
+}
+:root[data-theme="synthwave"] .session-actions button, :root[data-theme="synthwave"] .preset-btn { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+:root[data-theme="synthwave"] .preset-btn { border: 1px solid rgba(34,211,238,.4) !important; }
+
+/* ---------- Interruptores, barras y scroll ---------- */
+:root[data-theme="synthwave"] .setting-switch { background: rgba(8,2,24,.9) !important; border: 1px solid var(--sw-cyan) !important; box-shadow: 0 0 10px rgba(34,211,238,.4) !important; }
+:root[data-theme="synthwave"] .setting-switch::after { background: #f5e9ff !important; box-shadow: 0 0 8px rgba(255,255,255,.7); }
+:root[data-theme="synthwave"] .setting-switch:checked { background: linear-gradient(90deg, #ff2bd6, #7c3aed) !important; border-color: #fff !important; box-shadow: 0 0 14px rgba(255,43,214,.7) !important; }
+:root[data-theme="synthwave"] input[type="range"] { -webkit-appearance: none; appearance: none; height: 18px; background: transparent; }
+:root[data-theme="synthwave"] input[type="range"]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: linear-gradient(90deg, #ff2bd6, #22d3ee); box-shadow: 0 0 10px rgba(255,43,214,.6); }
+:root[data-theme="synthwave"] input[type="range"]::-moz-range-track { height: 4px; border-radius: 4px; background: linear-gradient(90deg, #ff2bd6, #22d3ee); }
+:root[data-theme="synthwave"] input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 50%; background: #fff; border: 2px solid var(--sw-pink); box-shadow: 0 0 12px rgba(255,43,214,.9); }
+:root[data-theme="synthwave"] input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--sw-pink); }
+:root[data-theme="synthwave"] ::-webkit-scrollbar { width: 10px; height: 10px; }
+:root[data-theme="synthwave"] ::-webkit-scrollbar-track { background: rgba(8,2,24,.8); }
+:root[data-theme="synthwave"] ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #ff2bd6, #22d3ee); border-radius: 6px; box-shadow: 0 0 8px rgba(255,43,214,.6); }
+:root[data-theme="synthwave"] .typing-dots span { background: var(--sw-pink) !important; box-shadow: 0 0 10px var(--sw-pink); }
+:root[data-theme="synthwave"] .time-greeting-banner { background: linear-gradient(135deg, rgba(60,14,110,.92), rgba(20,4,50,.95)) !important; border: 1px solid var(--sw-pink) !important; color: #f5e9ff !important; box-shadow: 0 0 22px rgba(255,43,214,.55) !important; backdrop-filter: none; }
+:root[data-theme="synthwave"] .time-greeting-banner::before { display: none; }
+:root[data-theme="synthwave"] .time-greeting-banner * { color: #f5e9ff !important; text-shadow: none !important; }
+:root[data-theme="synthwave"] .stream-caret { background: var(--sw-pink); box-shadow: 0 0 8px var(--sw-pink); }
+
+/* ---------- Vista previa del tema en Configuración ---------- */
+.theme-preview-synth { background: radial-gradient(circle at 50% 62%, #ffd23f 0 17%, #ff2bd6 17% 27%, transparent 28%), linear-gradient(to bottom, #1b0540 0 50%, #ff6a3d 60%, #12012b 60%); color: #fff; box-shadow: inset 0 -10px 0 -4px rgba(34,211,238,.6); }
+@media (prefers-reduced-motion: reduce) { :root[data-theme="synthwave"] #fx-circles::after { animation: none; } :root[data-theme="synthwave"] .fx-circle { display: none; } }
+
+/* Con una imagen de fondo propia, el paisaje (sol y rejilla) se oculta para no taparla; los paneles y los neones se quedan. */
+:root[data-user-bg][data-theme="synthwave"] #fx-circles::before, :root[data-user-bg][data-theme="synthwave"] #fx-circles::after { display: none; }
+:root[data-user-bg][data-theme="synthwave"] #bg-canvas { mix-blend-mode: normal; }

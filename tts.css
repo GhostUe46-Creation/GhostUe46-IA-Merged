@@ -1,0 +1,14 @@
+/* Controles discretos de voz por respuesta; conserva los temas originales de GhostUe46. */
+.g46-tts-message-button {
+  display: inline-flex; align-items: center; gap: .35rem; margin-left: auto;
+  padding: .28rem .55rem; border: 1px solid rgba(56,189,248,.35); border-radius: 999px;
+  color: #0e7490; background: rgba(255,255,255,.22); font: inherit; font-size: 10px;
+  letter-spacing: .02em; cursor: pointer; transition: background .18s ease, transform .18s ease;
+}
+.g46-tts-message-button:hover { background: rgba(34,211,238,.24); transform: translateY(-1px); }
+.g46-tts-message-button:focus-visible { outline: 2px solid #22d3ee; outline-offset: 2px; }
+.g46-tts-message-button i { font-size: 11px; }
+#tts-voice-select { min-height: 40px; color: #e2e8f0; }
+#tts-voice-select option { color: #0f172a; background: #fff; }
+:root[data-theme="frutiger-aero"] .g46-tts-message-button { color: #075985; background: rgba(255,255,255,.56); border-color: rgba(3,169,244,.35); }
+@media (max-width: 640px) { .g46-tts-message-button { padding: .26rem .42rem; font-size: 9px; } }

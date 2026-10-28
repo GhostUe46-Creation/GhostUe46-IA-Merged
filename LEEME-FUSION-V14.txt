@@ -1,0 +1,20 @@
+GhostUe46 Multiplataforma v14
+
+NOVEDAD: VISTA PREVIA SOLO EN ARCHFILE
+- Cuando GhostUe46 genera un sitio web en Inteligencia → ArchFile, aparece una vista previa interactiva integrada en la conversación.
+- La vista previa usa un iframe aislado (sandbox), y agrupa los CSS/JS locales enlazados cuando es posible. Incluye controles para móvil, tablet, escritorio, recargar y pantalla completa.
+- Solo las respuestas generadas con el modo ArchFile reciben esa vista previa. En Estándar, Pensar, Código y Visión, los bloques HTML/CSS/JS se muestran como código normal.
+- Se guarda el modo de Inteligencia asociado a cada nueva respuesta para conservar el comportamiento al volver a abrir la conversación. Los mensajes antiguos no tienen metadatos de modo y no se convierten automáticamente en vistas previas.
+
+SE CONSERVA DE v13
+- Botón Enviar → Parar respuesta durante una generación; cancela la petición desde el navegador y detiene TTS.
+- TTS nativo del navegador con selección de voz femenina/masculina disponibles. Los bloques de código se excluyen de la lectura.
+- Generación explícita de imágenes mediante OpenRouter (API key válida, modelo compatible, Internet y posible coste).
+- Creator INFO, Ko-fi, reporte de errores, temas, personalización y recursos.
+
+SEGURIDAD Y LIMITACIONES
+- La vista previa se ejecuta en un iframe con sandbox sin acceso al DOM ni al almacenamiento de GhostUe46. Funciones que requieran backend, módulos externos o APIs bloqueadas por el navegador pueden no funcionar en la vista previa.
+- La cancelación no puede deshacer procesamiento que el proveedor ya haya realizado.
+- No publiques una API key real en un repositorio público.
+
+Para usarlo: selecciona Inteligencia → ArchFile y pide, por ejemplo: “Crea una web de portafolio personal con HTML, CSS y JavaScript”.

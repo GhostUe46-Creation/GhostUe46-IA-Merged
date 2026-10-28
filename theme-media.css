@@ -1,0 +1,16 @@
+/* Imagen de fondo del usuario */
+#user-bg-layer { position: fixed; inset: 0; z-index: 0; display: none; pointer-events: none; background-size: cover; background-position: center; background-repeat: no-repeat; }
+:root[data-user-bg] #user-bg-layer { display: block; filter: blur(var(--ubg-blur, 0px)); transform: scale(1.06); }
+#user-bg-layer::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, var(--ubg-dim, .35)); }
+/* Zonas de subida */
+.media-drop { display: flex; gap: 14px; align-items: center; padding: 12px; border-radius: 14px; border: 1px dashed color-mix(in srgb, var(--accent-primary) 50%, transparent); background: rgba(255,255,255,.04); transition: background .2s, border-color .2s; }
+.media-drop.drag { background: color-mix(in srgb, var(--accent-primary) 18%, transparent); border-style: solid; }
+.media-preview { flex: 0 0 120px; height: 72px; border-radius: 10px; background: rgba(0,0,0,.25) center/cover no-repeat; display: flex; align-items: center; justify-content: center; font-size: 10px; opacity: .85; border: 1px solid rgba(255,255,255,.18); }
+.media-preview.has-image { opacity: 1; }
+.media-icon-preview { flex: 0 0 56px; width: 56px; height: 56px; border-radius: 14px; object-fit: cover; box-shadow: 0 3px 10px rgba(0,0,0,.3); }
+.media-drop-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-width: 0; }
+.media-drop-actions .settings-hint { flex-basis: 100%; margin: 2px 0 0; }
+.media-upload-btn { cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.media-check { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; cursor: pointer; }
+.media-drop-actions button:disabled { opacity: .45; cursor: not-allowed; }
+@media (max-width: 520px) { .media-drop { flex-direction: column; align-items: stretch; } .media-preview { flex-basis: 90px; width: 100%; } }

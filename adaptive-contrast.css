@@ -1,0 +1,19 @@
+/* GhostUe46 · Placeholder contrast adapts to the sampled foreground mode. */
+html[data-g46-adaptive-contrast="on"] input[data-g46-auto-contrast="light"]::placeholder,
+html[data-g46-adaptive-contrast="on"] textarea[data-g46-auto-contrast="light"]::placeholder {
+  color: rgba(248, 250, 252, .76) !important;
+  -webkit-text-fill-color: rgba(248, 250, 252, .76) !important;
+}
+html[data-g46-adaptive-contrast="on"] input[data-g46-auto-contrast="dark"]::placeholder,
+html[data-g46-adaptive-contrast="on"] textarea[data-g46-auto-contrast="dark"]::placeholder {
+  color: rgba(16, 24, 39, .68) !important;
+  -webkit-text-fill-color: rgba(16, 24, 39, .68) !important;
+}
+html[data-g46-adaptive-contrast="on"] select[data-g46-auto-contrast="dark"],
+html[data-g46-adaptive-contrast="on"] option[data-g46-auto-contrast="dark"] {
+  color: #101827 !important;
+}
+html[data-g46-adaptive-contrast="on"] select[data-g46-auto-contrast="light"],
+html[data-g46-adaptive-contrast="on"] option[data-g46-auto-contrast="light"] {
+  color: #f8fafc !important;
+}

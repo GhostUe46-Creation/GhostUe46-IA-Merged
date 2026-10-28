@@ -1,0 +1,11 @@
+GhostUe46 Multiplataforma v11
+
+Esta versión restaura el sistema de reporte automático de errores de la v6 Multicolor, sobre la fusión v10.
+
+- `error-report.js`: captura automáticamente hasta cinco errores JavaScript y promesas rechazadas; abre un formulario para que el usuario revise y envíe el reporte.
+- `error-report.css`: estilos aislados para el formulario y accesos flotantes Gmail/Outlook.
+- Los botones REPORTAR ERROR están en index.html y creator.html.
+- `sw.js` usa una caché nueva y almacena los archivos del reporte.
+- Ko-fi, Creator INFO, temas multicolor y contenido de v10 se mantienen.
+
+IMPORTANTE: la captura de errores es automática, pero el envío NO ocurre en segundo plano: la persona debe pulsar el botón de envío. El endpoint Formspree configurado requiere seguir activo y con destinatario verificado. El envío online necesita HTTPS o localhost.

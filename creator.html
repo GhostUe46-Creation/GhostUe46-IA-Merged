@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="liquid-glass">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Diagnóstico exhaustivo: consola, JavaScript, CSS, recursos y eventos. -->
+    <script src="consola-debugg.js"></script>
+    <script src="error-report.js"></script>
+    <title>GhostUe46 × Illusion Lab · Experiencia continua</title>
+    <meta name="description" content="GhostUe46 y Illusion Lab en una sola experiencia continua: GhostUe46, transición cromática Claude y laboratorio de ilusiones ópticas.">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" type="image/svg+xml" href="assets/site-icon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/site-icon-32.png">
+    <link rel="apple-touch-icon" href="assets/site-icon-180.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Press+Start+2P&family=Caveat:wght@600&family=Playfair+Display:wght@600&family=Fira+Code&family=Fredoka:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="icon-sets.css">
+    <link rel="stylesheet" href="illusion-studio.css">
+    <link rel="stylesheet" href="error-report.css">
+    <link rel="stylesheet" href="adaptive-contrast.css">
+    <script src="illusion-studio.js" defer></script>
+    <script src="fusion-scroll.js" defer></script>
+    <script src="ambience-sound.js" defer></script>
+    <script src="ui-sounds.js" defer></script>
+
+    <style>
+        :root {
+            --accent-primary: #67e8f9;
+            --accent-secondary: #a78bfa;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.22);
+            --glass-shadow: rgba(0, 0, 0, 0.35);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; color: #f8fafc; min-height: 100vh; overflow-x: hidden; position: relative; }
+        #bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .liquid-card {
+            background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border); box-shadow: 0 20px 50px var(--glass-shadow), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            border-radius: 24px; transition: border-color .4s, box-shadow .4s;
+        }
+        .liquid-card:hover { border-color: rgba(103, 232, 249, 0.5); box-shadow: 0 25px 60px rgba(103, 232, 249, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.5); }
+        .liquid-nav-btn { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); color: #94a3b8; transition: all .3s ease; }
+        .liquid-nav-btn[aria-selected="true"], .liquid-nav-btn:hover { background: rgba(103, 232, 249, 0.2); border-color: #67e8f9; color: #fff; box-shadow: 0 0 20px rgba(103, 232, 249, 0.3); }
+        .liquid-nav-btn:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid #67e8f9; outline-offset: 3px; }
+        .font-audiowide { font-family: 'Audiowide', cursive; }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        #transition-overlay { transition: opacity .8s cubic-bezier(.4, 0, .2, 1), transform .8s cubic-bezier(.4, 0, .2, 1); }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(2, 6, 23, 0.6); }
+        ::-webkit-scrollbar-thumb { background: rgba(103, 232, 249, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(103, 232, 249, 0.6); }
+        .skip-link { position: absolute; left: -999px; top: 8px; z-index: 100; background: #67e8f9; color: #020617; padding: 8px 14px; border-radius: 10px; font-weight: 700; }
+        .skip-link:focus { left: 8px; }
+        .stat { text-align: center; padding: 14px 8px; }
+        .stat b { display: block; font-family: 'Orbitron', sans-serif; font-size: 1.7rem; background: linear-gradient(90deg, #67e8f9, #a78bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .stat span { font-size: 11px; color: #94a3b8; }
+        .cap-card { padding: 16px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); transition: transform .25s, border-color .25s; }
+        .cap-card:hover { transform: translateY(-3px); border-color: rgba(103,232,249,.45); }
+        .cap-card i { font-size: 1.1rem; }
+        table.models { width: 100%; border-collapse: collapse; font-size: 11px; }
+        table.models th { text-align: left; padding: 8px 10px; color: #94a3b8; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,.15); }
+        table.models td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.07); vertical-align: top; }
+        table.models code { font-family: 'Fira Code', monospace; font-size: 10.5px; color: #67e8f9; background: rgba(0,0,0,.3); padding: 1px 6px; border-radius: 6px; word-break: break-all; }
+        .pill { display: inline-block; padding: 1px 8px; border-radius: 99px; font-size: 10px; border: 1px solid rgba(255,255,255,.2); }
+        .pill.ok { color: #6ee7b7; border-color: rgba(16,185,129,.5); background: rgba(16,185,129,.12); }
+        .pill.no { color: #fca5a5; border-color: rgba(239,68,68,.45); background: rgba(239,68,68,.1); }
+        /* Galería de temas: cada tarjeta usa su propio set de iconos (icon-sets.css) */
+        .theme-demo { border-radius: 18px; padding: 14px; border: 1px solid rgba(255,255,255,.18); min-height: 150px; display: flex; flex-direction: column; gap: 8px; }
+        .theme-demo h4 { font-family: 'Audiowide', cursive; font-size: 12px; }
+        .theme-demo p { font-size: 11px; opacity: .85; line-height: 1.5; }
+        .icon-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
+        .icon-row i { font-size: 22px; font-style: normal; }
+        .font-chip { padding: 8px 12px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); font-size: 15px; white-space: nowrap; }
+        details.faq { border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); padding: 12px 16px; }
+        details.faq summary { cursor: pointer; font-weight: 600; font-size: 12px; color: #e2e8f0; }
+        details.faq[open] { border-color: rgba(103,232,249,.4); }
+        details.faq p, details.faq ol { margin-top: 8px; font-size: 11.5px; color: #94a3b8; line-height: 1.65; }
+        .step { counter-increment: step; position: relative; padding: 14px 14px 14px 52px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+        .step::before { content: counter(step); position: absolute; left: 14px; top: 12px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-family: 'Orbitron', sans-serif; font-size: 12px; color: #020617; background: linear-gradient(135deg, #67e8f9, #a78bfa); }
+        .steps { counter-reset: step; display: grid; gap: 10px; }
+        kbd { font-family: 'Fira Code', monospace; font-size: 10.5px; padding: 1px 6px; border-radius: 6px; background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.2); }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .cap-card, .liquid-card { transition: none; } }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div id="fusion-atmosphere" aria-hidden="true"></div>
+
+    <div id="transition-overlay" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center opacity-0 pointer-events-none transform scale-95" aria-hidden="true">
+        <div class="relative w-32 h-32 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border-4 border-cyan-500/20 border-t-cyan-400 animate-spin"></div>
+            <div class="absolute inset-3 rounded-full border-4 border-purple-500/20 border-b-purple-400 animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+            <img src="assets/site-icon.svg" alt="" class="w-14 h-14 animate-pulse">
+        </div>
+        <h2 class="mt-6 font-audiowide text-xl text-cyan-300 tracking-wider animate-pulse">INICIALIZANDO GHOSTUE46...</h2>
+        <p class="text-xs font-mono text-slate-400 mt-2">Preparando tu espacio de trabajo</p>
+    </div>
+
+    <header class="relative z-10 p-6 max-w-7xl mx-auto w-full flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center space-x-3">
+            <img src="assets/site-icon.svg" alt="" class="w-11 h-11 rounded-2xl shadow-xl">
+            <div>
+                <h1 class="font-audiowide text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-purple-400">GhostUe46</h1>
+                <p class="text-[10px] text-cyan-300/70 font-mono">CREATOR · DOCUMENTACIÓN · GUÍA</p>
+            </div>
+        </div>
+        <div class="flex items-center justify-end gap-2 flex-wrap shrink-0">
+            <button type="button" data-g46-report-open aria-label="Reportar un error" title="Reportar un error a soporte" class="g46-report-trigger g46-report-trigger--compact">
+                <i class="fa-solid fa-bug" aria-hidden="true"></i><span class="g46-report-label">REPORTAR ERROR</span><span id="g46-report-error-count" class="g46-report-error-count" hidden>0</span>
+            </button>
+            <button type="button" onclick="probarIA()" class="group relative px-6 py-2.5 rounded-2xl font-audiowide text-xs tracking-wider uppercase overflow-hidden shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 text-white border border-cyan-300/40 bg-gradient-to-r from-cyan-500/30 to-purple-500/30 flex items-center space-x-2">
+                <span>Probar IA</span>
+                <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="relative z-10 flex-1 max-w-7xl mx-auto px-6 py-8 w-full space-y-10">
+
+        <div class="liquid-card p-4 border-red-500/40 bg-red-950/20 text-red-200 flex items-start space-x-4" role="note">
+            <i class="fa-solid fa-triangle-exclamation text-red-400 text-xl mt-0.5"></i>
+            <div class="text-xs leading-relaxed">
+                <strong class="font-bold uppercase tracking-wider text-red-400 block mb-1">Equipos de gama baja</strong>
+                El tema Liquid Glass usa muchas capas y animaciones. Si notas lentitud, desactiva las animaciones en Configuración o elige el tema Predeterminado o Material You.
+            </div>
+        </div>
+
+        <!-- Presentación -->
+        <section class="liquid-card p-8 md:p-12 relative overflow-hidden" aria-labelledby="hero-title">
+            <div class="max-w-3xl space-y-6">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 border border-cyan-400/30 text-cyan-300">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span>Tu asistente de IA, con tus claves y en tu navegador</span>
+                </div>
+                <h2 id="hero-title" class="text-3xl md:text-5xl font-extrabold font-orbitron tracking-tight text-white leading-tight">Una sola app para hablar con 9 proveedores de IA.</h2>
+                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                    <strong>GhostUe46</strong> conecta con OpenRouter, GROQ, Grok, Gemini, Anthropic (Claude), NVIDIA, Meta, Llama local y OpenAI. Las respuestas aparecen en vivo, programa con un editor que verifica la sintaxis, busca en la web, analiza tus archivos e imágenes, genera imágenes y vídeo, y todo se ve como tú quieras: 8 temas, +270 fuentes, imagen de fondo y sets de iconos propios.
+                </p>
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <button type="button" onclick="probarIA()" class="px-5 py-2.5 rounded-2xl text-xs font-audiowide text-slate-900 bg-gradient-to-r from-cyan-300 to-purple-300 hover:brightness-110 transition">Empezar a chatear</button>
+                    <button type="button" onclick="goTab('guide')" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide">Guía rápida</button>
+                    <a href="#claude-bridge" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide inline-flex items-center"><i class="fa-solid fa-eye mr-2 text-cyan-300"></i>Descubrir las ilusiones <span class="ml-2">↓</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cifras -->
+        <section class="liquid-card grid grid-cols-2 md:grid-cols-5 divide-white/10 md:divide-x" aria-label="Datos de GhostUe46">
+            <div class="stat"><b>9</b><span>proveedores de IA</span></div>
+            <div class="stat"><b>4</b><span>modos de Inteligencia</span></div>
+            <div class="stat"><b>8</b><span>temas visuales</span></div>
+            <div class="stat"><b>71</b><span>iconos propios</span></div>
+            <div class="stat col-span-2 md:col-span-1"><b>270+</b><span>fuentes de letra</span></div>
+        </section>
+
+        <!-- Capacidades -->
+        <section class="space-y-5" aria-labelledby="cap-title">
+            <h2 id="cap-title" class="font-audiowide text-lg text-white">Lo que hace GhostUe46</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article class="cap-card space-y-2"><i class="fa-solid fa-bolt text-cyan-300"></i><h3 class="font-audiowide text-xs">Respuestas en vivo</h3><p class="text-[11px] text-slate-400 leading-relaxed">Ves el texto aparecer mientras el modelo escribe (OpenAI y compatibles, y Anthropic). En modo Lento se desactiva porque revisa su respuesta.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-code text-purple-300"></i><h3 class="font-audiowide text-xs">Editor y ejecución de código</h3><p class="text-[11px] text-slate-400 leading-relaxed">Python se ejecuta de verdad con Pyodide (WebAssembly). JavaScript y HTML se ejecutan en el navegador; Java, C, C++ y C# pasan por un verificador de sintaxis. Cada bloque de código tiene Copiar, Abrir en Editor y Descargar.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-cube text-emerald-300"></i><h3 class="font-audiowide text-xs">APIs gráficas (BETA)</h3><p class="text-[11px] text-slate-400 leading-relaxed">Ayuda con shaders y pipelines en DirectX/HLSL, OpenGL/GLSL y Vulkan. Siempre con aviso de fase BETA: revisa el código antes de usarlo.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-magnifying-glass text-sky-300"></i><h3 class="font-audiowide text-xs">Búsqueda web</h3><p class="text-[11px] text-slate-400 leading-relaxed">Si la activas, consulta DuckDuckGo y responde usando lo encontrado, con enlace a la búsqueda completa.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-photo-film text-amber-300"></i><h3 class="font-audiowide text-xs">Imágenes y vídeo</h3><p class="text-[11px] text-slate-400 leading-relaxed">Esta edición se centra en la conversación con el proveedor de chat configurado, la generación de código y el procesamiento de archivos. La generación integrada de imágenes y vídeo no está incluida.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-file-zipper text-rose-300"></i><h3 class="font-audiowide text-xs">Archivos adjuntos</h3><p class="text-[11px] text-slate-400 leading-relaxed">Lee PDF, Word, Excel, ZIP, código, texto e imágenes (también con captura de pantalla y arrastrar y pegar).</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-brain text-pink-300"></i><h3 class="font-audiowide text-xs">Memoria local</h3><p class="text-[11px] text-slate-400 leading-relaxed">Dile «recuerda que…» y guarda la nota en tu navegador. La editas o la borras cuando quieras.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-microphone text-lime-300"></i><h3 class="font-audiowide text-xs">Voz a texto</h3><p class="text-[11px] text-slate-400 leading-relaxed">Dicta tus mensajes con el micrófono (según lo que permita tu navegador).</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-palette text-cyan-300"></i><h3 class="font-audiowide text-xs">Tú decides cómo se ve</h3><p class="text-[11px] text-slate-400 leading-relaxed">Temas, colores, cristal, fuentes, imagen de fondo, icono del sitio y temas guardados con aviso de legibilidad.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-shield-halved text-emerald-300"></i><h3 class="font-audiowide text-xs">Tus datos, contigo</h3><p class="text-[11px] text-slate-400 leading-relaxed">Chats con buscador, fijado y renombrado; contador de uso por proveedor; copia de seguridad completa e instalación como app.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-eye text-orange-300"></i><h3 class="font-audiowide text-xs">Illusion Lab</h3><p class="text-[11px] text-slate-400 leading-relaxed">Un laboratorio visual al final de esta página: 10 ilusiones ópticas animadas que controlas en tiempo real (patrón, intensidad, velocidad y paleta). Baja desde la zona naranja de Claude para entrar.</p></article>
+                <article class="cap-card space-y-2"><i class="fa-solid fa-microphone text-lime-300"></i><h3 class="font-audiowide text-xs">Música y sonidos</h3><p class="text-[11px] text-slate-400 leading-relaxed">Música ambiental con fundido cruzado al hacer scroll (Happy ↔ Space), sonido de clic en botones y aviso sonoro en las notificaciones. Los sonidos de interfaz se apagan con un interruptor en Configuración.</p></article>
+            </div>
+        </section>
+
+        <!-- Inteligencia -->
+        <section class="liquid-card p-6 md:p-8 space-y-6" aria-labelledby="intel-title">
+            <div class="flex items-center space-x-3 text-cyan-300"><i class="fa-solid fa-lightbulb text-xl"></i><h2 id="intel-title" class="font-audiowide text-lg text-white">Inteligencia de GhostUe46</h2></div>
+            <p class="text-xs text-slate-300 leading-relaxed">El botón flotante del chat activa un modo. Y el selector de velocidad decide cuánto se esfuerza cada respuesta.</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="cap-card"><h3 class="font-audiowide text-xs text-cyan-300 mb-1">Pensar</h3><p class="text-[11px] text-slate-400">Planifica, investiga en DuckDuckGo y razona antes de responder. Tarda un poco más y no va con Rápido.</p></div>
+                <div class="cap-card"><h3 class="font-audiowide text-xs text-purple-300 mb-1">Código</h3><p class="text-[11px] text-slate-400">Más experto en lenguajes. Revisa su propio código con el verificador de sintaxis real y se corrige.</p></div>
+                <div class="cap-card"><h3 class="font-audiowide text-xs text-emerald-300 mb-1">ArchFile</h3><p class="text-[11px] text-slate-400">Crea sitios web y archivos para instalar. Si hace un HTML, ves su vista previa funcionando, y puedes bajar todo en ZIP.</p></div>
+                <div class="cap-card"><h3 class="font-audiowide text-xs text-amber-300 mb-1">Visión</h3><p class="text-[11px] text-slate-400">Mira tus imágenes y analiza PDF, Word, Excel, ZIP, código y texto.</p></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-2xl bg-white/5 border border-white/10"><strong class="text-xs text-cyan-300">Rápido</strong><p class="text-[11px] text-slate-400 mt-1">Respuestas breves y directas, con menos historial y sin ronda de corrección.</p></div>
+                <div class="p-4 rounded-2xl bg-white/5 border border-cyan-300/40"><strong class="text-xs text-cyan-300">Normal <span class="pill ok">recomendado</span></strong><p class="text-[11px] text-slate-400 mt-1">Va al grano y envía menos historial, así que responde un poco más rápido.</p></div>
+                <div class="p-4 rounded-2xl bg-white/5 border border-white/10"><strong class="text-xs text-cyan-300">Lento</strong><p class="text-[11px] text-slate-400 mt-1">Más cuidadoso: razona paso a paso y revisa su respuesta antes de entregarla.</p></div>
+            </div>
+        </section>
+
+        <!-- Pestañas -->
+        <section class="space-y-6" aria-label="Documentación">
+            <div class="flex flex-wrap gap-3 border-b border-white/10 pb-4" role="tablist" aria-label="Secciones de la documentación" id="tablist">
+                <button type="button" role="tab" id="tab-models" aria-controls="content-models" aria-selected="true" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide flex items-center space-x-2"><i class="fa-solid fa-microchip"></i><span>Modelos</span></button>
+                <button type="button" role="tab" id="tab-themes" aria-controls="content-themes" aria-selected="false" tabindex="-1" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide flex items-center space-x-2"><i class="fa-solid fa-palette"></i><span>Temas</span></button>
+                <button type="button" role="tab" id="tab-guide" aria-controls="content-guide" aria-selected="false" tabindex="-1" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide flex items-center space-x-2"><i class="fa-solid fa-play"></i><span>Guía rápida</span></button>
+                <button type="button" role="tab" id="tab-faq" aria-controls="content-faq" aria-selected="false" tabindex="-1" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide flex items-center space-x-2"><i class="fa-solid fa-circle-info"></i><span>Preguntas</span></button>
+                <button type="button" role="tab" id="tab-privacy" aria-controls="content-privacy" aria-selected="false" tabindex="-1" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide flex items-center space-x-2"><i class="fa-solid fa-user-shield"></i><span>Privacidad</span></button>
+                <button type="button" role="tab" id="tab-terms" aria-controls="content-terms" aria-selected="false" tabindex="-1" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide flex items-center space-x-2"><i class="fa-solid fa-file-contract"></i><span>Términos</span></button>
+                <button type="button" role="tab" id="tab-security" aria-controls="content-security" aria-selected="false" tabindex="-1" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide flex items-center space-x-2"><i class="fa-solid fa-lock"></i><span>Seguridad</span></button>
+                <button type="button" role="tab" id="tab-news" aria-controls="content-news" aria-selected="false" tabindex="-1" class="liquid-nav-btn px-5 py-2.5 rounded-2xl text-xs font-audiowide flex items-center space-x-2"><i class="fa-solid fa-bolt"></i><span>Novedades</span></button>
+            </div>
+
+            <!-- Modelos -->
+            <div id="content-models" role="tabpanel" aria-labelledby="tab-models" class="tab-content liquid-card p-6 md:p-8 space-y-6">
+                <div class="flex items-center space-x-3 text-cyan-300"><i class="fa-solid fa-microchip text-xl"></i><h2 class="font-audiowide text-lg text-white">Proveedores e integraciones</h2></div>
+                <p class="text-xs text-slate-300 leading-relaxed">Cada proveedor se configura con tu propia clave en Configuración. Si dejas el campo «Modelo» vacío, GhostUe46 usa el modelo recomendado de abajo. Puedes escribir cualquier otro modelo que tu cuenta tenga disponible.</p>
+                <div class="overflow-x-auto">
+                    <table class="models" aria-label="Proveedores soportados">
+                        <thead><tr><th>Proveedor</th><th>Modelo por defecto</th><th>Clave</th><th>Notas</th></tr></thead>
+                        <tbody>
+                            <tr><td class="text-cyan-300 font-bold">OpenRouter</td><td><code>openai/gpt-3.5-turbo</code></td><td><span class="pill no">Sí</span></td><td>Un solo acceso a muchos modelos. Recomendado para empezar.</td></tr>
+                            <tr><td class="text-orange-300 font-bold">GROQ</td><td><code>llama-3.3-70b-versatile</code></td><td><span class="pill no">Sí</span></td><td>Inferencia muy rápida.</td></tr>
+                            <tr><td class="text-rose-300 font-bold">Grok (xAI)</td><td><code>grok-3-mini</code></td><td><span class="pill no">Sí</span></td><td>Modelos de xAI.</td></tr>
+                            <tr><td class="text-sky-300 font-bold">Google Gemini</td><td><code>gemini-2.5-flash</code></td><td><span class="pill no">Sí</span></td><td>Usa la interfaz compatible con OpenAI de Google.</td></tr>
+                            <tr><td class="text-purple-300 font-bold">Anthropic (Claude)</td><td><code>claude-sonnet-5-5</code></td><td><span class="pill no">Sí</span></td><td>Conexión directa desde el navegador; acepta imágenes. Escribe otro modelo Claude si lo prefieres.</td></tr>
+                            <tr><td class="text-lime-300 font-bold">NVIDIA</td><td><code>meta/llama-3.1-70b-instruct</code></td><td><span class="pill no">Sí</span></td><td>Endpoints acelerados de NVIDIA.</td></tr>
+                            <tr><td class="text-blue-300 font-bold">META (Llama API)</td><td><code>Llama-3.3-70B-Instruct</code></td><td><span class="pill no">Sí</span></td><td>API compatible con OpenAI de Meta. Si tu cuenta usa otra dirección, ponla en «Endpoint personalizado».</td></tr>
+                            <tr><td class="text-emerald-300 font-bold">LLAMA (local)</td><td><code>llama3.2</code></td><td><span class="pill ok">No</span></td><td>Llama en tu propio equipo con Ollama (<code>localhost:11434</code>). Gratis y privado.</td></tr>
+                            <tr><td class="text-emerald-200 font-bold">OpenAI</td><td><code>gpt-4o-mini</code></td><td><span class="pill no">Sí</span></td><td>Modelos oficiales de OpenAI.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-[11px] text-slate-400">¿Otro servicio compatible con OpenAI (LM Studio, vLLM, un servidor propio)? Pega su dirección en <strong>Endpoint personalizado</strong>. El contador de <strong>Uso por proveedor</strong> te muestra cuántos mensajes y tokens llevas con cada uno.</p>
+            </div>
+
+            <!-- Temas -->
+            <div id="content-themes" role="tabpanel" aria-labelledby="tab-themes" class="tab-content hidden liquid-card p-6 md:p-8 space-y-6">
+                <div class="flex items-center space-x-3 text-purple-300"><i class="fa-solid fa-palette text-xl"></i><h2 class="font-audiowide text-lg text-white">Temas, iconos y letras</h2></div>
+                <p class="text-xs text-slate-300 leading-relaxed">Cada tema trae su propio set de iconos dibujados a mano, y las burbujas del chat son un estilo aparte que puedes combinar con cualquier tema. En <strong>Personalizado</strong> eliges el tuyo y combinas colores, cristal, desenfoque, bordes y tipografía.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="theme-gallery">
+                    <div class="theme-demo" data-demo-theme="default" data-icons="thin" style="--accent-primary:#38bdf8;--accent-secondary:#a855f7;background:linear-gradient(135deg,#050816,#0e233b);color:#f1f5f9"><h4>Predeterminado</h4><p>Oscuro y limpio. Iconos de contorno fino.</p><div class="icon-row"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-globe"></i><i class="fa-solid fa-brain"></i><i class="fa-solid fa-code"></i><i class="fa-solid fa-camera"></i><i class="fa-solid fa-microphone"></i><i class="fa-solid fa-paper-plane"></i><i class="fa-solid fa-palette"></i></div></div>
+                    <div class="theme-demo" data-demo-theme="liquid-glass" data-icons="thin" style="--accent-primary:#67e8f9;--accent-secondary:#a78bfa;background:linear-gradient(135deg,#0e3a5a,#1e2a6b);color:#f1f5f9"><h4>Liquid Glass</h4><p>Cristal con reflejos. Contorno fino con brillo.</p><div class="icon-row"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-globe"></i><i class="fa-solid fa-brain"></i><i class="fa-solid fa-code"></i><i class="fa-solid fa-camera"></i><i class="fa-solid fa-microphone"></i><i class="fa-solid fa-paper-plane"></i><i class="fa-solid fa-palette"></i></div></div>
+                    <div class="theme-demo" data-demo-theme="material-you" data-icons="duo" style="--accent-primary:#7dd3fc;--accent-secondary:#c4b5fd;background:linear-gradient(135deg,#101426,#1b1b2f);color:#f1f5f9"><h4>Material You</h4><p>Suave y colorido. Iconos bicolor con relleno.</p><div class="icon-row"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-globe"></i><i class="fa-solid fa-brain"></i><i class="fa-solid fa-code"></i><i class="fa-solid fa-camera"></i><i class="fa-solid fa-microphone"></i><i class="fa-solid fa-paper-plane"></i><i class="fa-solid fa-palette"></i></div></div>
+                    <div class="theme-demo" data-demo-theme="aurora" data-icons="bold" style="--accent-primary:#2dd4bf;--accent-secondary:#a78bfa;background:linear-gradient(135deg,#082f49,#2e1065);color:#f1f5f9"><h4>Aurora</h4><p>Degradados glaciares. Trazo grueso con resplandor.</p><div class="icon-row"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-globe"></i><i class="fa-solid fa-brain"></i><i class="fa-solid fa-code"></i><i class="fa-solid fa-camera"></i><i class="fa-solid fa-microphone"></i><i class="fa-solid fa-paper-plane"></i><i class="fa-solid fa-palette"></i></div></div>
+                    <div class="theme-demo" data-demo-theme="frutiger-aero" data-icons="ginger" style="background:linear-gradient(135deg,#bfeaf5,#8fd8ee);color:#06496b"><h4>Frutiger Aero · Android 2.3</h4><p>Nostalgia Gingerbread: botones oscuros con brillo, interruptores, barras y el robot verde de carga.</p><div class="icon-row"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-globe"></i><i class="fa-solid fa-brain"></i><i class="fa-solid fa-code"></i><i class="fa-solid fa-camera"></i><i class="fa-solid fa-microphone"></i><i class="fa-solid fa-paper-plane"></i><i class="fa-solid fa-palette"></i></div></div>
+                    <div class="theme-demo" data-demo-theme="assassins-creed-2" data-icons="animus" style="background:repeating-linear-gradient(45deg,rgba(243,244,246,.06) 0 1px,transparent 1px 14px),repeating-linear-gradient(-45deg,rgba(243,244,246,.06) 0 1px,transparent 1px 14px),linear-gradient(135deg,#2b2c32,#0d0e11);color:#f3f4f6;border-left:4px solid #e5253a"><h4>Assassin's Creed II · Animus</h4><p>Rombos, líneas blancas, grises y rojas, y una hélice de ADN rómbica que reemplaza las ondas XLMB. Siempre oscuro. Sus burbujas («Animus») son opcionales.</p><p style="color:#fca5a5;font-weight:600">⚠ Puede ir mal en dispositivos de gama baja.</p><div class="icon-row"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-globe"></i><i class="fa-solid fa-brain"></i><i class="fa-solid fa-code"></i><i class="fa-solid fa-camera"></i><i class="fa-solid fa-microphone"></i><i class="fa-solid fa-paper-plane"></i><i class="fa-solid fa-palette"></i></div></div>
+                    <div class="theme-demo" data-demo-theme="synthwave" data-icons="neon" style="background:linear-gradient(180deg,#0b0221 0%,#4a0e6b 50%,#ff5f6d 62%,#12012b 62.2%);color:#f5e9ff;border:1px solid rgba(255,43,214,.6);box-shadow:0 0 22px rgba(255,43,214,.3)"><h4>Synthwave</h4><p>Neón retro de los 80: atardecer con sol rayado, rejilla en perspectiva y brillo magenta y cian. Iconos de tubo de neón. Las burbujas «Synthwave» se eligen aparte.</p><div class="icon-row"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-globe"></i><i class="fa-solid fa-brain"></i><i class="fa-solid fa-code"></i><i class="fa-solid fa-camera"></i><i class="fa-solid fa-microphone"></i><i class="fa-solid fa-paper-plane"></i><i class="fa-solid fa-palette"></i></div></div>
+                    <div class="theme-demo" data-demo-theme="custom" data-icons="duo" style="--ct-accent-primary:#f472b6;--ct-accent-secondary:#fbbf24;background:linear-gradient(135deg,#1a0f2e,#33142b);color:#f1f5f9"><h4>Personalizado</h4><p>Tú mandas: colores, cristal, fuente y uno de 7 estilos de iconos.</p><div class="icon-row"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-globe"></i><i class="fa-solid fa-brain"></i><i class="fa-solid fa-code"></i><i class="fa-solid fa-camera"></i><i class="fa-solid fa-microphone"></i><i class="fa-solid fa-paper-plane"></i><i class="fa-solid fa-palette"></i></div></div>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-audiowide text-sm text-white">Más de 270 fuentes</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="font-chip" style="font-family:'Orbitron'">Orbitron</span>
+                        <span class="font-chip" style="font-family:'Press Start 2P';font-size:11px">Press Start 2P</span>
+                        <span class="font-chip" style="font-family:'Caveat';font-size:19px">Caveat</span>
+                        <span class="font-chip" style="font-family:'Playfair Display'">Playfair Display</span>
+                        <span class="font-chip" style="font-family:'Fira Code'">Fira Code</span>
+                        <span class="font-chip" style="font-family:'Fredoka'">Fredoka</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Busca por nombre o estilo, o escribe cualquier fuente de Google Fonts. También ajustas el tamaño de letra (80–140 %).</p>
+                </div>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-[11.5px] text-slate-300">
+                    <li class="cap-card"><i class="fa-solid fa-image text-cyan-300"></i> <strong>Imagen de fondo</strong> (JPG, PNG o WebP) en cualquier tema, con oscurecido, desenfoque y una <strong>transparencia de la interfaz de 0 a 100 %</strong> (0 = la interfaz desaparece; 100 = cristal muy desenfocado).</li>
+                    <li class="cap-card"><i class="fa-solid fa-ghost text-purple-300"></i> <strong>Icono del sitio</strong> único (el fantasma de cristal) o el tuyo propio.</li>
+                    <li class="cap-card"><i class="fa-solid fa-circle-check text-emerald-300"></i> <strong>Temas guardados</strong>: ponles nombre, expórtalos e impórtalos.</li>
+                    <li class="cap-card"><i class="fa-solid fa-triangle-exclamation text-amber-300"></i> <strong>Aviso de legibilidad</strong>: te avisa si el texto casi no se ve y lo corrige con un clic.</li>
+                </ul>
+            </div>
+
+            <!-- Guía rápida -->
+            <div id="content-guide" role="tabpanel" aria-labelledby="tab-guide" class="tab-content hidden liquid-card p-6 md:p-8 space-y-6">
+                <div class="flex items-center space-x-3 text-emerald-300"><i class="fa-solid fa-play text-xl"></i><h2 class="font-audiowide text-lg text-white">Guía rápida: de cero a chatear</h2></div>
+                <ol class="steps">
+                    <li class="step"><strong class="text-white">Abre Configuración</strong> (el engranaje) y elige tu proveedor. OpenRouter es el más cómodo para empezar.</li>
+                    <li class="step"><strong class="text-white">Pega tu API Key</strong> del proveedor. Se guarda solo en tu navegador. Con LLAMA local no hace falta clave.</li>
+                    <li class="step"><strong class="text-white">Escribe tu primer mensaje.</strong> Verás la respuesta aparecer en vivo. Con <kbd>Shift</kbd>+<kbd>Enter</kbd> haces salto de línea.</li>
+                    <li class="step"><strong class="text-white">Activa un modo de Inteligencia</strong> si lo necesitas: Pensar para razonar, Código para programar, ArchFile para crear sitios y Visión para analizar archivos.</li>
+                    <li class="step"><strong class="text-white">Haz tuya la interfaz:</strong> elige un tema, una fuente, una imagen de fondo y guarda tu combinación con un nombre.</li>
+                    <li class="step"><strong class="text-white">Haz una copia de seguridad</strong> en Configuración. Así puedes mover todo a otro navegador o recuperarlo si limpias los datos.</li>
+                </ol>
+                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 text-[11.5px] text-slate-300 leading-relaxed">
+                    <strong class="text-cyan-300">Ejemplos para probar:</strong> «imagen: un faro en una tormenta», «escribe un programa en Python que ordene una lista y ejecútalo en el editor», «recuerda que me llamo Ana», «busca las novedades de…» (con la búsqueda web activada).
+                </div>
+            </div>
+
+            <!-- Preguntas -->
+            <div id="content-faq" role="tabpanel" aria-labelledby="tab-faq" class="tab-content hidden liquid-card p-6 md:p-8 space-y-4">
+                <div class="flex items-center space-x-3 text-sky-300"><i class="fa-solid fa-circle-info text-xl"></i><h2 class="font-audiowide text-lg text-white">Preguntas frecuentes</h2></div>
+                <details class="faq"><summary>¿Dónde se guardan mis claves y mis chats?</summary><p>Solo en tu navegador (almacenamiento local). No hay un servidor de GhostUe46 en medio: tus mensajes viajan directo de tu navegador al proveedor que elijas.</p></details>
+                <details class="faq"><summary>¿Puedo usar Llama gratis en mi computadora?</summary><ol class="list-decimal list-inside"><li>Instala Ollama y descarga un modelo (por ejemplo <code>ollama pull llama3.2</code>).</li><li>Permite que esta página lo use: define la variable <code>OLLAMA_ORIGINS</code> con la dirección de donde abres GhostUe46 (o <code>*</code> para probar).</li><li>En Configuración elige <strong>LLAMA (local)</strong>. No necesitas clave.</li></ol></details>
+                <details class="faq"><summary>¿Funciona sin Internet?</summary><p>La interfaz sí, si la instalas como aplicación (desde una dirección https o localhost). El chat necesita Internet, salvo con LLAMA local.</p></details>
+                <details class="faq"><summary>¿Cómo paso mis chats y ajustes a otro navegador?</summary><p>Configuración → Copia de seguridad → Exportar. En el otro navegador usa Restaurar copia. Por defecto la copia no incluye tus API Keys; puedes elegir incluirlas.</p></details>
+                <details class="faq"><summary>¿Cuánto me va a costar usarlo?</summary><p>GhostUe46 no cobra: pagas (o no) a cada proveedor según su plan. El contador de Uso por proveedor te da una idea aproximada, pero tu factura real está siempre en el panel del proveedor.</p></details>
+                <details class="faq"><summary>El texto de mi tema personalizado casi no se ve</summary><p>Mira el aviso de legibilidad dentro del panel de Tema Personalizado: te dice qué combinaciones fallan y el botón «Corregir automáticamente» ajusta el color del texto.</p></details>
+                <details class="faq"><summary>Subí una imagen de fondo y no la veo</summary><p>Mira «Transparencia de la interfaz» en Configuración → Imagen de fondo e iconos: con la imagen activa se aplica sola (45 % por defecto), y bajándola hacia 0 % los paneles desaparecen y se ve toda tu imagen. También puedes subir el 100 % para un cristal muy desenfocado. Si no cambia nada, comprueba que «Mostrar» esté activado. Funciona con cualquier tema.</p></details>
+                <details class="faq"><summary>¿Puedo usar las burbujas de un tema en otro tema?</summary><p>Sí. Las burbujas son independientes del tema: en Configuración → Estilo de burbujas del chat eliges Cristal, Neón, Minimal, Suave, Fantasma, Frutiger Aero, <strong>Animus</strong> o <strong>Synthwave</strong>, y en «Forma de las burbujas» puedes hacerlas redondas, de esquinas cortadas o cuadradas.</p></details>
+                <details class="faq"><summary>¿Por qué no suena la música ambiental?</summary><p>El navegador no deja reproducir audio hasta que haces clic: pulsa «ACTIVAR SONIDO» una vez. Además, los archivos <code>sounds/Happy.mp3</code> y <code>sounds/Space.mp3</code> tienen que existir en la carpeta del proyecto (los pones tú). Si falta uno, el panel de sonido te dice cuál.</p></details>
+                <details class="faq"><summary>¿Cómo apago los sonidos de clic y de notificación?</summary><p>En la app: Configuración → Apariencia → «Sonidos de interfaz». La música ambiental de esta página tiene su propio botón de silencio.</p></details>
+                <details class="faq"><summary>El Illusion Lab me marea o me molesta la vista</summary><p>Pulsa «PAUSAR ANIMACIÓN», baja la intensidad o la velocidad, o elige la paleta Blanco y negro. Si tienes sensibilidad a patrones en movimiento o a destellos, usa el laboratorio con precaución.</p></details>
+            </div>
+
+            <!-- Privacidad -->
+            <div id="content-privacy" role="tabpanel" aria-labelledby="tab-privacy" class="tab-content hidden liquid-card p-6 md:p-8 space-y-6">
+                <div class="flex items-center space-x-3 text-purple-300"><i class="fa-solid fa-user-shield text-xl"></i><h2 class="font-audiowide text-lg text-white">Política de privacidad</h2></div>
+                <div class="text-xs text-slate-300 leading-relaxed space-y-4">
+                    <p>En <strong>GhostUe46</strong> la privacidad se basa en un modelo directo: tu navegador habla con el proveedor que elijas, sin servidores intermedios nuestros.</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-400 pl-2">
+                        <li><strong>Almacenamiento local:</strong> chats, ajustes, memoria, temas guardados, contadores de uso, la imagen de fondo y el icono del sitio se guardan solo en tu navegador (localStorage e IndexedDB).</li>
+                        <li><strong>Lo que ve cada proveedor:</strong> el contenido de tus mensajes y adjuntos que envías a la IA, según su propia política. Revísala antes de enviar datos sensibles.</li>
+                        <li><strong>Búsqueda web:</strong> si la activas, tu consulta se envía a DuckDuckGo.</li>
+                        <li><strong>Fuentes y librerías:</strong> al elegir una fuente de Google Fonts o adjuntar PDF, Word, Excel o ZIP, el navegador descarga esos recursos de sus servidores (Google, cdnjs).</li>
+                        <li><strong>Modo sin conexión:</strong> si instalas la app, el navegador guarda en caché los archivos de la interfaz. Nunca guarda tus conversaciones ahí.</li>
+                        <li><strong>Control total:</strong> borra la memoria, los chats o todos los contadores con un clic, o limpia los datos del sitio desde tu navegador.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Términos -->
+            <div id="content-terms" role="tabpanel" aria-labelledby="tab-terms" class="tab-content hidden liquid-card p-6 md:p-8 space-y-6">
+                <div class="flex items-center space-x-3 text-emerald-300"><i class="fa-solid fa-file-contract text-xl"></i><h2 class="font-audiowide text-lg text-white">Términos de uso</h2></div>
+                <div class="text-xs text-slate-300 leading-relaxed space-y-4">
+                    <p>Al utilizar este sitio y sus utilidades, aceptas lo siguiente:</p>
+                    <ol class="list-decimal list-inside space-y-2 text-slate-400 pl-2">
+                        <li><strong>Uso responsable:</strong> no uses la generación de código o archivos con fines maliciosos o destructivos.</li>
+                        <li><strong>Código en fase BETA:</strong> lo generado para DirectX, OpenGL y Vulkan es informativo. Audítalo antes de usarlo.</li>
+                        <li><strong>Respuestas de la IA:</strong> pueden contener errores. Verifica los datos importantes (salud, dinero, leyes) con fuentes fiables.</li>
+                        <li><strong>Claves de API:</strong> eres responsable de custodiarlas y de los costes o límites en cada plataforma.</li>
+                        <li><strong>Contenido propio:</strong> eres responsable de los archivos e imágenes que subas, incluidas la imagen de fondo y el icono del sitio.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Seguridad -->
+            <div id="content-security" role="tabpanel" aria-labelledby="tab-security" class="tab-content hidden liquid-card p-6 md:p-8 space-y-6">
+                <div class="flex items-center space-x-3 text-amber-300"><i class="fa-solid fa-lock text-xl"></i><h2 class="font-audiowide text-lg text-white">Seguridad</h2></div>
+                <div class="text-xs text-slate-300 leading-relaxed space-y-3">
+                    <div class="p-3 rounded-lg bg-white/5 border border-white/10"><strong class="text-cyan-300 block mb-1">Ejecución aislada:</strong><p class="text-slate-400 text-[11px]">Python se ejecuta en Pyodide (WebAssembly), aislado de tu sistema operativo.</p></div>
+                    <div class="p-3 rounded-lg bg-white/5 border border-white/10"><strong class="text-cyan-300 block mb-1">Texto siempre escapado:</strong><p class="text-slate-400 text-[11px]">Lo que escribe la IA (o trae una copia de seguridad ajena) se muestra como texto: no puede inyectar HTML ni scripts en la página.</p></div>
+                    <div class="p-3 rounded-lg bg-white/5 border border-white/10"><strong class="text-cyan-300 block mb-1">Copias de seguridad y temas importados:</strong><p class="text-slate-400 text-[11px]">Se validan antes de usarse: colores, números, nombres de fuente y adjuntos se saneán. Las copias no incluyen tus API Keys salvo que lo pidas.</p></div>
+                    <div class="p-3 rounded-lg bg-white/5 border border-white/10"><strong class="text-cyan-300 block mb-1">Claves en el navegador:</strong><p class="text-slate-400 text-[11px]">Tus claves viven en el almacenamiento local de este navegador. Úsalo en equipos tuyos, no publiques el proyecto con una clave incrustada y, si una clave se expone, revócala y crea otra. Anthropic y otros proveedores permiten llamadas directas desde el navegador, pensadas para uso personal.</p></div>
+                    <div class="p-3 rounded-lg bg-white/5 border border-white/10"><strong class="text-cyan-300 block mb-1">Procesamiento local:</strong><p class="text-slate-400 text-[11px]">El análisis de vídeo por fotogramas y la lectura de archivos se hacen en tu navegador antes de enviar nada al modelo.</p></div>
+                </div>
+            </div>
+
+            <!-- Novedades -->
+            <div id="content-news" role="tabpanel" aria-labelledby="tab-news" class="tab-content hidden liquid-card p-6 md:p-8 space-y-6">
+                <div class="flex items-center space-x-3 text-cyan-300"><i class="fa-solid fa-bolt text-xl"></i><h2 class="font-audiowide text-lg text-white">Novedades</h2></div>
+                <div class="space-y-4 text-[11.5px] text-slate-300 leading-relaxed">
+                                                            <div class="cap-card" style="border-color:rgba(255,43,214,.55)"><strong class="text-pink-300 font-audiowide text-xs">Versión 7 · Burbujas libres, imagen que sí se ve y Synthwave</strong>
+                        <ul class="list-disc list-inside text-slate-400 mt-2 space-y-1"><li><strong class="text-slate-200">Burbujas independientes del tema:</strong> el tema Assassin's Creed II ya no trae sus burbujas puestas. Ahora «Animus» es un estilo de burbuja que eliges tú, igual que el nuevo «Synthwave», y funcionan con cualquier tema.</li><li><strong class="text-slate-200">Forma de las burbujas:</strong> según el estilo, redonda, de esquinas cortadas o cuadrada.</li><li><strong class="text-slate-200">Imagen de fondo arreglada:</strong> antes el lienzo de ondas la tapaba en todos los temas. Ahora se ve siempre, se acepta aunque tu sistema no informe el tipo de archivo y, si el navegador no puede guardarla, igualmente se aplica y te avisa.</li><li><strong class="text-slate-200">Transparencia de la interfaz, de 0 a 100 %:</strong> 0 % deja la interfaz invisible (solo ves tu imagen) y 100 % la convierte en cristal muy borroso y desenfocado. Por defecto 45 %. Las ventanas de Configuración y del editor no se ven afectadas, para que siempre puedas leerlas.</li><li><strong class="text-slate-200">Tema nuevo, Synthwave:</strong> neón retro de los 80 con sol rayado, rejilla en perspectiva que avanza, ondas magenta y cian, botones y controles de neón, y un set de iconos propio de tubo de neón (también elegible en Tema Personalizado). Es siempre oscuro y ligero (solo CSS).</li><li>Detalle de legibilidad: la burbuja «Frutiger Aero» mantiene su texto oscuro también sobre temas oscuros.</li></ul></div>
+                    <div class="cap-card" style="border-color:rgba(255,143,62,.55)"><strong class="text-orange-300 font-audiowide text-xs">Versión 6 · Fusión: Illusion Lab, sonido y nueva imagen</strong>
+                        <ul class="list-disc list-inside text-slate-400 mt-2 space-y-1"><li><strong class="text-slate-200">Creator como una sola experiencia:</strong> al bajar, el azul de GhostUe46 se funde con el naranja de Claude («esta IA fue inventada con Claude, by Anthropic») y llega al Illusion Lab.</li><li><strong class="text-slate-200">Illusion Lab:</strong> 10 ilusiones ópticas animadas (vórtice, ondas concéntricas, rayos, espiral, moiré, tablero ondulante, túnel infinito, caleidoscopio, rejilla deformada y triángulos imposibles) con control de intensidad, velocidad y 4 paletas (Aqua digital, Violeta eléctrico, Ámbar Claude y Blanco y negro), pausa y restablecer.</li><li><strong class="text-slate-200">Música ambiental:</strong> Happy.mp3 y Space.mp3 se cruzan suavemente según la zona de color por la que vas, con botón de activar y silenciar.</li><li><strong class="text-slate-200">Sonidos de interfaz</strong> también dentro de la app: clic en botones, casillas y controles y un aviso sonoro en las notificaciones, con interruptor en Configuración.</li><li><strong class="text-slate-200">Nuevo logo con dragón e icono GUe46:</strong> tu arte, optimizado para que la página cargue rápido (las imágenes pasaron de unos 18 MB a poco más de 1 MB) y con iconos cuadrados para pestaña, móvil e instalación.</li><li>La fusión conserva todo lo de la versión 5 (tema Assassin's Creed II) y el service worker guarda en caché las piezas nuevas.</li></ul></div>
+                    <div class="cap-card" style="border-color:rgba(229,37,58,.55)"><strong class="text-red-300 font-audiowide text-xs">Versión 5 · Assassin's Creed II (Animus)</strong>
+                        <ul class="list-disc list-inside text-slate-400 mt-2 space-y-1"><li><strong class="text-slate-200">Tema nuevo:</strong> malla de rombos con líneas verticales y horizontales en blanco, gris y rojo; siempre oscuro.</li><li><strong class="text-slate-200">Hélice de ADN rómbica:</strong> sustituye a las ondas XLMB del fondo animado (si apagas XLMB, no se dibuja), con una segunda hélice lejana, rombos que laten y una línea de escaneo roja.</li><li>Burbujas de chat con esquinas cortadas y malla interior; botones con filo rojo y esquinas cortadas; marca Animus propia.</li><li>Set de iconos «Animus» (angulosos, blanco y gris con filo rojo), también disponible en Tema Personalizado, que ahora ofrece 6 estilos de iconos.</li><li><strong class="text-red-300">Advertencia en rojo:</strong> puede ir mal en dispositivos de gama baja. Aparece al elegir el tema y queda fija en Configuración.</li></ul></div>
+                    <div class="cap-card"><strong class="text-cyan-300 font-audiowide text-xs">Versión 4 · Más IA, más control</strong>
+                        <ul class="list-disc list-inside text-slate-400 mt-2 space-y-1"><li>Respuestas en vivo y proveedores nuevos: Anthropic (Claude), Meta (Llama API) y Llama local con Ollama.</li><li>Endpoint personalizado para cualquier API compatible con OpenAI.</li><li>Contador de uso por proveedor con aviso diario.</li><li>Copia de seguridad completa y restauración.</li><li>Temas guardados, exportables e importables, y aviso de legibilidad.</li><li>Chats: búsqueda, fijar y renombrar. Botón Copiar en cada bloque de código.</li><li>Instalable como aplicación (PWA) y nuevo icono único del sitio.</li><li>Seguridad: texto de mensajes escapado; las claves privadas no se incrustan en el código fuente.</li></ul></div>
+                    <div class="cap-card"><strong class="text-purple-300 font-audiowide text-xs">Versión 3 · Imagen e iconos</strong>
+                        <ul class="list-disc list-inside text-slate-400 mt-2 space-y-1"><li>Imagen de fondo (JPG, PNG, WebP) y icono del sitio propio.</li><li>Un set de iconos distinto para cada tema (70 iconos).</li></ul></div>
+                    <div class="cap-card"><strong class="text-emerald-300 font-audiowide text-xs">Versión 2 · Letras y nostalgia</strong>
+                        <ul class="list-disc list-inside text-slate-400 mt-2 space-y-1"><li>Más de 270 fuentes en Tema Personalizado y tamaño de letra.</li><li>Frutiger Aero al estilo Android 2.3 «Gingerbread»: botones, interruptores, barras y robot de carga.</li></ul></div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Transición continua: GhostUe46 azul → Claude naranja → Illusion Lab azul. No es una pestaña. -->
+        <section id="claude-bridge" class="fusion-bridge" aria-labelledby="claude-bridge-title">
+            <div class="fusion-bridge-grid" aria-hidden="true"></div>
+            <div class="fusion-bridge-inner">
+                <div class="fusion-bridge-meta"><span>GHOSTUE46 / 046</span><span class="fusion-meta-dot"></span><span>CAMBIO DE FRECUENCIA</span></div>
+                <div class="fusion-portal" aria-hidden="true">
+                    <div class="fusion-portal-ring fusion-ring-a"></div>
+                    <div class="fusion-portal-ring fusion-ring-b"></div>
+                    <div class="fusion-portal-ring fusion-ring-c"></div>
+                    <div class="fusion-portal-scan"></div>
+                    <img src="assets/claude-starburst.png" alt="" class="fusion-claude-mark" loading="lazy">
+                    <span class="fusion-portal-cross">+</span>
+                    <span class="fusion-portal-code">ANTHROPIC<br>CLAUDE / AI</span>
+                </div>
+                <p class="fusion-bridge-kicker">LA INTERFAZ SE DISUELVE. LA PERCEPCIÓN DESPIERTA.</p>
+                <h2 id="claude-bridge-title">ESTA IA FUE<br><span>INVENTADA CON</span><br><em>CLAUDE</em></h2>
+                <p class="fusion-bridge-byline">(BY ANTHROPIC) <span>—</span> NARANJA ENTRANDO EN LA DIMENSIÓN AZUL</p>
+                <p class="fusion-bridge-copy">Sigue bajando. En esta zona Claude toma el control del color: las ondas, anillos y reflejos se vuelven naranja fuego, ámbar, cobre y dorado. Cada patrón crea una ilusión distinta antes de que el mundo vuelva a mezclarse con el azul de GhostUe46.</p>
+                <div class="fusion-optic-gallery" aria-label="Galería de ilusiones ópticas Claude">
+                    <article class="fusion-optic-card optic-moire"><div class="fusion-optic-visual" aria-hidden="true"><span></span></div><h3>MOIRÉ DINÁMICO</h3><p>Dos capas de líneas parecen moverse a distinta velocidad.</p></article>
+                    <article class="fusion-optic-card optic-rings"><div class="fusion-optic-visual" aria-hidden="true"><span></span></div><h3>ANILLOS HIPNÓTICOS</h3><p>El centro parece hundirse aunque la pantalla sea plana.</p></article>
+                    <article class="fusion-optic-card optic-tunnel"><div class="fusion-optic-visual" aria-hidden="true"><span></span></div><h3>TÚNEL INFINITO</h3><p>La perspectiva genera una profundidad imposible.</p></article>
+                    <article class="fusion-optic-card optic-wave"><div class="fusion-optic-visual" aria-hidden="true"><span></span></div><h3>ONDAS DEFORMADAS</h3><p>Las líneas rectas se curvan al seguir el patrón.</p></article>
+                </div>
+                <p class="fusion-floating-caption">UNA CONSTELACIÓN DE IDEAS · GRACIAS POR INSPIRARME</p>
+                <div class="fusion-floating-logos" role="group" aria-label="Logotipos de Anthropic, OpenAI, Google, Grok y Gemini flotando en cascada">
+                    <div class="fusion-float-logo fusion-float-anthropic" title="Anthropic"><img src="assets/thanks-logos/anthropic.png" alt="Logotipo de Anthropic" loading="lazy"></div>
+                    <div class="fusion-float-logo fusion-float-openai" title="OpenAI"><img src="assets/thanks-logos/openai.png" alt="Logotipo de OpenAI" loading="lazy"></div>
+                    <div class="fusion-float-logo fusion-float-google" title="Google"><img src="assets/thanks-logos/google.png" alt="Logotipo multicolor de Google" loading="lazy"></div>
+                    <div class="fusion-float-logo fusion-float-grok" title="Grok"><img src="assets/thanks-logos/grok.png" alt="Logotipo de Grok" loading="lazy"></div>
+                    <div class="fusion-float-logo fusion-float-gemini" title="Gemini"><img src="assets/thanks-logos/gemini.png" alt="Logotipo de Gemini" loading="lazy"></div>
+                </div>
+                <div class="fusion-thanks-gallery" aria-label="Agradecimientos de Randy a los creadores de inteligencia artificial">
+                    <article class="fusion-thanks-card fusion-thanks-anthropic">
+                        <div class="fusion-thanks-logo-pair">
+                            <div class="fusion-thanks-logo-chip"><img src="assets/logo-anthropic.svg" alt="Logotipo de Anthropic" loading="lazy"><span><b>ANTHROPIC</b><small>CREADOR</small></span></div>
+                            <span class="fusion-thanks-pair-mark">×</span>
+                            <div class="fusion-thanks-logo-chip"><img src="assets/logo-claude.svg" alt="Logotipo de Claude" loading="lazy"><span><b>CLAUDE</b><small>IA</small></span></div>
+                        </div>
+                        <h3>GRACIAS, ANTHROPIC Y CLAUDE</h3>
+                        <p>Gracias a Anthropic por crear Claude y por poner a mi alcance una herramienta que me ha ayudado a explorar ideas, organizar conceptos y dar forma a GhostUe46. Claude ha sido una compañía valiosa durante este camino de aprendizaje y creación. ❤️</p>
+                    </article>
+                    <article class="fusion-thanks-card fusion-thanks-openai">
+                        <div class="fusion-thanks-logo-pair">
+                            <div class="fusion-thanks-logo-chip"><img src="assets/logo-openai.svg" alt="Logotipo de OpenAI" loading="lazy"><span><b>OPENAI</b><small>CREADOR</small></span></div>
+                            <span class="fusion-thanks-pair-mark">×</span>
+                            <div class="fusion-thanks-logo-chip"><img src="assets/logo-chatgpt.svg" alt="Logotipo de ChatGPT" loading="lazy"><span><b>CHATGPT</b><small>IA</small></span></div>
+                        </div>
+                        <h3>GRACIAS, OPENAI Y CHATGPT</h3>
+                        <p>Gracias a OpenAI y ChatGPT por ayudarme a aprender, pensar de otra manera, encontrar soluciones y seguir adelante cuando el código se complica. Cada explicación y cada nueva idea se han convertido en oportunidades para mejorar este proyecto. ❤️</p>
+                    </article>
+                    <article class="fusion-thanks-card fusion-thanks-xai">
+                        <div class="fusion-thanks-logo-pair">
+                            <div class="fusion-thanks-logo-chip"><img src="assets/logo-xai.svg" alt="Logotipo de xAI" loading="lazy"><span><b>xAI</b><small>CREADOR</small></span></div>
+                            <span class="fusion-thanks-pair-mark">×</span>
+                            <div class="fusion-thanks-logo-chip"><img src="assets/logo-grok.svg" alt="Logotipo de Grok" loading="lazy"><span><b>GROK</b><small>IA</small></span></div>
+                        </div>
+                        <h3>GRACIAS, xAI Y GROK</h3>
+                        <p>Gracias a xAI por desarrollar Grok y aportar otra perspectiva al mundo de la inteligencia artificial. Su existencia invita a mantener la curiosidad, cuestionar ideas y experimentar con nuevas posibilidades. Toda perspectiva nueva puede encender una chispa creativa. ❤️</p>
+                    </article>
+                    <article class="fusion-thanks-card fusion-thanks-google">
+                        <div class="fusion-thanks-logo-pair">
+                            <div class="fusion-thanks-logo-chip"><img src="assets/logo-google.svg" alt="Logotipo de Google" loading="lazy"><span><b>GOOGLE</b><small>CREADOR</small></span></div>
+                            <span class="fusion-thanks-pair-mark">×</span>
+                            <div class="fusion-thanks-logo-chip"><img src="assets/logo-gemini.svg" alt="Logotipo de Gemini" loading="lazy"><span><b>GEMINI</b><small>IA</small></span></div>
+                        </div>
+                        <h3>GRACIAS, GOOGLE Y GEMINI</h3>
+                        <p>Gracias a Google por desarrollar Gemini y acercar herramientas que ayudan a investigar, comprender temas difíciles y transformar preguntas en ideas concretas. Su trabajo también me anima a seguir aprendiendo y a hacer crecer GhostUe46 paso a paso. ❤️</p>
+                    </article>
+                </div>
+                <p class="fusion-thanks-disclaimer">GhostUe46 es un proyecto independiente. Estos agradecimientos no implican afiliación, patrocinio ni respaldo oficial. Los nombres y logotipos pertenecen a sus respectivos propietarios.</p>
+                <a class="fusion-scroll-cue" href="#illusion-journey-lab"><span class="fusion-scroll-cue-icon">↓</span><span>DESCIENDE PARA ENTRAR EN LA ILUSIÓN</span><span class="fusion-scroll-cue-line"></span></a>
+                <div class="fusion-side-note fusion-note-left" aria-hidden="true">PERCEPTION<br>IS A VARIABLE</div>
+                <div class="fusion-side-note fusion-note-right" aria-hidden="true">COLOR SHIFT<br>AMBER → CYAN</div>
+            </div>
+            <div class="fusion-bridge-bottom-glow" aria-hidden="true"></div>
+        </section>
+
+        <section id="illusion-journey-lab" class="fusion-lab-arrival" aria-labelledby="illusion-arrival-title">
+            <div class="fusion-lab-inner">
+                <div class="fusion-arrival-heading">
+                    <div class="fusion-arrival-kicker"><span></span> DIMENSIÓN 02 / ILLUSION ENGINE <span></span></div>
+                    <h2 id="illusion-arrival-title">YA ESTÁS <em>DENTRO.</em></h2>
+                    <p>El naranja se ha fundido con el azul. Ahora manipula la ilusión: cambia el patrón, la intensidad, la velocidad y los colores en tiempo real.</p>
+                </div>
+                            <section class="illusion-studio" aria-labelledby="illusionStudioTitle">
+                <div class="is-heading">
+                    <div class="is-eyebrow"><span></span> GHOSTUE46 × ILLUSION LAB <span></span></div>
+                    <h2 id="illusionStudioTitle">Manipula tu <em>percepción.</em></h2>
+                    <p>Un laboratorio visual interactivo: cambia patrones, color, intensidad y velocidad en tiempo real.</p>
+                </div>
+                <div class="is-layout">
+                    <div class="is-preview-panel">
+                        <div class="is-panel-topline">
+                            <span><i class="is-live-dot"></i> VISTA PREVIA EN TIEMPO REAL</span>
+                            <span class="is-mono">ILLUSION_046</span>
+                        </div>
+                        <div class="is-canvas-wrap" id="illusionPreviewWrap">
+                            <canvas id="illusionCanvas" width="900" height="700" aria-label="Ilusión óptica animada e interactiva"></canvas>
+                            <div class="is-preview-label is-label-top">PERCEPTION FIELD / A</div>
+                            <div class="is-preview-label is-label-bottom">MUEVE EL RATÓN SOBRE EL LIENZO</div>
+                            <div class="is-reticle" aria-hidden="true"></div>
+                        </div>
+                        <div class="is-preview-status"><span>RENDER <b>ACTIVO</b></span><span>FPS <b id="illusionFpsValue">60</b></span><span>MODO <b id="illusionModeValue">VÓRTICE</b></span></div>
+                    </div>
+                    <aside class="is-controls-panel" aria-label="Controles de ilusión óptica">
+                        <div class="is-control-heading"><span>[ 01 — CONTROLES ]</span><span class="is-control-star">✳</span></div>
+                        <h3>Diseña tu<br><em>percepción.</em></h3>
+                        <div class="is-control-group">
+                            <div class="is-control-label"><label for="illusionPatternSelect">Patrón visual</label><span>MODE_01</span></div>
+                            <select id="illusionPatternSelect">
+                                <option value="vortex">Vórtice hipnótico</option>
+                                <option value="rings">Ondas concéntricas</option>
+                                <option value="rays">Rayos ópticos</option>
+                                <option value="spiral">Espiral de contraste</option>
+                                <option value="moire">Moiré dinámico</option>
+                                <option value="checker">Tablero ondulante</option>
+                                <option value="tunnel">Túnel infinito</option>
+                                <option value="kaleido">Caleidoscopio radial</option>
+                                <option value="wavegrid">Rejilla deformada</option>
+                                <option value="impossible">Triángulos imposibles</option>
+                            </select>
+                        </div>
+                        <div class="is-control-group">
+                            <div class="is-control-label"><label for="illusionIntensityRange">Intensidad</label><output id="illusionIntensityOutput">65%</output></div>
+                            <input id="illusionIntensityRange" type="range" min="15" max="100" value="65">
+                        </div>
+                        <div class="is-control-group">
+                            <div class="is-control-label"><label for="illusionSpeedRange">Velocidad</label><output id="illusionSpeedOutput">42%</output></div>
+                            <input id="illusionSpeedRange" type="range" min="0" max="100" value="42">
+                        </div>
+                        <div class="is-control-group">
+                            <div class="is-control-label"><label for="illusionColorSelect">Paleta de color</label><span>CHROMA</span></div>
+                            <select id="illusionColorSelect"><option value="aqua">Aqua digital</option><option value="violet">Violeta eléctrico</option><option value="amber">Ámbar Claude</option><option value="mono">Blanco y negro</option></select>
+                        </div>
+                        <div class="is-control-actions">
+                            <button class="is-launch-button" id="illusionPauseButton" type="button"><span class="is-button-label">PAUSAR ANIMACIÓN</span><span class="is-button-arrow">Ⅱ</span></button>
+                            <button class="is-reset-button" id="illusionResetButton" type="button">↺ RESTABLECER</button>
+                        </div>
+                        <p class="is-controls-note"><span>✳</span> Consejo: fija la vista en el centro. Si te marea, pausa la animación.</p>
+                    </aside>
+                </div>
+                <div class="is-bottom"><span>[ EXPERIMENTO VISUAL 046 ]</span><span>ESTA IA FUE INVENTADA CON CLAUDE (BY ANTHROPIC)</span></div>
+            </section>
+                <div class="fusion-lab-endnote"><span>GHOSTUE46 × ILLUSION LAB</span><span>UNA SOLA PÁGINA · UNA SOLA EXPERIENCIA</span><a href="#main">VOLVER ARRIBA ↑</a></div>
+            </div>
+        </section>
+    </main>
+
+    <section id="donaciones" class="relative z-10 max-w-5xl mx-auto w-full px-6 pb-12" aria-labelledby="donaciones-title">
+            <div class="liquid-card relative overflow-hidden p-8 md:p-10 text-center border-pink-400/25" style="background: radial-gradient(ellipse at top, rgba(236,72,153,.12), transparent 60%), rgba(255,255,255,.045);">
+                <div class="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-pink-500/10 blur-3xl pointer-events-none"></div>
+                <div class="relative">
+                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-mono text-pink-200 bg-pink-500/10 border border-pink-400/25 mb-4">
+                        <i class="fa-solid fa-heart text-pink-400"></i><span>APOYA EL PROYECTO</span>
+                    </div>
+                    <h2 id="donaciones-title" class="font-orbitron text-2xl md:text-3xl font-bold text-white mb-4">Donaciones <span aria-hidden="true">❤️</span></h2>
+                    <p class="max-w-2xl mx-auto text-sm md:text-base leading-relaxed text-slate-300 mb-3">Aunque no tenga un servidor propio como otras IA, GhostUe46 sigue creciendo gracias al tiempo, la creatividad y el esfuerzo que hay detrás de cada mejora.</p>
+                    <p class="max-w-2xl mx-auto text-sm leading-relaxed text-slate-400 mb-6">Si este proyecto te gusta y quieres ayudarme a mantenerlo y añadir nuevas funciones, cualquier aporte es bienvenido. No es obligatorio: tu apoyo y usar el proyecto ya significan mucho. 💜</p>
+                    <div class="flex justify-center items-center min-h-[54px]">
+                        <script type="text/javascript" src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"></script>
+                        <script type="text/javascript">kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'E4D629LBJQ');kofiwidget2.draw();</script>
+                    </div>
+                    <p class="text-[10px] font-mono tracking-wider text-slate-500 mt-5">HECHO CON DEDICACIÓN · GHOSTUE46</p>
+                </div>
+            </div>
+        </section>
+
+    <footer class="relative z-10 border-t border-white/10 mt-auto py-6 bg-slate-950/60 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 space-y-4 md:space-y-0">
+            <div class="flex items-center space-x-2 font-audiowide"><span>GhostUe46 &copy; 2026</span><span class="text-cyan-400">· Creator</span></div>
+            <nav class="flex flex-wrap gap-x-6 gap-y-2 text-slate-400" aria-label="Enlaces del pie">
+                <a href="#models" data-go="models" class="hover:text-cyan-300">Modelos</a>
+                <a href="#themes" data-go="themes" class="hover:text-cyan-300">Temas</a>
+                <a href="#claude-bridge" class="hover:text-orange-200">Illusion Lab ↓</a>
+                <a href="#faq" data-go="faq" class="hover:text-cyan-300">Preguntas</a>
+                <a href="#privacy" data-go="privacy" class="hover:text-cyan-300">Privacidad</a>
+                <a href="#terms" data-go="terms" class="hover:text-cyan-300">Términos</a>
+                <a href="#security" data-go="security" class="hover:text-cyan-300">Seguridad</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        function probarIA() {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.classList.remove('pointer-events-none', 'opacity-0', 'scale-95');
+            overlay.classList.add('opacity-100', 'scale-100');
+            overlay.setAttribute('aria-hidden', 'false');
+            setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+        }
+
+        // Pestañas accesibles: clic, flechas del teclado y enlace directo (#faq, #themes...)
+        const TABS = ['models', 'themes', 'guide', 'faq', 'privacy', 'terms', 'security', 'news'];
+        function switchTab(key, focus) {
+            if (!TABS.includes(key)) key = 'models';
+            TABS.forEach((k) => {
+                const on = k === key;
+                document.getElementById('content-' + k).classList.toggle('hidden', !on);
+                const btn = document.getElementById('tab-' + k);
+                btn.setAttribute('aria-selected', String(on));
+                btn.tabIndex = on ? 0 : -1;
+                if (on && focus) btn.focus();
+            });
+            if (location.hash !== '#' + key && !['claude-bridge', 'illusion-journey-lab'].includes(location.hash.slice(1))) history.replaceState(null, '', '#' + key);
+        }
+        function goTab(key) { switchTab(key); document.getElementById('tablist').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        document.getElementById('tablist').addEventListener('click', (e) => { const b = e.target.closest('[role="tab"]'); if (b) switchTab(b.id.replace('tab-', '')); });
+        document.getElementById('tablist').addEventListener('keydown', (e) => {
+            const i = TABS.findIndex((k) => document.getElementById('tab-' + k).getAttribute('aria-selected') === 'true');
+            let n = -1;
+            if (e.key === 'ArrowRight') n = (i + 1) % TABS.length; else if (e.key === 'ArrowLeft') n = (i - 1 + TABS.length) % TABS.length;
+            else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = TABS.length - 1;
+            if (n >= 0) { e.preventDefault(); switchTab(TABS[n], true); }
+        });
+        document.querySelectorAll('[data-go]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); goTab(a.dataset.go); }));
+        const initialHash = location.hash.slice(1);
+        switchTab(TABS.includes(initialHash) ? initialHash : 'models');
+        if (initialHash === 'claude-bridge' || initialHash === 'illusion-journey-lab') {
+            requestAnimationFrame(() => document.getElementById(initialHash)?.scrollIntoView({ behavior: 'smooth' }));
+        }
+
+        // Fondo de ondas: respeta «reducir movimiento» y se pausa si la pestaña no se ve
+        (function initLiquidCanvas() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let w, h, step = 0, raf = 0;
+            function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; if (still) draw(); }
+            window.addEventListener('resize', resize);
+            const coolWaveColors = ['rgba(103, 232, 249, 0.25)', 'rgba(167, 139, 250, 0.20)', 'rgba(56, 189, 248, 0.18)', 'rgba(90, 205, 255, 0.15)'];
+            const warmWaveColors = ['rgba(255, 105, 42, 0.34)', 'rgba(255, 143, 62, 0.31)', 'rgba(255, 184, 92, 0.28)', 'rgba(255, 220, 150, 0.25)', 'rgba(205, 73, 30, 0.24)'];
+            function mixWaveColor(cool, warm, amount) {
+                const nums = value => value.match(/[\d.]+/g).map(Number);
+                const a = nums(cool), b = nums(warm);
+                const mixed = a.slice(0,3).map((v,i)=>Math.round(v+(b[i]-v)*amount));
+                const alpha = (a[3] ?? 1) + ((b[3] ?? 1) - (a[3] ?? 1)) * amount;
+                return `rgba(${mixed[0]}, ${mixed[1]}, ${mixed[2]}, ${alpha.toFixed(3)})`;
+            }
+            function draw() {
+                const rootStyle = getComputedStyle(document.documentElement);
+                const warmLevel = Math.max(0, Math.min(1, Number(rootStyle.getPropertyValue('--claude-orange-zone')) || 0));
+                ctx.fillStyle = warmLevel > .55 ? 'rgba(35, 12, 7, 0.22)' : 'rgba(2, 6, 23, 0.2)';
+                ctx.fillRect(0, 0, w, h);
+                step += 0.008;
+                const count = Math.max(coolWaveColors.length, warmWaveColors.length);
+                for (let i = 0; i < count; i++) {
+                    const cool = coolWaveColors[i % coolWaveColors.length];
+                    const warm = warmWaveColors[i % warmWaveColors.length];
+                    const color = mixWaveColor(cool, warm, warmLevel);
+                    ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.4 + warmLevel * 1.1; ctx.shadowColor = color; ctx.shadowBlur = 12 + warmLevel * 13;
+                    for (let x = 0; x <= w; x += 10) {
+                        const phase = step + i * 0.7;
+                        const y = Math.sin(x * (0.0026 + i * .00012) + phase) * (52 + i * 5) + Math.cos(x * 0.0018 - step * 0.8 + i) * (34 + warmLevel * 13) + h / 2 + (i * 24 - 34);
+                        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                    }
+                    ctx.stroke();
+                }
+                // Additional amber orbital ripples appear only while Claude's zone is active.
+                if (warmLevel > .15) {
+                    ctx.save(); ctx.globalAlpha = warmLevel * .30; ctx.strokeStyle = '#ffb56f'; ctx.shadowColor = '#ff7a36'; ctx.shadowBlur = 12; ctx.lineWidth = 1;
+                    const pulse = (step * 22) % (Math.max(w,h) * .55);
+                    for (let n = 0; n < 4; n++) {
+                        const radius = ((pulse + n * 90) % (Math.max(w,h) * .55)) + 10;
+                        ctx.beginPath(); ctx.ellipse(w * .5, h * .5, radius, radius * .55, Math.sin(step * .15) * .15, 0, Math.PI * 2); ctx.stroke();
+                    }
+                    ctx.restore();
+                }
+            }
+            function loop() { draw(); raf = requestAnimationFrame(loop); }
+            resize();
+            if (still) return;
+            loop();
+            document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else if (!raf) loop(); });
+        })();
+    </script>
+<script src="adaptive-contrast.js"></script>
+<!-- Contacto flotante de errores: ambos iconos abren el formulario, no envían nada sin confirmación. -->
+    <aside class="g46-report-dock" aria-label="Enviar un reporte de error por Internet o correo electrónico">
+        <span class="g46-report-dock-label">REPORTAR<br>ERROR</span>
+        <span class="g46-report-dock-hint" aria-hidden="true">Envía el reporte por Internet o usa Gmail/Outlook</span>
+        <button type="button" class="g46-report-dock-button gmail" data-g46-report-open="gmail" title="Reportar un error con Gmail" aria-label="Reportar un error con Gmail">
+            <svg viewBox="0 0 48 48" role="img" aria-label="Gmail" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="44" height="44" rx="11" fill="#fff"/>
+                <path d="M8 36V13.5c0-1.5 1.8-2.3 3-1.4L24 22.5l13-10.4c1.2-.9 3-.1 3 1.4V36" fill="none" stroke="#4285F4" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 14l16 12L40 14" fill="none" stroke="#EA4335" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 17v19" fill="none" stroke="#34A853" stroke-width="4.2" stroke-linecap="round"/>
+                <path d="M40 17v19" fill="none" stroke="#FBBC04" stroke-width="4.2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <button type="button" class="g46-report-dock-button outlook" data-g46-report-open="outlook" title="Reportar un error con Outlook" aria-label="Reportar un error con Outlook">
+            <svg viewBox="0 0 48 48" role="img" aria-label="Outlook" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="g46OutlookBack" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#28A8EA"/><stop offset="1" stop-color="#0757B8"/></linearGradient></defs>
+                <rect x="17" y="5" width="28" height="38" rx="5" fill="url(#g46OutlookBack)"/>
+                <path d="M20 15h19v18H20z" fill="#fff" opacity=".96"/>
+                <path d="M20 17l9.5 8L39 17" fill="none" stroke="#1476D4" stroke-width="2.6" stroke-linejoin="round"/>
+                <rect x="3" y="10" width="24" height="28" rx="4" fill="#0B5FB8"/>
+                <path d="M8 16h14v16H8z" fill="#06478F" opacity=".45"/>
+                <text x="15" y="29" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#fff">O</text>
+            </svg>
+        </button>
+    </aside>
+</body>
+</html>

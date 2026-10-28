@@ -1,0 +1,126 @@
+/* =====================================================================
+   GhostUe46 · Tema ASSASSIN'S CREED II (estilo Animus)
+   Rombos, líneas verticales y horizontales en blanco, gris y rojo.
+   El fondo animado (hélice de ADN rómbica) se dibuja en app.js y reemplaza a las ondas XLMB.
+   Solo afecta con data-theme="assassins-creed-2". Siempre es oscuro.
+   ===================================================================== */
+:root[data-theme="assassins-creed-2"] { --accent-primary: #e5253a; --accent-secondary: #e5e7eb; --ac-red: #e5253a; --ac-white: #f3f4f6; --ac-gray: #9ca3af; --ac-ink: #0f1013; color-scheme: dark; }
+
+/* ---------- Fondo: malla de rombos + líneas ---------- */
+:root[data-theme="assassins-creed-2"] body,
+:root[data-mode="light"][data-theme="assassins-creed-2"] body {
+  background:
+    repeating-linear-gradient(45deg, rgba(243,244,246,.045) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(-45deg, rgba(243,244,246,.045) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(90deg, rgba(229,37,58,.10) 0 1px, transparent 1px 176px),
+    repeating-linear-gradient(0deg, rgba(156,163,175,.07) 0 1px, transparent 1px 176px),
+    radial-gradient(ellipse at 50% -10%, #34353b 0%, #131418 55%, #08080a 100%) !important;
+  color: #f3f4f6 !important;
+}
+:root[data-theme="assassins-creed-2"] #fx-circles { background: radial-gradient(ellipse at 88% 8%, rgba(229,37,58,.18), transparent 45%), radial-gradient(ellipse at 8% 92%, rgba(243,244,246,.07), transparent 45%); mix-blend-mode: normal; }
+:root[data-theme="assassins-creed-2"] #bg-canvas { opacity: .95; }
+/* Los círculos flotantes pasan a ser rombos */
+:root[data-theme="assassins-creed-2"] .fx-circle { border-radius: 0; rotate: 45deg; background: linear-gradient(135deg, rgba(243,244,246,.1), rgba(229,37,58,.14)); border: 1px solid rgba(243,244,246,.35); }
+
+/* ---------- Paneles ---------- */
+:root[data-theme="assassins-creed-2"] .water-glass,
+:root[data-theme="assassins-creed-2"] .water-glass-card,
+:root[data-theme="assassins-creed-2"] .settings-section {
+  background: linear-gradient(160deg, rgba(30,31,36,.86), rgba(13,14,17,.9)) !important;
+  border: 1px solid rgba(243,244,246,.16) !important; border-radius: 4px !important;
+  box-shadow: 0 18px 46px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+:root[data-theme="assassins-creed-2"] .settings-section-title i { color: var(--ac-red); }
+:root[data-theme="assassins-creed-2"] .crystal-input,
+:root[data-theme="assassins-creed-2"] input[type="text"], :root[data-theme="assassins-creed-2"] input[type="search"], :root[data-theme="assassins-creed-2"] input[type="password"], :root[data-theme="assassins-creed-2"] input[type="number"], :root[data-theme="assassins-creed-2"] select, :root[data-theme="assassins-creed-2"] textarea {
+  background: #0c0d10 !important; border: 1px solid rgba(243,244,246,.24) !important; border-bottom: 2px solid var(--ac-red) !important; border-radius: 2px !important; color: #f3f4f6;
+}
+:root[data-theme="assassins-creed-2"] .crystal-input:focus, :root[data-theme="assassins-creed-2"] input:focus, :root[data-theme="assassins-creed-2"] textarea:focus, :root[data-theme="assassins-creed-2"] select:focus { border-color: #fff !important; outline: none; box-shadow: 0 2px 12px rgba(229,37,58,.4) !important; }
+
+/* ---------- Estilo de burbuja «Animus» (opcional, elegible en cualquier tema): esquinas cortadas en rombo y malla interior ---------- */
+:root[data-bubbles="animus"][data-bubbles] .msg-user,
+:root[data-bubbles="animus"][data-bubbles] .msg-assistant {
+  border-radius: 0 !important; color: #f3f4f6 !important;
+  background-color: #17181c;
+  background-image: repeating-linear-gradient(45deg, rgba(243,244,246,.06) 0 1px, transparent 1px 16px), repeating-linear-gradient(-45deg, rgba(243,244,246,.06) 0 1px, transparent 1px 16px), linear-gradient(135deg, #2b2c32, #14151a) !important;
+  border: 1px solid rgba(243,244,246,.3) !important; border-left: 4px solid var(--ac-red) !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,.5) !important;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+:root[data-bubbles="animus"][data-bubbles] .msg-user {
+  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.1) 0 1px, transparent 1px 16px), repeating-linear-gradient(-45deg, rgba(255,255,255,.1) 0 1px, transparent 1px 16px), linear-gradient(135deg, #c8202f, #7a1019) !important;
+  border-left: 1px solid rgba(243,244,246,.55) !important; border-right: 4px solid #f3f4f6 !important;
+  clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+}
+:root[data-bubbles="animus"] .msg-assistant *, :root[data-bubbles="animus"] .msg-user * { text-shadow: none; }
+:root[data-bubbles="animus"] .msg-assistant .text-cyan-300, :root[data-bubbles="animus"] .msg-assistant strong { color: #fca5a5 !important; }
+:root[data-theme="assassins-creed-2"] .stream-caret { background: var(--ac-red); border-radius: 0; }
+/* Logos de marca sustituidos por la marca Animus */
+:root[data-theme="assassins-creed-2"] img.brand-logo, :root[data-theme="assassins-creed-2"] img.assistant-brand-logo, :root[data-theme="assassins-creed-2"] img.conversation-logo { content: url("assets/animus-mark.svg"); border-radius: 4px; }
+
+/* ---------- Botones ---------- */
+:root[data-theme="assassins-creed-2"] button:not(.gb-skip):not([role="tab"]),
+:root[data-theme="assassins-creed-2"] .theme-choice,
+:root[data-theme="assassins-creed-2"] .pref-chip,
+:root[data-theme="assassins-creed-2"] .settings-cancel {
+  background: linear-gradient(to bottom, #3b3c42, #1b1c20) !important;
+  border: 1px solid rgba(243,244,246,.34) !important; border-bottom: 2px solid var(--ac-red) !important; border-radius: 2px !important;
+  color: #f3f4f6 !important; text-shadow: none !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+}
+:root[data-theme="assassins-creed-2"] button:not(.gb-skip) span:not(.theme-preview), :root[data-theme="assassins-creed-2"] .theme-choice-title, :root[data-theme="assassins-creed-2"] .theme-choice-desc { color: inherit !important; }
+:root[data-theme="assassins-creed-2"] .theme-choice-desc { opacity: .72; }
+:root[data-theme="assassins-creed-2"] button:not(.gb-skip):not([role="tab"]):hover, :root[data-theme="assassins-creed-2"] .theme-choice:hover, :root[data-theme="assassins-creed-2"] .pref-chip:hover {
+  background: linear-gradient(to bottom, #50515a, #26272c) !important; border-color: #fff !important; border-bottom-color: var(--ac-red) !important; box-shadow: 0 3px 14px rgba(229,37,58,.4), inset 0 1px 0 rgba(255,255,255,.2) !important; transform: none !important;
+}
+:root[data-theme="assassins-creed-2"] button:not(.gb-skip):not([role="tab"]):active, :root[data-theme="assassins-creed-2"] button:not(.gb-skip):focus-visible, :root[data-theme="assassins-creed-2"] .theme-choice:active, :root[data-theme="assassins-creed-2"] .pref-chip:active {
+  background: linear-gradient(to bottom, #ff4458, #b3182a) !important; border-color: #fff !important; color: #fff !important; outline: none !important;
+}
+/* Seleccionado y botones principales: rojo Animus con esquinas cortadas */
+:root[data-theme="assassins-creed-2"] .theme-choice.selected, :root[data-theme="assassins-creed-2"] .pref-chip.selected,
+:root[data-theme="assassins-creed-2"] button[aria-pressed="true"]:not(.gb-skip), :root[data-theme="assassins-creed-2"] button.active:not(.gb-skip),
+:root[data-theme="assassins-creed-2"] #send-btn, :root[data-theme="assassins-creed-2"] .settings-save {
+  background: linear-gradient(to bottom, #ef3347, #a8142a) !important; border: 1px solid rgba(255,255,255,.7) !important; border-bottom: 2px solid #fff !important; color: #fff !important;
+  box-shadow: 0 0 14px rgba(229,37,58,.45), inset 0 1px 0 rgba(255,255,255,.35) !important;
+}
+:root[data-theme="assassins-creed-2"] #send-btn, :root[data-theme="assassins-creed-2"] .settings-save, :root[data-theme="assassins-creed-2"] .settings-cancel,
+:root[data-theme="assassins-creed-2"] .theme-choice, :root[data-theme="assassins-creed-2"] .pref-chip {
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
+}
+/* Botones pequeños de las listas: sin caja, para no recargar */
+:root[data-theme="assassins-creed-2"] .session-actions button, :root[data-theme="assassins-creed-2"] .preset-btn { background: transparent !important; border: 0 !important; box-shadow: none !important; clip-path: none; }
+:root[data-theme="assassins-creed-2"] .session-actions button:hover { color: var(--ac-red) !important; }
+:root[data-theme="assassins-creed-2"] .preset-btn { border: 1px solid rgba(243,244,246,.25) !important; }
+:root[data-theme="assassins-creed-2"] .session-pin-mark { color: var(--ac-red); }
+
+/* ---------- Interruptores, barras, scroll ---------- */
+:root[data-theme="assassins-creed-2"] .setting-switch { border-radius: 2px !important; background: #0c0d10 !important; border: 1px solid rgba(243,244,246,.4) !important; }
+:root[data-theme="assassins-creed-2"] .setting-switch::after { border-radius: 1px !important; background: #f3f4f6 !important; }
+:root[data-theme="assassins-creed-2"] .setting-switch:checked { background: linear-gradient(to bottom, #ef3347, #a8142a) !important; border-color: #fff !important; }
+:root[data-theme="assassins-creed-2"] .setting-switch:checked::after { background: #fff !important; }
+:root[data-theme="assassins-creed-2"] input[type="range"] { -webkit-appearance: none; appearance: none; height: 16px; background: transparent; }
+:root[data-theme="assassins-creed-2"] input[type="range"]::-webkit-slider-runnable-track { height: 3px; background: linear-gradient(90deg, var(--ac-red), var(--ac-gray)); }
+:root[data-theme="assassins-creed-2"] input[type="range"]::-moz-range-track { height: 3px; background: linear-gradient(90deg, var(--ac-red), var(--ac-gray)); }
+:root[data-theme="assassins-creed-2"] input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px; margin-top: -5px; border-radius: 0; background: #f3f4f6; border: 2px solid var(--ac-red); transform: rotate(45deg); }
+:root[data-theme="assassins-creed-2"] input[type="range"]::-moz-range-thumb { width: 11px; height: 11px; border-radius: 0; background: #f3f4f6; border: 2px solid var(--ac-red); transform: rotate(45deg); }
+:root[data-theme="assassins-creed-2"] ::-webkit-scrollbar { width: 10px; height: 10px; }
+:root[data-theme="assassins-creed-2"] ::-webkit-scrollbar-track { background: #0a0a0c; }
+:root[data-theme="assassins-creed-2"] ::-webkit-scrollbar-thumb { background: linear-gradient(to right, #6b7280, #9ca3af); border: 1px solid #0a0a0c; border-radius: 0; }
+:root[data-theme="assassins-creed-2"] ::-webkit-scrollbar-thumb:hover { background: var(--ac-red); }
+:root[data-theme="assassins-creed-2"] .usage-meter { border-radius: 0; background: #0c0d10; border: 1px solid rgba(243,244,246,.25); }
+:root[data-theme="assassins-creed-2"] .usage-meter i { background: linear-gradient(90deg, var(--ac-red), #f3f4f6); }
+/* Indicador de carga: rombos rojos que parpadean */
+:root[data-theme="assassins-creed-2"] #typing-indicator .typing-orbit { display: none !important; }
+:root[data-theme="assassins-creed-2"] .typing-dots span { border-radius: 0 !important; rotate: 45deg; background: var(--ac-red) !important; }
+
+/* Saludo flotante */
+:root[data-theme="assassins-creed-2"] .time-greeting-banner { background: linear-gradient(135deg, #2b2c32, #14151a) !important; border: 1px solid rgba(243,244,246,.4) !important; border-left: 4px solid var(--ac-red) !important; border-radius: 0 !important; color: #f3f4f6 !important; box-shadow: 0 10px 28px rgba(0,0,0,.5) !important; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); backdrop-filter: none; }
+:root[data-theme="assassins-creed-2"] .time-greeting-banner::before { display: none; }
+:root[data-theme="assassins-creed-2"] .time-greeting-banner * { color: #f3f4f6 !important; text-shadow: none !important; }
+/* ---------- Vista previa del tema en Configuración ---------- */
+.theme-preview-ac2 { background: repeating-linear-gradient(45deg, rgba(243,244,246,.16) 0 1px, transparent 1px 12px), repeating-linear-gradient(-45deg, rgba(243,244,246,.16) 0 1px, transparent 1px 12px), linear-gradient(135deg, #3a3b41 0 55%, #b3182a 55%); color: #fff; }
+/* ---------- Advertencia roja (gama baja) ---------- */
+.lowend-warning { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; padding: 10px 12px; border-radius: 12px; font-size: 11px; line-height: 1.55; color: #fecaca; background: rgba(185,28,28,.2); border: 1px solid #ef4444; }
+.lowend-warning strong { color: #f87171; text-transform: uppercase; letter-spacing: .04em; display: block; margin-bottom: 2px; }
+.lowend-warning.hidden { display: none !important; }
+@media (prefers-reduced-motion: reduce) { :root[data-theme="assassins-creed-2"] .fx-circle { display: none; } }

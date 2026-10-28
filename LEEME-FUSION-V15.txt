@@ -1,0 +1,12 @@
+GhostUe46 Multiplataforma v15 — contraste adaptativo
+
+Novedad:
+- El color del texto se calcula según el fondo visible del elemento.
+- Usa texto claro en superficies oscuras y texto oscuro en superficies claras.
+- En fondos degradados o multicolor añade un contorno/sombra discreta para mejorar la lectura.
+- Se actualiza cuando cambias de tema, personalizas colores o aparecen nuevos mensajes.
+- Respeta los bloques de código, editores, SVG y textos con degradado propio.
+- Se añadió adaptive-contrast.js y adaptive-contrast.css a index.html, creator.html y la caché de la PWA.
+
+Instalación: sustituye la carpeta anterior por el contenido de este ZIP y recarga con Ctrl+F5.
+La generación de contraste es local y no utiliza servicios externos.

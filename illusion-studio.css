@@ -1,0 +1,316 @@
+/* Illusion Lab fusion styles. Scoped to .illusion-studio so GhostUe46's UI is untouched. */
+.illusion-studio{--is-cyan:#67e8f9;--is-violet:#a78bfa;--is-amber:#f4a879;--is-line:rgba(103,232,249,.22);color:#eaf7ff}
+.illusion-studio *{box-sizing:border-box}
+.illusion-studio .is-heading{text-align:center;padding:10px 8px 25px}
+.illusion-studio .is-eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;color:#8dbacb;font:9px 'Fira Code',monospace;letter-spacing:.18em}
+.illusion-studio .is-eyebrow span{width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--is-cyan))}
+.illusion-studio .is-eyebrow span:last-child{background:linear-gradient(90deg,var(--is-violet),transparent)}
+.illusion-studio .is-heading h2{margin:14px 0 8px;font:600 clamp(27px,4vw,42px) 'Orbitron',sans-serif;letter-spacing:-.055em;color:#f8fbff}
+.illusion-studio .is-heading h2 em,.illusion-studio .is-controls-panel h3 em{font-family:'Playfair Display',Georgia,serif;font-weight:600;font-style:italic;color:var(--is-cyan)}
+.illusion-studio .is-heading p{margin:0 auto;max-width:620px;color:#94a8c2;font-size:12px;line-height:1.75}
+.illusion-studio .is-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.8fr);gap:15px;align-items:stretch}
+.illusion-studio .is-preview-panel,.illusion-studio .is-controls-panel{min-width:0;border:1px solid rgba(103,232,249,.18);border-radius:18px;overflow:hidden;background:linear-gradient(145deg,rgba(15,34,62,.92),rgba(10,13,35,.94));box-shadow:0 18px 55px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.045)}
+.illusion-studio .is-panel-topline{height:44px;padding:0 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(103,232,249,.14);color:#abd6e8;font:9px 'Fira Code',monospace;letter-spacing:.07em}
+.illusion-studio .is-panel-topline>span:first-child{display:flex;align-items:center;gap:8px}
+.illusion-studio .is-live-dot{display:inline-block;width:6px;height:6px;background:#4cf6d4;border-radius:50%;box-shadow:0 0 12px #4cf6d4}
+.illusion-studio .is-mono{color:#8994bd}
+.illusion-studio .is-canvas-wrap{position:relative;min-height:415px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 50%,#122e64,#080c21 72%)}
+.illusion-studio .is-canvas-wrap::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.55;background:linear-gradient(120deg,transparent 25%,rgba(103,232,249,.05) 50%,transparent 72%);background-size:220% 100%;animation:isSheen 8s linear infinite}
+.illusion-studio #illusionCanvas{position:relative;z-index:0;display:block;width:100%;height:415px;min-height:300px;cursor:crosshair;touch-action:pan-y}
+.illusion-studio .is-preview-label{position:absolute;z-index:2;pointer-events:none;color:rgba(163,211,235,.7);font:8px 'Fira Code',monospace;letter-spacing:.1em}
+.illusion-studio .is-label-top{top:14px;left:15px}
+.illusion-studio .is-label-bottom{bottom:13px;left:50%;transform:translateX(-50%);white-space:nowrap;text-align:center}
+.illusion-studio .is-reticle{position:absolute;z-index:2;pointer-events:none;left:50%;top:50%;width:42px;height:42px;transform:translate(-50%,-50%);border:1px solid rgba(103,232,249,.28);border-radius:50%;box-shadow:0 0 22px rgba(103,232,249,.14);opacity:.4}
+.illusion-studio .is-reticle::before,.illusion-studio .is-reticle::after{content:"";position:absolute;left:50%;top:50%;background:rgba(103,232,249,.35);transform:translate(-50%,-50%)}
+.illusion-studio .is-reticle::before{width:60px;height:1px}.illusion-studio .is-reticle::after{width:1px;height:60px}
+.illusion-studio .is-preview-status{min-height:38px;padding:8px 12px;display:flex;align-items:center;justify-content:space-around;gap:8px;border-top:1px solid rgba(103,232,249,.13);background:rgba(4,10,26,.6);color:#7f9bb7;font:8px 'Fira Code',monospace;letter-spacing:.05em}
+.illusion-studio .is-preview-status b{color:#a5f3fc;font-weight:500}
+.illusion-studio .is-controls-panel{padding:21px 20px;display:flex;flex-direction:column}
+.illusion-studio .is-control-heading{display:flex;align-items:center;justify-content:space-between;color:#81a7c4;font:9px 'Fira Code',monospace;letter-spacing:.08em}
+.illusion-studio .is-control-star{color:#a78bfa;font-size:19px;animation:isStar 12s linear infinite}
+.illusion-studio .is-controls-panel h3{margin:15px 0 23px;color:#f5f9ff;font:600 27px 'Orbitron',sans-serif;letter-spacing:-.055em;line-height:1.2}
+.illusion-studio .is-control-group{margin-bottom:19px}
+.illusion-studio .is-control-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.illusion-studio .is-control-label label{color:#d5e7f5;font-size:11px;font-weight:600}
+.illusion-studio .is-control-label span,.illusion-studio .is-control-label output{color:#86c6db;font:9px 'Fira Code',monospace}
+.illusion-studio select{width:100%;min-height:40px;appearance:auto;background:#0a1630;color:#e4f6ff;border:1px solid rgba(103,232,249,.25);border-radius:9px;padding:9px 11px;font-size:11px;outline:none;background-image:none}
+.illusion-studio select:focus{border-color:var(--is-cyan);box-shadow:0 0 0 3px rgba(103,232,249,.1)}
+.illusion-studio input[type=range]{display:block;width:100%;height:4px;appearance:none;background:linear-gradient(90deg,#38bdf8,#a78bfa);border-radius:99px;outline:none;cursor:pointer}
+.illusion-studio input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:#e0fcff;border:2px solid #2563eb;box-shadow:0 0 0 3px rgba(103,232,249,.12),0 0 12px #67e8f9}
+.illusion-studio input[type=range]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#e0fcff;border:2px solid #2563eb;box-shadow:0 0 0 3px rgba(103,232,249,.12),0 0 12px #67e8f9}
+.illusion-studio .is-control-actions{display:flex;flex-direction:column;gap:9px;margin-top:auto;padding-top:2px}
+.illusion-studio .is-launch-button,.illusion-studio .is-reset-button{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:42px;padding:11px 13px;border-radius:10px;cursor:pointer;font:10px 'Fira Code',monospace;letter-spacing:.04em;transition:transform .2s,border-color .2s,filter .2s}
+.illusion-studio .is-launch-button{border:1px solid rgba(103,232,249,.5);color:#041426;background:linear-gradient(110deg,#67e8f9,#a78bfa);font-weight:700;box-shadow:0 6px 18px rgba(103,232,249,.1)}
+.illusion-studio .is-launch-button:hover,.illusion-studio .is-reset-button:hover{transform:translateY(-1px);filter:brightness(1.1)}
+.illusion-studio .is-button-arrow{font-size:15px}
+.illusion-studio .is-reset-button{border:1px solid rgba(167,139,250,.28);color:#c9c3f6;background:rgba(167,139,250,.06)}
+.illusion-studio .is-controls-note{margin:17px 0 0;color:#8da4bf;font-size:10px;line-height:1.7}
+.illusion-studio .is-controls-note span{color:#67e8f9;font-size:14px;margin-right:5px}
+.illusion-studio .is-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:20px 4px 2px;color:#8095b0;font:8px 'Fira Code',monospace;letter-spacing:.07em}
+.illusion-studio .is-bottom span:last-child{color:#9edbe9;text-align:right}
+@keyframes isSheen{to{background-position:-220% 0}}
+@keyframes isStar{to{transform:rotate(360deg)}}
+@media(max-width:900px){.illusion-studio .is-layout{grid-template-columns:1fr}.illusion-studio .is-controls-panel{padding:20px}.illusion-studio .is-canvas-wrap{min-height:360px}.illusion-studio #illusionCanvas{height:360px}.illusion-studio .is-controls-panel h3 br{display:none}}
+@media(max-width:520px){.illusion-studio .is-heading{padding:5px 2px 18px}.illusion-studio .is-eyebrow{font-size:7px;letter-spacing:.08em;gap:6px}.illusion-studio .is-eyebrow span{width:14px}.illusion-studio .is-heading h2{font-size:25px}.illusion-studio .is-heading p{font-size:11px}.illusion-studio .is-panel-topline{padding:0 9px;font-size:7px}.illusion-studio .is-canvas-wrap{min-height:300px}.illusion-studio #illusionCanvas{height:300px}.illusion-studio .is-preview-label{font-size:6px}.illusion-studio .is-preview-status{font-size:7px}.illusion-studio .is-controls-panel{padding:16px}.illusion-studio .is-bottom{align-items:flex-start;flex-direction:column;font-size:7px}.illusion-studio .is-bottom span:last-child{text-align:left}}
+@media(prefers-reduced-motion:reduce){.illusion-studio .is-canvas-wrap::before,.illusion-studio .is-control-star{animation:none!important}.illusion-studio .is-launch-button,.illusion-studio .is-reset-button{transition:none}}
+
+/* ─────────────────────────────────────────────────────────────
+   CONTINUOUS SCROLL FUSION
+   The page flows from GhostUe46 blue, through Claude amber, and
+   into the blue-violet optical laboratory. No separate tab.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --fusion-orange:.025;
+  --fusion-blue:.12;
+  --fusion-violet:.035;
+  --fusion-progress:0;
+  --claude-orange-zone:0;
+}
+#fusion-atmosphere{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.92;mix-blend-mode:screen;
+  background:
+    radial-gradient(ellipse at 12% 73%,rgba(255,105,42,calc(var(--fusion-orange) + var(--claude-orange-zone) * .20)),transparent 56%),
+    radial-gradient(ellipse at 82% 24%,rgba(255,174,75,calc(var(--claude-orange-zone) * .33)),transparent 50%),
+    radial-gradient(ellipse at 78% 82%,rgba(207,75,35,calc(var(--claude-orange-zone) * .29)),transparent 54%),
+    radial-gradient(ellipse at 86% 78%,rgba(33,150,243,var(--fusion-blue)),transparent 57%),
+    radial-gradient(ellipse at 52% 52%,rgba(138,91,203,var(--fusion-violet)),transparent 65%);
+  transition:background .18s linear;
+}
+.fusion-bridge,.fusion-lab-arrival{position:relative;left:50%;width:100vw;margin-left:-50vw;isolation:isolate;overflow:hidden}
+main#main>.fusion-bridge,main#main>.fusion-lab-arrival{margin-top:0}
+.fusion-bridge{
+  min-height:min(900px,100vh);padding:clamp(70px,10vw,140px) 24px clamp(90px,12vw,160px);
+  background:linear-gradient(180deg,rgba(87,34,24,calc(.06 + var(--claude-orange-zone) * .18)) 0%,rgba(180,73,37,calc(.14 + var(--claude-orange-zone) * .32)) 18%,rgba(255,124,52,calc(.18 + var(--claude-orange-zone) * .32)) 47%,rgba(255,169,78,calc(.16 + var(--claude-orange-zone) * .27)) 67%,rgba(225,94,39,calc(.10 + var(--claude-orange-zone) * .2)) 84%,rgba(3,14,35,.06) 100%);
+}
+.fusion-bridge::before,.fusion-bridge::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1}
+.fusion-bridge::before{
+  background:radial-gradient(ellipse at 28% 35%,rgba(255,109,45,calc(.17 + var(--claude-orange-zone) * .24)),transparent 36%),radial-gradient(ellipse at 72% 58%,rgba(255,181,90,calc(.14 + var(--claude-orange-zone) * .25)),transparent 39%),radial-gradient(ellipse at 50% 82%,rgba(255,216,133,calc(.07 + var(--claude-orange-zone) * .18)),transparent 42%);
+  filter:blur(14px)
+}
+.fusion-bridge::after{
+  opacity:.26;background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+  background-size:54px 54px;mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 72%,transparent 100%)
+}
+.fusion-bridge-grid{position:absolute;inset:0;pointer-events:none;opacity:.7;background:radial-gradient(circle at 50% 45%,transparent 0 18%,rgba(255,196,132,calc(.08 + var(--claude-orange-zone) * .16)) 18.15%,transparent 18.5% 28%,rgba(255,129,64,calc(.07 + var(--claude-orange-zone) * .19)) 28.15%,transparent 28.5% 42%,rgba(204,76,36,calc(.06 + var(--claude-orange-zone) * .15)) 42.15%,transparent 42.5%);animation:fusionGridPulse 9s ease-in-out infinite alternate}
+.fusion-bridge-inner{position:relative;z-index:2;max-width:980px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
+.fusion-bridge-meta{display:flex;align-items:center;justify-content:center;gap:12px;color:rgba(255,227,212,.76);font:9px 'Fira Code',monospace;letter-spacing:.18em;text-transform:uppercase}
+.fusion-meta-dot{width:5px;height:5px;border-radius:50%;background:#ffb18b;box-shadow:0 0 14px #ff9c70;animation:fusionDot 2s ease-in-out infinite}
+.fusion-portal{position:relative;width:clamp(170px,25vw,270px);aspect-ratio:1;display:grid;place-items:center;margin:28px auto 30px;isolation:isolate;filter:drop-shadow(0 22px 46px rgba(5,22,52,.25))}
+.fusion-portal::before{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,rgba(255,189,147,.24),rgba(226,138,97,.1) 38%,rgba(36,166,231,.15) 63%,transparent 73%);filter:blur(8px);animation:fusionPortalBreath 4.4s ease-in-out infinite}
+.fusion-portal-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,217,197,.58);box-shadow:0 0 20px rgba(229,143,104,.13),inset 0 0 20px rgba(255,255,255,.04)}
+.fusion-ring-a{border-top-color:#ffbd9b;border-left-color:rgba(255,189,155,.13);animation:fusionSpin 22s linear infinite}
+.fusion-ring-b{inset:9%;border-color:rgba(111,222,255,.72);border-right-color:transparent;border-bottom-color:rgba(111,222,255,.18);box-shadow:0 0 18px rgba(78,203,255,.15);animation:fusionSpin 16s linear infinite reverse}
+.fusion-ring-c{inset:20%;border-style:dashed;border-color:rgba(255,233,223,.45);animation:fusionSpin 46s linear infinite}
+.fusion-claude-mark{position:relative;z-index:2;width:42%;height:auto;object-fit:contain;filter:drop-shadow(0 0 15px rgba(255,171,126,.38)) drop-shadow(0 0 34px rgba(255,135,95,.22));animation:fusionMarkFloat 5s ease-in-out infinite}
+.fusion-portal-scan{position:absolute;z-index:3;left:10%;right:10%;top:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(177,241,255,.8),rgba(255,197,161,.9),transparent);box-shadow:0 0 14px rgba(119,218,255,.45);animation:fusionScan 4.8s ease-in-out infinite}
+.fusion-portal-cross{position:absolute;z-index:3;top:11%;right:15%;color:#d3faff;font:19px 'Fira Code',monospace;text-shadow:0 0 14px #75deff}
+.fusion-portal-code{position:absolute;z-index:3;bottom:9%;right:-12%;font:7px/1.6 'Fira Code',monospace;letter-spacing:.14em;text-align:left;color:rgba(218,244,255,.76);transform:rotate(7deg)}
+.fusion-bridge-kicker{margin:0 0 16px;color:rgba(255,216,196,.76);font:9px 'Fira Code',monospace;letter-spacing:.2em}
+.fusion-bridge h2{margin:0;color:#f8fbff;font:800 clamp(35px,7.2vw,76px)/.99 'Orbitron',sans-serif;letter-spacing:-.065em;text-shadow:0 8px 40px rgba(3,15,35,.25)}
+.fusion-bridge h2 span{background:linear-gradient(90deg,#ffcca9 0%,#f0a17b 27%,#d2b9c8 57%,#8de5f5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fusion-bridge h2 em{font-style:normal;background:linear-gradient(95deg,#ffb080 2%,#f2a98b 33%,#8de7f3 72%,#74cfff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 20px rgba(226,138,97,.12))}
+.fusion-bridge-byline{margin:19px 0 0;color:#ffd1b8;font:10px 'Fira Code',monospace;letter-spacing:.18em}
+.fusion-bridge-byline span{color:#8fe4f7;padding:0 7px}
+.fusion-bridge-copy{max-width:620px;margin:25px auto 0;color:rgba(226,239,249,.82);font-size:13px;line-height:1.95;text-wrap:balance}
+.fusion-scroll-cue{margin-top:37px;display:flex;align-items:center;gap:13px;color:#d5f7ff;font:9px 'Fira Code',monospace;letter-spacing:.13em;text-decoration:none;transition:color .25s,transform .25s}
+.fusion-scroll-cue:hover{color:#fff;transform:translateY(3px)}
+.fusion-scroll-cue-icon{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;border:1px solid rgba(181,241,255,.52);background:rgba(30,114,157,.18);font-size:15px;box-shadow:0 0 18px rgba(79,197,255,.13);animation:fusionCue 2s ease-in-out infinite}
+.fusion-scroll-cue-line{width:42px;height:1px;background:linear-gradient(90deg,#f3a278,#89e5f8)}
+.fusion-side-note{position:absolute;top:58%;color:rgba(226,243,255,.4);font:8px/1.7 'Fira Code',monospace;letter-spacing:.12em;text-align:left}
+.fusion-note-left{left:clamp(16px,7vw,110px)}.fusion-note-right{right:clamp(16px,7vw,110px);text-align:right}
+.fusion-bridge-bottom-glow{position:absolute;bottom:-1px;left:0;width:100%;height:180px;background:linear-gradient(180deg,transparent,rgba(8,60,106,.18) 48%,rgba(2,6,23,.7));pointer-events:none}
+.fusion-lab-arrival{padding:clamp(65px,9vw,120px) 24px 70px;background:linear-gradient(180deg,rgba(15,75,119,.30) 0%,rgba(8,31,69,.76) 16%,rgba(3,13,35,.97) 42%,#020617 100%);border-top:1px solid rgba(118,218,255,.12)}
+.fusion-lab-inner{max-width:1240px;margin:0 auto;position:relative;z-index:2}
+.fusion-arrival-heading{text-align:center;max-width:740px;margin:0 auto 34px}
+.fusion-arrival-kicker{display:flex;align-items:center;justify-content:center;gap:10px;color:#8fdff5;font:9px 'Fira Code',monospace;letter-spacing:.17em}
+.fusion-arrival-kicker span{height:1px;width:24px;background:linear-gradient(90deg,transparent,#74dff5)}
+.fusion-arrival-kicker span:last-child{background:linear-gradient(90deg,#a78bfa,transparent)}
+.fusion-arrival-heading h2{margin:16px 0 10px;color:#f6fbff;font:700 clamp(30px,5vw,50px) 'Orbitron',sans-serif;letter-spacing:-.055em}
+.fusion-arrival-heading h2 em{font-style:normal;background:linear-gradient(90deg,#67e8f9,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fusion-arrival-heading p{max-width:610px;margin:0 auto;color:#a9bfd7;font-size:12px;line-height:1.9}
+.fusion-lab-arrival .illusion-studio{padding:clamp(16px,3vw,32px);border:1px solid rgba(103,232,249,.19);border-radius:26px;background:linear-gradient(140deg,rgba(9,29,57,.63),rgba(6,11,30,.62));box-shadow:0 35px 100px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.04);backdrop-filter:blur(12px)}
+.fusion-lab-arrival .illusion-studio .is-heading{padding-top:10px}
+.fusion-lab-endnote{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:30px;color:#6f8eaa;font:8px 'Fira Code',monospace;letter-spacing:.1em}
+.fusion-lab-endnote a{color:#a3e9fa;text-decoration:none}.fusion-lab-endnote a:hover{color:white}
+
+/* Claude's optical exhibition: a deliberate orange-only palette. */
+.fusion-optic-gallery{width:min(900px,100%);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:29px auto 4px;text-align:left}
+.fusion-optic-card{min-width:0;overflow:hidden;border:1px solid rgba(255,178,112,.25);border-radius:13px;background:linear-gradient(150deg,rgba(87,35,24,.54),rgba(30,13,12,.6));box-shadow:0 10px 28px rgba(0,0,0,.14),inset 0 1px rgba(255,225,190,.06);padding:9px;transition:transform .25s,border-color .25s,background .25s}
+.fusion-optic-card:hover{transform:translateY(-4px);border-color:rgba(255,183,103,.65);background:linear-gradient(150deg,rgba(137,55,25,.68),rgba(36,15,11,.7))}
+.fusion-optic-visual{height:88px;position:relative;overflow:hidden;border-radius:8px;isolation:isolate;background:radial-gradient(circle at center,#54200f,#160b0a 78%);border:1px solid rgba(255,158,83,.18)}
+.fusion-optic-visual::before,.fusion-optic-visual::after,.fusion-optic-visual span{content:"";position:absolute;inset:-30%;pointer-events:none}
+.optic-moire .fusion-optic-visual::before{background:repeating-linear-gradient(90deg,rgba(255,208,139,.88) 0 1px,transparent 1px 7px);transform:skewX(-18deg) scale(1.12);animation:opticMoire 5s linear infinite}
+.optic-moire .fusion-optic-visual::after{background:repeating-linear-gradient(90deg,rgba(255,116,45,.8) 0 1px,transparent 1px 7px);transform:skewX(18deg) scale(1.12);animation:opticMoire 7s linear infinite reverse}
+.optic-rings .fusion-optic-visual::before{inset:-5%;background:repeating-radial-gradient(ellipse at center,transparent 0 5px,rgba(255,201,133,.95) 5.7px 6.8px,transparent 7.5px 12px);animation:opticRings 10s linear infinite}
+.optic-rings .fusion-optic-visual::after{inset:15%;border:1px solid rgba(255,115,47,.75);border-radius:50%;box-shadow:0 0 0 7px rgba(255,148,69,.12),0 0 0 15px rgba(255,184,93,.09)}
+.optic-tunnel .fusion-optic-visual{perspective:180px}
+.optic-tunnel .fusion-optic-visual::before{inset:8%;background:repeating-radial-gradient(ellipse at center,rgba(255,215,147,.85) 0 1px,transparent 1px 8px);transform:rotateX(58deg) scale(1.35);animation:opticTunnel 6s linear infinite}
+.optic-tunnel .fusion-optic-visual::after{inset:0;background:linear-gradient(90deg,rgba(255,119,47,.18),transparent 35%,rgba(255,197,124,.22) 50%,transparent 70%,rgba(255,119,47,.18));mix-blend-mode:screen}
+.optic-wave .fusion-optic-visual::before{inset:-45% -10%;background:repeating-radial-gradient(ellipse at 50% 50%,transparent 0 6px,rgba(255,178,103,.9) 6.5px 7.5px,transparent 8px 14px);transform:scaleX(1.5) rotate(-18deg);animation:opticWave 5.5s ease-in-out infinite alternate}
+.optic-wave .fusion-optic-visual::after{inset:0;background:linear-gradient(180deg,transparent,rgba(255,107,42,.2),transparent)}
+.fusion-optic-card h3{margin:10px 0 5px;color:#ffc08e;font:9px 'Fira Code',monospace;letter-spacing:.08em}
+.fusion-optic-card p{margin:0;color:rgba(255,224,203,.72);font-size:10px;line-height:1.55}
+/* When Claude's zone is active, every frame and wave switches to warm orange hues. */
+html.claude-zone-active #fusion-atmosphere{mix-blend-mode:normal;opacity:.88}
+html.claude-zone-active .fusion-bridge{filter:saturate(1.22)}
+html.claude-zone-active .fusion-side-note{color:rgba(255,194,136,.72)}
+html.claude-zone-active .fusion-bridge-kicker{color:rgba(255,213,170,.88)}
+html.claude-zone-active .fusion-bridge-copy{color:rgba(255,232,210,.9)}
+html.claude-zone-active .fusion-bridge-bottom-glow{background:linear-gradient(180deg,transparent,rgba(255,116,48,.20) 48%,rgba(45,15,8,.62))}
+html.claude-zone-active .fusion-ring-b{border-color:rgba(255,179,103,.83);border-right-color:transparent;border-bottom-color:rgba(255,115,48,.55);box-shadow:0 0 22px rgba(255,128,53,.24)}
+html.claude-zone-active .fusion-portal::before{background:radial-gradient(circle,rgba(255,220,150,.35),rgba(255,143,65,.22) 38%,rgba(205,69,27,.18) 63%,transparent 73%)}
+html.claude-zone-active .fusion-portal-scan{background:linear-gradient(90deg,transparent,#ffe0a7,#ff7b35,transparent);box-shadow:0 0 16px rgba(255,141,62,.6)}
+html.claude-zone-active .fusion-portal-cross{color:#ffe4b8;text-shadow:0 0 14px #ff8b43}
+html.claude-zone-active .fusion-portal-code{color:rgba(255,215,176,.86)}
+html.claude-zone-active .fusion-bridge h2 span{background:linear-gradient(90deg,#fff0ce 0%,#ffc27c 25%,#ff8647 60%,#ffe0a8 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+html.claude-zone-active .fusion-bridge h2 em{background:linear-gradient(95deg,#ffe1a4 0%,#ff9a53 42%,#ff6d35 75%,#ffd193 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+html.claude-zone-active .fusion-bridge-byline span{color:#ffc07d}
+html.claude-zone-active .fusion-scroll-cue{color:#ffe4c4}
+html.claude-zone-active .fusion-scroll-cue-icon{border-color:rgba(255,177,105,.7);background:rgba(255,110,43,.22);box-shadow:0 0 18px rgba(255,121,49,.28)}
+html.claude-zone-active .fusion-scroll-cue-line{background:linear-gradient(90deg,#ff7a39,#ffe0a5)}
+@keyframes opticMoire{from{background-position:0 0;filter:hue-rotate(0deg)}to{background-position:56px 0;filter:hue-rotate(12deg)}}
+@keyframes opticRings{from{transform:scale(.82) rotate(0deg)}to{transform:scale(1.22) rotate(360deg)}}
+@keyframes opticTunnel{from{transform:rotateX(58deg) scale(1.1)}to{transform:rotateX(58deg) scale(1.8)}}
+@keyframes opticWave{from{transform:scaleX(1.4) rotate(-22deg) translateX(-7%)}to{transform:scaleX(1.6) rotate(-12deg) translateX(7%)}}
+
+@keyframes fusionSpin{to{transform:rotate(360deg)}}
+@keyframes fusionPortalBreath{0%,100%{transform:scale(.94);opacity:.65}50%{transform:scale(1.08);opacity:1}}
+@keyframes fusionMarkFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-7px) rotate(3deg)}}
+@keyframes fusionScan{0%,100%{transform:translateY(-45px);opacity:0}35%,65%{opacity:.9}50%{transform:translateY(45px);opacity:.65}}
+@keyframes fusionDot{0%,100%{opacity:.65;transform:scale(.85)}50%{opacity:1;transform:scale(1.3)}}
+@keyframes fusionCue{0%,100%{transform:translateY(0);box-shadow:0 0 12px rgba(79,197,255,.1)}50%{transform:translateY(4px);box-shadow:0 0 24px rgba(79,197,255,.27)}}
+@keyframes fusionGridPulse{from{opacity:.25;transform:scale(1)}to{opacity:.7;transform:scale(1.06)}}
+@media(max-width:700px){
+  .fusion-bridge{min-height:unset;padding:75px 20px 100px}
+  .fusion-optic-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .fusion-optic-visual{height:75px}
+  .fusion-optic-card h3{font-size:8px}
+  .fusion-optic-card p{font-size:9px}
+  .fusion-bridge-meta{font-size:7px;letter-spacing:.1em;gap:7px}
+  .fusion-portal{width:190px;margin:28px auto}
+  .fusion-portal-code{right:-4%;font-size:6px}
+  .fusion-bridge-kicker{font-size:7px;letter-spacing:.1em;line-height:1.7}
+  .fusion-bridge h2{font-size:clamp(32px,10vw,54px)}
+  .fusion-bridge-byline{font-size:8px;letter-spacing:.1em;line-height:1.8}
+  .fusion-bridge-copy{font-size:12px}
+  .fusion-side-note{display:none}
+  .fusion-lab-arrival{padding:65px 14px 45px}
+  .fusion-lab-arrival .illusion-studio{padding:13px;border-radius:18px}
+  .fusion-lab-endnote{font-size:7px;line-height:1.8}
+}
+@media(prefers-reduced-motion:reduce){
+  .fusion-bridge-grid,.fusion-ring-a,.fusion-ring-b,.fusion-ring-c,.fusion-portal::before,.fusion-claude-mark,.fusion-portal-scan,.fusion-meta-dot,.fusion-scroll-cue-icon,.fusion-optic-card *{animation:none!important}
+}
+
+/* Control flotante para la música de fondo, con tonalidad que sigue el scroll. */
+.ambient-audio-control {
+  position: fixed;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 100;
+  display: grid;
+  gap: 5px;
+  justify-items: end;
+  max-width: min(300px, calc(100vw - 28px));
+  font-family: 'DM Mono', 'Fira Code', monospace;
+}
+.ambient-audio-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 43px;
+  padding: 10px 15px;
+  border: 1px solid rgba(103, 232, 249, .48);
+  border-radius: 999px;
+  color: #e6fbff;
+  background: rgba(5, 19, 38, .86);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .3), 0 0 18px rgba(56, 189, 248, .10);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  font: 600 10px/1.2 'DM Mono', 'Fira Code', monospace;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: color .35s, background .35s, border-color .35s, box-shadow .35s, transform .2s;
+}
+.ambient-audio-button:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,.35), 0 0 22px rgba(56,189,248,.22); }
+.ambient-audio-button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.ambient-audio-glyph { font-size: 19px; line-height: 1; color: #67e8f9; }
+.ambient-audio-status {
+  max-width: 100%;
+  padding: 5px 9px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 8px;
+  color: rgba(226, 241, 255, .75);
+  background: rgba(4, 12, 27, .72);
+  backdrop-filter: blur(12px);
+  font: 9px/1.4 'DM Mono', 'Fira Code', monospace;
+  text-align: right;
+}
+.claude-zone-active .ambient-audio-button {
+  color: #fff1e4;
+  border-color: rgba(255, 151, 77, .68);
+  background: rgba(53, 20, 7, .90);
+  box-shadow: 0 8px 30px rgba(0,0,0,.3), 0 0 20px rgba(255, 112, 45, .18);
+}
+.claude-zone-active .ambient-audio-glyph { color: #ffad65; }
+.ambient-audio-button.is-enabled .ambient-audio-glyph { animation: ambient-note-pulse 1.5s ease-in-out infinite; }
+@keyframes ambient-note-pulse { 0%, 100% { transform: scale(1); opacity: .8; } 50% { transform: scale(1.18); opacity: 1; } }
+@media (max-width: 520px) {
+  .ambient-audio-control { right: 10px; bottom: 10px; }
+  .ambient-audio-button { min-height: 39px; padding: 8px 11px; }
+  .ambient-audio-status { font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-audio-button.is-enabled .ambient-audio-glyph { animation: none; }
+}
+
+/* Agradecimientos de Randy: marcas separadas por creador y producto. */
+.fusion-thanks-gallery{width:min(1000px,100%);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:29px auto 0;text-align:left}
+.fusion-thanks-card{--thanks-color:#f4f7fb;--thanks-soft:rgba(244,247,251,.22);min-width:0;padding:clamp(16px,2.2vw,22px);border-radius:17px;border:1px solid var(--thanks-soft);background:linear-gradient(145deg,rgba(10,19,36,.78),rgba(7,12,28,.76));box-shadow:0 14px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.06);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.fusion-thanks-card:hover{transform:translateY(-4px);border-color:var(--thanks-color);box-shadow:0 18px 42px rgba(0,0,0,.23),0 0 24px color-mix(in srgb,var(--thanks-color) 14%,transparent)}
+.fusion-thanks-anthropic{--thanks-color:#D97757;--thanks-soft:rgba(217,119,87,.34)}
+.fusion-thanks-openai{--thanks-color:#74AA9C;--thanks-soft:rgba(116,170,156,.34)}
+.fusion-thanks-xai{--thanks-color:#e9edf3;--thanks-soft:rgba(233,237,243,.29)}
+.fusion-thanks-google{--thanks-color:#d6c4ff;--thanks-soft:rgba(167,139,250,.35);border-color:transparent;background:linear-gradient(145deg,rgba(10,19,36,.82),rgba(7,12,28,.78)) padding-box,linear-gradient(125deg,#EA4335 0%,#FBBC05 27%,#34A853 52%,#4285F4 77%,#EA4335 100%) border-box;box-shadow:0 14px 34px rgba(0,0,0,.16),0 0 15px rgba(234,67,53,.14),0 0 22px rgba(251,188,5,.12),0 0 28px rgba(52,168,83,.13),0 0 34px rgba(66,133,244,.14)}
+.fusion-thanks-logo-pair{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:18px}
+.fusion-thanks-logo-chip{display:flex;align-items:center;gap:8px;min-width:0;flex:1;padding:9px 10px;border:1px solid var(--thanks-soft);border-radius:12px;background:rgba(255,255,255,.045)}
+.fusion-thanks-logo-chip img{display:block;flex:0 0 auto;width:29px;height:29px;object-fit:contain}
+.fusion-thanks-logo-chip span{display:flex;flex-direction:column;gap:3px;min-width:0;color:var(--thanks-color);font:700 9px/1.2 'Fira Code',monospace;letter-spacing:.055em;overflow-wrap:anywhere}
+.fusion-thanks-logo-chip small{font:8px/1.2 'Fira Code',monospace;letter-spacing:.12em;color:rgba(229,239,250,.55)}
+.fusion-thanks-pair-mark{flex:0 0 auto;color:var(--thanks-color);font:700 17px 'Fira Code',monospace;opacity:.8}
+.fusion-thanks-card h3{margin:0 0 10px;color:var(--thanks-color);font:700 10px/1.6 'Fira Code',monospace;letter-spacing:.065em}
+.fusion-thanks-card p{margin:0;color:rgba(239,245,252,.84);font-size:12px;line-height:1.8}
+.fusion-thanks-disclaimer{max-width:780px;margin:20px auto 0;color:rgba(229,239,249,.55);font:9px/1.8 'Fira Code',monospace;letter-spacing:.02em;text-align:center}
+@media(max-width:760px){.fusion-thanks-gallery{grid-template-columns:1fr;gap:11px}.fusion-thanks-card{padding:16px}.fusion-thanks-logo-chip{padding:8px}.fusion-thanks-logo-chip img{width:27px;height:27px}.fusion-thanks-card p{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.fusion-thanks-card{transition:none}.fusion-thanks-card:hover{transform:none}}
+
+
+/* Logotipos originales proporcionados por Randy: cascada flotante y glow independiente por marca. */
+.fusion-floating-caption{margin:25px 0 -8px;color:rgba(255,229,213,.75);font:8px/1.7 'Fira Code',monospace;letter-spacing:.2em;text-align:center}
+.fusion-floating-logos{position:relative;width:min(850px,100%);height:clamp(225px,29vw,300px);margin:8px auto 4px;isolation:isolate}
+.fusion-float-logo{--float-tilt:0deg;--float-duration:6s;--float-delay:0s;--float-brand:#ffffff;--float-glow:rgba(255,255,255,.3);position:absolute;display:grid;place-items:center;box-sizing:border-box;width:clamp(118px,16vw,158px);height:84px;padding:13px 16px;border:1px solid color-mix(in srgb,var(--float-brand) 62%,white);border-radius:19px;background:rgba(255,255,255,.93);box-shadow:0 16px 34px rgba(28,13,7,.18),0 0 14px var(--float-glow),0 0 34px var(--float-glow),inset 0 1px rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transform:rotate(var(--float-tilt));animation:fusionThanksDrift var(--float-duration) ease-in-out var(--float-delay) infinite alternate,fusionLogoGlow 4.6s ease-in-out var(--float-delay) infinite;will-change:transform,box-shadow;transition:filter .25s ease,border-color .25s ease}
+.fusion-float-logo img{display:block;width:100%;height:100%;max-width:130px;max-height:58px;object-fit:contain;object-position:center;filter:drop-shadow(0 0 2px var(--float-glow))}
+.fusion-float-logo:hover{z-index:10;filter:brightness(1.06);border-color:var(--float-brand);box-shadow:0 21px 44px rgba(28,13,7,.26),0 0 24px var(--float-glow),0 0 48px var(--float-glow),inset 0 1px rgba(255,255,255,.98)}
+.fusion-float-anthropic{--float-tilt:-8deg;--float-duration:6.8s;--float-delay:-1.2s;--float-brand:#D97757;--float-glow:rgba(217,119,87,.52);left:6%;top:23%;border-color:rgba(217,119,87,.75)}
+.fusion-float-openai{--float-tilt:5deg;--float-duration:7.6s;--float-delay:-3.1s;--float-brand:#74AA9C;--float-glow:rgba(116,170,156,.5);left:34%;top:1%}
+.fusion-float-google{--float-tilt:8deg;--float-duration:6.2s;--float-delay:-2s;--float-brand:#4285F4;--float-glow:rgba(66,133,244,.56);right:5%;top:24%;border-color:rgba(66,133,244,.68)}
+.fusion-float-grok{--float-tilt:-5deg;--float-duration:7.1s;--float-delay:-.5s;--float-brand:#f3f5f7;--float-glow:rgba(242,246,255,.45);left:19%;bottom:5%;background:rgba(8,10,15,.96);border-color:rgba(255,255,255,.52);box-shadow:0 17px 35px rgba(0,0,0,.27),0 0 14px var(--float-glow),0 0 34px var(--float-glow),inset 0 1px rgba(255,255,255,.08)}
+.fusion-float-gemini{--float-tilt:6deg;--float-duration:7.8s;--float-delay:-2.6s;--float-brand:#8E75B2;--float-glow:rgba(142,117,178,.58);right:22%;bottom:1%;border-color:rgba(142,117,178,.7)}
+@keyframes fusionThanksDrift{0%{transform:translate3d(0,-5px,0) rotate(calc(var(--float-tilt) - 2deg))}50%{transform:translate3d(0,8px,0) rotate(var(--float-tilt))}100%{transform:translate3d(0,14px,0) rotate(calc(var(--float-tilt) + 3deg))}}
+@keyframes fusionLogoGlow{0%,100%{box-shadow:0 16px 34px rgba(28,13,7,.18),0 0 10px var(--float-glow),0 0 25px var(--float-glow),inset 0 1px rgba(255,255,255,.9)}50%{box-shadow:0 18px 38px rgba(28,13,7,.22),0 0 24px var(--float-glow),0 0 48px var(--float-glow),inset 0 1px rgba(255,255,255,.96)}}
+@media(max-width:760px){.fusion-floating-caption{font-size:7px;letter-spacing:.12em;max-width:95%;margin-top:20px}.fusion-floating-logos{height:258px;width:100%;margin-top:12px}.fusion-float-logo{width:clamp(98px,30vw,130px);height:70px;padding:10px 12px;border-radius:15px}.fusion-float-logo img{max-width:108px;max-height:48px}.fusion-float-anthropic{left:0;top:10%;}.fusion-float-openai{left:33%;top:0}.fusion-float-google{right:0;top:37%}.fusion-float-grok{left:8%;bottom:2%}.fusion-float-gemini{right:7%;bottom:0}}
+@media(max-width:390px){.fusion-floating-logos{height:245px}.fusion-float-logo{width:100px;height:66px;padding:8px 10px}.fusion-float-anthropic{left:-1%}.fusion-float-openai{left:32%}.fusion-float-google{right:-1%;top:35%}.fusion-float-grok{left:5%;bottom:1%}.fusion-float-gemini{right:4%;bottom:0}}
+@media(prefers-reduced-motion:reduce){.fusion-float-logo{animation:none;will-change:auto}}
+
+/* Google + Gemini: halo multicolor (rojo, amarillo, verde y azul) con difusión suave. */
+.fusion-thanks-google .fusion-thanks-logo-chip{border:1px solid transparent;background:linear-gradient(rgba(255,255,255,.055),rgba(255,255,255,.04)) padding-box,linear-gradient(125deg,#EA4335 0%,#FBBC05 28%,#34A853 54%,#4285F4 79%,#EA4335 100%) border-box;box-shadow:0 0 10px rgba(234,67,53,.12),0 0 16px rgba(251,188,5,.10),0 0 20px rgba(52,168,83,.10),0 0 24px rgba(66,133,244,.11)}
+.fusion-thanks-google .fusion-thanks-logo-chip span b{background:linear-gradient(100deg,#EA4335 0%,#FBBC05 28%,#34A853 54%,#4285F4 79%,#EA4335 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:fusionRainbowText 7s linear infinite}
+.fusion-float-google,.fusion-float-gemini{--float-brand:#4285F4;--float-glow:rgba(66,133,244,.50);isolation:isolate;border:2px solid transparent;background:linear-gradient(rgba(255,255,255,.95),rgba(255,255,255,.93)) padding-box,linear-gradient(125deg,#EA4335 0%,#FBBC05 28%,#34A853 54%,#4285F4 79%,#EA4335 100%) border-box;box-shadow:0 16px 34px rgba(28,13,7,.18),0 0 12px rgba(234,67,53,.52),0 0 24px rgba(251,188,5,.42),0 0 36px rgba(52,168,83,.38),0 0 48px rgba(66,133,244,.42),inset 0 1px rgba(255,255,255,.95);animation:fusionThanksDrift var(--float-duration) ease-in-out var(--float-delay) infinite alternate,fusionRainbowGlow 4.8s ease-in-out var(--float-delay) infinite}
+.fusion-float-google::before,.fusion-float-gemini::before{content:"";position:absolute;z-index:-1;inset:-10px;border-radius:inherit;background:linear-gradient(125deg,rgba(234,67,53,.90),rgba(251,188,5,.80),rgba(52,168,83,.84),rgba(66,133,244,.90),rgba(234,67,53,.90));background-size:260% 260%;filter:blur(19px);opacity:.58;animation:fusionRainbowAura 6s ease-in-out infinite alternate;pointer-events:none}
+.fusion-float-gemini::before{animation-delay:-2.1s;background-position:100% 60%;opacity:.66}
+.fusion-float-google img,.fusion-float-gemini img{filter:drop-shadow(0 0 3px rgba(234,67,53,.26)) drop-shadow(0 0 5px rgba(52,168,83,.25)) drop-shadow(0 0 7px rgba(66,133,244,.24))}
+.fusion-float-google:hover,.fusion-float-gemini:hover{filter:brightness(1.06) saturate(1.08);box-shadow:0 21px 44px rgba(28,13,7,.24),0 0 20px rgba(234,67,53,.72),0 0 34px rgba(251,188,5,.58),0 0 48px rgba(52,168,83,.54),0 0 62px rgba(66,133,244,.58),inset 0 1px rgba(255,255,255,.98)}
+@keyframes fusionRainbowAura{0%{background-position:0% 30%;opacity:.46}50%{background-position:100% 70%;opacity:.75}100%{background-position:20% 100%;opacity:.56}}
+@keyframes fusionRainbowGlow{0%,100%{box-shadow:0 16px 34px rgba(28,13,7,.18),0 0 9px rgba(234,67,53,.46),0 0 19px rgba(251,188,5,.34),0 0 29px rgba(52,168,83,.32),0 0 39px rgba(66,133,244,.34),inset 0 1px rgba(255,255,255,.9)}50%{box-shadow:0 18px 38px rgba(28,13,7,.22),0 0 20px rgba(234,67,53,.7),0 0 32px rgba(251,188,5,.58),0 0 44px rgba(52,168,83,.54),0 0 56px rgba(66,133,244,.58),inset 0 1px rgba(255,255,255,.96)}}
+@keyframes fusionRainbowText{to{background-position:220% 0}}
+@media(prefers-reduced-motion:reduce){.fusion-float-google::before,.fusion-float-gemini::before,.fusion-thanks-google .fusion-thanks-logo-chip span b{animation:none}}

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full select-none">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Diagnóstico exhaustivo: consola, JavaScript, CSS, recursos y eventos. -->
+    <script src="consola-debugg.js"></script>
+    <script src="error-report.js"></script>
+    <title>GhostUe46 · Frutiger Aero Chat</title>
+    <link id="site-icon-link" rel="icon" type="image/svg+xml" href="assets/site-icon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/site-icon-32.png">
+    <link rel="apple-touch-icon" href="assets/site-icon-180.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#2563eb">
+    <!-- Tailwind CSS must load before its configuration file. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Orbitron + Audiowide only -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Pyodide WASM (Python Engine) -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+
+    
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ui-plus.css">
+    <link rel="stylesheet" href="intelligence.css">
+    <link rel="stylesheet" href="icon-sets.css">
+    <link rel="stylesheet" href="gingerbread.css">
+    <link rel="stylesheet" href="theme-media.css">
+    <link rel="stylesheet" href="extras.css">
+    <link rel="stylesheet" href="animus.css">
+    <link rel="stylesheet" href="synthwave.css">
+    <link rel="stylesheet" href="customize.css">
+    <link rel="stylesheet" href="error-report.css">
+    <link rel="stylesheet" href="tts.css">
+    <link rel="stylesheet" href="adaptive-contrast.css">
+</head>
+<body class="h-full bg-slate-950 text-slate-100 font-sans overflow-hidden relative selection:bg-purple-500 selection:text-white">
+
+    <!-- Hidden SVG turbulence filter used for the Liquid Glass theme's refractive highlights. -->
+    <svg id="ghost-svg-defs" class="svg-filter-defs" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;left:-9999px;overflow:hidden">
+        <filter id="ghost-water-distortion" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence id="ghost-water-turb" type="fractalNoise" baseFrequency="0.012 0.035" numOctaves="2" seed="8" result="waterNoise">
+                <animate attributeName="baseFrequency" dur="13s" values="0.012 0.035;0.019 0.024;0.009 0.017;0.012 0.035" repeatCount="indefinite" />
+            </feTurbulence>
+            <feDisplacementMap id="ghost-water-disp" in="SourceGraphic" in2="waterNoise" scale="36" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <filter id="ghost-liquid" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+            <feTurbulence id="liquid-turb" type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="4" result="n">
+                <animate attributeName="baseFrequency" dur="18s" values="0.008 0.012;0.013 0.018;0.008 0.012" repeatCount="indefinite"/>
+            </feTurbulence>
+            <feGaussianBlur in="n" stdDeviation="2" result="nb"/>
+            <feDisplacementMap id="liquid-disp" in="SourceGraphic" in2="nb" scale="36" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="ghost-goo" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="b"/>
+            <feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"/>
+        </filter>
+    </svg>
+    <!-- Animated Crossing Waves & Trailing Stars Background -->
+    <canvas id="bg-canvas"></canvas>
+    <div id="fx-circles" aria-hidden="true"></div>
+
+    <!-- Notificaciones estilo Xbox Series X (abajo al centro) -->
+    <div id="toast-container" class="xbox-toast-stack" aria-live="polite" aria-relevant="additions"></div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="relative z-10 flex h-screen w-screen p-2 md:p-5 gap-3 md:gap-5 overflow-hidden">
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="water-glass rounded-3xl flex flex-col transition-all duration-500 ease-in-out relative z-20 w-80 flex-shrink-0 shadow-2xl overflow-hidden">
+            
+            <!-- Header with Custom GhostUe46 Logo -->
+            <div class="p-5 border-b border-white/10 flex items-center justify-between bg-white/5">
+                <div class="flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-2xl water-glass flex items-center justify-center relative p-2 shadow-lg">
+                        <img src="assets/frutiger-aero-logo.png" alt="Logo de GhostUe46" class="brand-logo w-full h-full object-contain rounded-xl">
+                    </div>
+                    <div>
+                        <h1 class="font-orbitron font-extrabold text-lg tracking-wider text-white glow-cyan">GhostUe46</h1>
+                        <span class="text-[10px] font-audiowide text-purple-300 flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                            FRUTIGER AERO AI
+                        </span>
+                    </div>
+                </div>
+                <button data-action="toggleSidebar" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-colors" title="Ocultar/Mostrar barra">
+                    <i class="fa-solid fa-angles-left text-sm"></i>
+                </button>
+            </div>
+
+            <!-- New Chat Button -->
+            <div class="p-4 border-b border-white/10">
+                <button data-action="createNewChat" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 hover:from-cyan-500/40 hover:via-purple-500/40 hover:to-pink-500/40 border border-white/20 text-white font-orbitron text-xs font-semibold flex items-center justify-center space-x-2 transition-all shadow-lg group">
+                    <i class="fa-solid fa-plus text-cyan-400 group-hover:rotate-90 transition-transform duration-300"></i>
+                    <span>NUEVO CHAT</span>
+                </button>
+            </div>
+
+            <!-- Chat Session List -->
+            <div class="px-3 pt-1 session-search-wrap">
+                <label for="session-search" class="sr-only">Buscar en tus conversaciones</label>
+                <div class="session-search"><i class="fa-solid fa-magnifying-glass"></i><input id="session-search" type="search" placeholder="Buscar chats..." autocomplete="off" oninput="setSessionFilter(this.value)"></div>
+            </div>
+            <div id="session-list" class="flex-1 overflow-y-auto p-3 space-y-2">
+                <!-- Sessions populated via JS -->
+            </div>
+
+            <!-- Sidebar Config Footer -->
+            <div class="p-4 border-t border-white/10 bg-white/5 flex items-center justify-between">
+                <button data-action="openConfigModal" class="flex items-center space-x-2 text-xs font-audiowide text-slate-300 hover:text-cyan-300 transition-colors">
+                    <i class="fa-solid fa-gear text-cyan-400 text-sm"></i>
+                    <span>CONFIGURACIÓN</span>
+                </button>
+                <button data-action="clearAllChats" class="text-slate-400 hover:text-red-400 p-2 rounded-lg transition-colors" title="Eliminar todos los chats">
+                    <i class="fa-solid fa-trash-can text-xs"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CHAT & WORKSPACE -->
+        <main class="flex-1 water-glass rounded-3xl flex flex-col overflow-hidden relative shadow-2xl z-10">
+
+            <!-- Top Navigation Header -->
+            <header class="h-16 border-b border-white/10 px-2 sm:px-6 flex items-center justify-between gap-2 bg-white/5 backdrop-blur-xl">
+                <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+                    <button id="expand-sidebar-btn" data-action="toggleSidebar" class="hidden text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-colors">
+                        <i class="fa-solid fa-angles-right"></i>
+                    </button>
+                    <div>
+                        <h2 id="current-chat-title" class="font-orbitron font-bold text-xs sm:text-sm md:text-base text-white truncate max-w-[76px] sm:max-w-xs md:max-w-md">GhostUe46 Engine</h2>
+                        <div class="hidden sm:flex items-center space-x-2 text-[11px] font-mono text-cyan-300/90">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span id="active-provider-label">Chat API: OpenRouter</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-1 sm:space-x-2 shrink-0">
+                    <button id="web-search-toggle" data-action="toggleWebSearch" aria-pressed="false" title="DuckDuckGo: búsqueda web desactivada" class="web-search-toggle p-2.5 rounded-xl water-glass text-slate-300 hover:text-white border border-white/10 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-globe text-slate-400"></i>
+                        <span class="hidden lg:inline text-[10px] font-audiowide">WEB</span>
+                        <span id="web-search-status-dot" class="web-status-dot"></span>
+                    </button>
+                    <a id="creator-info-button" href="./creator.html" aria-label="Creator INFO: información del creador" title="Abrir Creator INFO" class="creator-info-button px-2 sm:px-3 py-2.5 rounded-xl water-glass text-cyan-200 hover:text-white border border-cyan-400/25 transition-all flex items-center gap-1.5 whitespace-nowrap text-[9px] sm:text-[10px] font-audiowide shrink-0">
+                        <i class="fa-solid fa-circle-info text-cyan-300" aria-hidden="true"></i>
+                        <span>Creator INFO</span>
+                    </a>
+                    <button type="button" class="g46-report-trigger g46-report-trigger--compact shrink-0" data-g46-report-open aria-label="Reportar un error" title="Reportar un error a soporte">
+                        <i class="fa-solid fa-bug" aria-hidden="true"></i><span class="g46-report-label">REPORTAR ERROR</span><span id="g46-report-error-count" class="g46-report-error-count" hidden>0</span>
+                    </button>
+                    <button data-action="openEditorModal" class="py-2 px-3.5 rounded-xl water-glass text-xs font-audiowide text-cyan-300 hover:text-white border border-cyan-500/30 flex items-center space-x-2 transition-all">
+                        <i class="fa-solid fa-code text-cyan-400"></i>
+                        <span class="hidden sm:inline">EDITOR & COMPILADOR</span>
+                    </button>
+                    <button data-action="openConfigModal" aria-label="Configuración de GhostUe46" title="Configuración de GhostUe46" class="p-2.5 rounded-xl water-glass text-slate-300 hover:text-white border border-white/10 transition-all">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Saludo dinámico según la hora local del dispositivo -->
+            <div id="time-greeting-banner" class="time-greeting-banner" role="status" aria-live="polite">
+                <span id="time-greeting-emoji" class="time-greeting-emoji" aria-hidden="true">🌞</span>
+                <span id="time-greeting-text">Buenos días :D</span>
+                <span class="time-greeting-bubble" aria-hidden="true">✧</span>
+            </div>
+
+            <!-- Chat Stream Box -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+                <!-- Messages dynamic insertion -->
+            </div>
+
+            <!-- AI Thinking / Code Creation Indicator -->
+            <div id="typing-indicator" class="hidden px-6 py-2 flex items-center gap-3 text-cyan-300 text-xs font-mono" role="status" aria-live="polite">
+                <div class="typing-dots" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="typing-orbit" aria-hidden="true"><div class="orb-shake"><div class="orb-spin"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div></div></div>
+                <span id="typing-indicator-text" class="font-audiowide status-fade">GhostUe46 está respondiendo...</span>
+                <span id="typing-language-name" class="hidden typing-language-name"></span>
+                <img id="typing-language-logo" class="hidden typing-language-logo" src="" alt="" />
+            </div>
+
+            <!-- Attachment Previews -->
+            <div id="attachment-preview-bar" class="hidden px-6 py-2 border-t border-white/10 bg-black/40 flex items-center space-x-3 overflow-x-auto"></div>
+
+            <!-- Input Controls -->
+            <div class="intel-composer p-3 md:p-4 border-t border-white/10 bg-white/5 backdrop-blur-2xl">
+                <!-- Inteligencia de GhostUe46: botón flotante con 4 modos -->
+                <div id="intel-dock" class="intel-dock" data-mode="none">
+                    <div id="intel-popover" class="intel-popover water-glass" role="dialog" aria-label="Inteligencia de GhostUe46">
+                        <div class="intel-pop-head">
+                            <span class="intel-pop-icon"><i class="fa-solid fa-brain"></i></span>
+                            <div><h4>Inteligencia de GhostUe46</h4><p>Elige cómo quieres que piense y trabaje. Toca el modo activo otra vez para volver al normal.</p></div>
+                        </div>
+                        <div id="intel-gate" class="intel-gate" role="alert">
+                            <p><i class="fa-solid fa-globe"></i> <strong>Pensar necesita acceso a DuckDuckGo</strong> para investigar antes de responder. Por eso puede tardar un poco más. ¿Quieres activarlo?</p>
+                            <div class="intel-gate-btns">
+                                <button type="button" class="intel-gate-accept" data-intel-gate="accept"><i class="fa-solid fa-check"></i> Activar DuckDuckGo y usar Pensar</button>
+                                <button type="button" class="intel-gate-cancel" data-intel-gate="cancel">Ahora no</button>
+                            </div>
+                        </div>
+                        <div class="intel-grid">
+                            <button type="button" class="intel-card" data-intel-mode="think" aria-pressed="false">
+                                <span class="intel-card-icon"><i class="fa-solid fa-lightbulb"></i></span>
+                                <span class="intel-card-text"><strong>Pensar</strong><small>Planifica, investiga en DuckDuckGo y razona antes de responder. Tarda un poco más.</small><em>Necesita DuckDuckGo · No va con Rápido</em></span>
+                                <span class="intel-card-check"><i class="fa-solid fa-check"></i></span>
+                            </button>
+                            <button type="button" class="intel-card" data-intel-mode="code" aria-pressed="false">
+                                <span class="intel-card-icon"><i class="fa-solid fa-code"></i></span>
+                                <span class="intel-card-text"><strong>Código</strong><small>Más experto en lenguajes de programación. Revisa su propio código con el verificador de sintaxis real y se corrige.</small><em>Autoverificación</em></span>
+                                <span class="intel-card-check"><i class="fa-solid fa-check"></i></span>
+                            </button>
+                            <button type="button" class="intel-card" data-intel-mode="archfile" aria-pressed="false">
+                                <span class="intel-card-icon"><i class="fa-solid fa-folder-tree"></i></span>
+                                <span class="intel-card-text"><strong>ArchFile</strong><small>Crea sitios web y archivos para instalar. Si hace un HTML verás su vista previa con los botones funcionando.</small><em>Vista previa + ZIP</em></span>
+                                <span class="intel-card-check"><i class="fa-solid fa-check"></i></span>
+                            </button>
+                            <button type="button" class="intel-card" data-intel-mode="vision" aria-pressed="false">
+                                <span class="intel-card-icon"><i class="fa-solid fa-eye"></i></span>
+                                <span class="intel-card-text"><strong>Visión</strong><small>Ve tus imágenes y analiza archivos: PDF, Word, Excel, ZIP, código y texto.</small><em>Imágenes y archivos</em></span>
+                                <span class="intel-card-check"><i class="fa-solid fa-check"></i></span>
+                            </button>
+                        </div>
+                        <div class="intel-pop-foot-row">
+                            <span id="intel-pop-foot" class="intel-pop-foot"></span>
+                            <button type="button" class="intel-attach" data-intel-attach title="Adjuntar archivos"><i class="fa-solid fa-paperclip"></i> Adjuntar</button>
+                        </div>
+                    </div>
+                    <button type="button" id="intel-btn" class="intel-btn water-glass" aria-haspopup="dialog" aria-expanded="false" title="Inteligencia de GhostUe46">
+                        <i class="fa-solid fa-brain intel-btn-brain"></i>
+                        <span class="intel-btn-label">Inteligencia de GhostUe46</span>
+                        <span id="intel-btn-badge" class="intel-btn-badge"></span>
+                        <i class="fa-solid fa-chevron-up intel-btn-caret"></i>
+                    </button>
+                </div>
+                <form id="chat-form" class="relative flex items-center">
+                    <input type="file" id="file-input" class="hidden" multiple>
+                    <input type="file" id="image-input" class="hidden" accept="image/*" multiple>
+
+                    <textarea id="user-input" rows="1" placeholder="Escribe a GhostUe46, solicita código, 'genera una imagen...' o 'crea un video...' " class="w-full crystal-input font-sans text-sm rounded-2xl py-3.5 pl-4 pr-40 resize-none max-h-32 shadow-inner" ></textarea>
+
+                    <div class="absolute right-3 flex items-center space-x-1.5">
+                        <div class="speed-wrap" id="speed-wrap">
+                            <div id="speed-popover" class="speed-popover water-glass" role="dialog" aria-label="Tiempo de respuesta de GhostUe46">
+                                <div class="intel-pop-head">
+                                    <span class="intel-pop-icon"><i class="fa-solid fa-bolt"></i></span>
+                                    <div><h4>Tiempo de respuesta de GhostUe46</h4><p>Elige entre rapidez y cuidado al responder.</p></div>
+                                </div>
+                                <div id="speed-gate" class="intel-gate" role="alert">
+                                    <p></p>
+                                    <div class="intel-gate-btns">
+                                        <button type="button" class="intel-gate-accept" data-intel-gate="accept"></button>
+                                        <button type="button" class="intel-gate-cancel" data-intel-gate="cancel">Ahora no</button>
+                                    </div>
+                                </div>
+                                <div class="intel-grid">
+                                    <button type="button" class="intel-card" data-speed="fast" aria-pressed="false">
+                                        <span class="intel-card-icon"><i class="fa-solid fa-bolt"></i></span>
+                                        <span class="intel-card-text"><strong>Rápido</strong><small>Respuestas breves y directas, con menos historial y sin ronda de corrección automática.</small><em>No compatible con Pensar</em></span>
+                                        <span class="intel-card-check"><i class="fa-solid fa-check"></i></span>
+                                    </button>
+                                    <button type="button" class="intel-card" data-speed="normal" aria-pressed="false">
+                                        <span class="intel-card-icon"><i class="fa-solid fa-gauge-high"></i></span>
+                                        <span class="intel-card-text"><strong>Normal</strong><small>Va al grano y envía menos historial, así que responde un poco más rápido que antes.</small><em>Recomendado</em></span>
+                                        <span class="intel-card-check"><i class="fa-solid fa-check"></i></span>
+                                    </button>
+                                    <button type="button" class="intel-card" data-speed="slow" aria-pressed="false">
+                                        <span class="intel-card-icon"><i class="fa-solid fa-hourglass-half"></i></span>
+                                        <span class="intel-card-text"><strong>Lento</strong><small>Más cuidadoso y detallado: razona paso a paso y revisa su propia respuesta antes de entregarla.</small><em>Tarda más</em></span>
+                                        <span class="intel-card-check"><i class="fa-solid fa-check"></i></span>
+                                    </button>
+                                </div>
+                                <div class="intel-pop-foot-row"><span id="speed-pop-foot" class="intel-pop-foot"></span></div>
+                            </div>
+                            <button type="button" id="speed-btn" class="speed-btn p-2 text-slate-400 hover:text-cyan-300 rounded-xl hover:bg-white/10 transition-colors" data-speed-current="normal" aria-haspopup="dialog" aria-expanded="false" aria-label="Tiempo de respuesta de GhostUe46" title="Tiempo de respuesta de GhostUe46"><i id="speed-btn-icon" class="fa-solid fa-gauge-high"></i></button>
+                        </div>
+                        <button type="button" id="mic-btn" data-action="toggleSpeechToText" class="p-2 text-slate-400 hover:text-pink-400 rounded-xl hover:bg-white/10 transition-colors" title="Dictado por Voz">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                        <button type="button" data-action="trigger-file-input" class="p-2 text-slate-400 hover:text-cyan-300 rounded-xl hover:bg-white/10 transition-colors" title="Adjuntar archivos"><i class="fa-solid fa-paperclip"></i></button>
+                        <button type="button" data-action="trigger-image-input" class="p-2 text-slate-400 hover:text-cyan-300 rounded-xl hover:bg-white/10 transition-colors" title="Adjuntar imagen"><i class="fa-solid fa-image"></i></button>
+                        <button type="button" data-action="captureScreen" class="p-2 text-slate-400 hover:text-cyan-300 rounded-xl hover:bg-white/10 transition-colors" title="Capturar pantalla"><i class="fa-solid fa-camera"></i></button>
+                        <button type="button" data-action="shareScreen" class="p-2 text-slate-400 hover:text-cyan-300 rounded-xl hover:bg-white/10 transition-colors" title="Compartir pantalla y capturar"><i class="fa-solid fa-camera-retro"></i></button>
+                        <button type="submit" id="send-btn" aria-label="Enviar mensaje" title="Enviar mensaje" class="p-2.5 rounded-xl bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-500 text-white font-medium shadow-lg hover:scale-105 transition-all">
+                            <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="flex items-center justify-between mt-2 px-1 text-[10px] font-mono text-slate-400">
+                    <span>Código: Java, JavaScript, HTML, CSS, C, C++, C#, Python · DirectX, OpenGL y Vulkan (BETA) · <span id="web-search-footer-status">Búsqueda web desactivada</span></span>
+                    <span>Chat mediante el proveedor de API configurado</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="drop-overlay" class="drop-overlay hidden" aria-hidden="true"><div class="drop-card"><div class="drop-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div><h2>¡Arrastra tus archivos aquí! :D</h2><p>Suelta imágenes, documentos o código para adjuntarlos al chat.</p></div></div>
+    <div id="screen-capture-modal" class="screen-capture-modal hidden" role="dialog" aria-modal="true" aria-label="Captura de pantalla"><div class="screen-capture-card"><h3><i class="fa-solid fa-camera"></i> Captura de pantalla</h3><p>Elige una ventana o pantalla en el selector del navegador. Después pulsa Capturar.</p><video id="screen-preview" autoplay playsinline></video><div class="screen-actions"><button type="button" data-action="closeScreenCapture">Cancelar</button><button type="button" data-action="takeScreenCapture"><i class="fa-solid fa-camera"></i> Capturar y adjuntar</button></div></div></div>
+
+    <!-- GHOSTUE46 SETTINGS MODAL -->
+    <div id="config-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-5 bg-black/75 backdrop-blur-md hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <div class="water-glass settings-panel rounded-3xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl relative border border-white/20 overflow-hidden">
+            <div class="settings-heading p-5 md:p-6 border-b border-white/10 flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="settings-icon"><i class="fa-solid fa-gear"></i></div>
+                    <div>
+                        <h3 id="settings-title" class="font-orbitron font-bold text-base md:text-lg text-white">Configuración de GhostUe46</h3>
+                        <p class="text-xs font-audiowide text-purple-300 mt-1">Personalización · Privacidad · Memoria · API</p>
+                    </div>
+                </div>
+                <button data-action="closeConfigModal" aria-label="Cerrar configuración" class="text-slate-400 hover:text-white p-2 rounded-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="settings-scroll p-4 md:p-6 space-y-5 overflow-y-auto">
+                <section class="settings-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-palette"></i><div><h4>Personalización</h4><p>Elige una apariencia para el chat.</p></div></div>
+                    <div class="theme-grid">
+                        <button type="button" data-action="selectTheme" data-theme-choice="default" class="theme-choice" aria-pressed="true">
+                            <span class="theme-preview theme-preview-default"><i class="fa-solid fa-moon"></i></span><span class="theme-choice-title">Predeterminado</span><span class="theme-choice-desc">Oscuro, limpio y legible.</span>
+                        </button>
+                        <button type="button" data-action="selectTheme" data-theme-choice="liquid-glass" class="theme-choice" aria-pressed="false">
+                            <span class="theme-preview theme-preview-liquid"><i class="fa-solid fa-water"></i></span><span class="theme-choice-title">Liquid Glass</span><span class="theme-choice-desc">Cristal translúcido con ondas.</span>
+                        </button>
+                        <button type="button" data-action="selectTheme" data-theme-choice="material-you" class="theme-choice" aria-pressed="false">
+                            <span class="theme-preview theme-preview-material"><i class="fa-solid fa-droplet"></i></span><span class="theme-choice-title">Material You</span><span class="theme-choice-desc">Personaliza tus colores.</span>
+                        </button>
+                        <button type="button" data-action="selectTheme" data-theme-choice="aurora" class="theme-choice" aria-pressed="false">
+                            <span class="theme-preview theme-preview-aurora"><i class="fa-solid fa-wand-magic-sparkles"></i></span><span class="theme-choice-title">Aurora</span><span class="theme-choice-desc">Azul glaciar y violeta.</span>
+                        </button>
+                        <button type="button" data-action="selectTheme" data-theme-choice="frutiger-aero" class="theme-choice" aria-pressed="false">
+                            <span class="theme-preview theme-preview-aero"><i class="fa-solid fa-water"></i><i class="fa-solid fa-leaf"></i></span><span class="theme-choice-title">Frutiger Aero</span><span class="theme-choice-desc">Agua cristalina, cielo azul y burbujas.</span>
+                        </button>
+                        <button type="button" data-action="selectTheme" data-theme-choice="assassins-creed-2" class="theme-choice" aria-pressed="false">
+                            <span class="theme-preview theme-preview-ac2"><i class="fa-solid fa-dna"></i></span><span class="theme-choice-title">Assassin's Creed II</span><span class="theme-choice-desc">Animus: rombos, ADN y rojo.</span>
+                        </button>
+                        <button type="button" data-action="selectTheme" data-theme-choice="synthwave" class="theme-choice" aria-pressed="false">
+                            <span class="theme-preview theme-preview-synth"><i class="fa-solid fa-sun"></i></span><span class="theme-choice-title">Synthwave</span><span class="theme-choice-desc">Neón retro años 80.</span>
+                        </button>
+                        <button type="button" data-action="selectTheme" data-theme-choice="custom" class="theme-choice" aria-pressed="false">
+                            <span class="theme-preview theme-preview-custom"><i class="fa-solid fa-sliders"></i></span><span class="theme-choice-title">Personalizado</span><span class="theme-choice-desc">Crea tu propio tema completo.</span>
+                        </button>
+                    </div>
+                    <div id="custom-color-controls" class="custom-color-controls hidden mt-4">
+                        <div><label for="primary-color-input">Color principal</label><div class="color-control"><input id="primary-color-input" data-change-action="onThemeColorChange" type="color" value="#38bdf8"><span id="primary-color-value">#38BDF8</span></div></div>
+                        <div><label for="secondary-color-input">Color secundario</label><div class="color-control"><input id="secondary-color-input" data-change-action="onThemeColorChange" type="color" value="#a855f7"><span id="secondary-color-value">#A855F7</span></div></div>
+                    </div>
+                    <div id="full-custom-theme-panel" class="full-custom-theme-panel hidden mt-4">
+                        <div class="settings-section-title" style="margin-bottom:12px">
+                            <i class="fa-solid fa-paint-roller"></i>
+                            <div>
+                                <h4>Diseñador de tema</h4>
+                                <p>Controla colores, cristal, burbujas y texto. Se guarda solo en este navegador.</p>
+                            </div>
+                        </div>
+                        <div class="custom-theme-grid">
+                            <div>
+                                <label class="settings-field-label" for="ct-accent-primary">Acento principal</label>
+                                <div class="color-control"><input id="ct-accent-primary" type="color" value="#38bdf8" data-change-action="onCustomThemeChange"><span id="ct-accent-primary-val">#38BDF8</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-accent-secondary">Acento secundario</label>
+                                <div class="color-control"><input id="ct-accent-secondary" type="color" value="#a855f7" data-change-action="onCustomThemeChange"><span id="ct-accent-secondary-val">#A855F7</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-bg-1">Fondo 1</label>
+                                <div class="color-control"><input id="ct-bg-1" type="color" value="#050816" data-change-action="onCustomThemeChange"><span id="ct-bg-1-val">#050816</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-bg-2">Fondo 2</label>
+                                <div class="color-control"><input id="ct-bg-2" type="color" value="#0e233b" data-change-action="onCustomThemeChange"><span id="ct-bg-2-val">#0E233B</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-panel">Panel / cristal</label>
+                                <div class="color-control"><input id="ct-panel" type="color" value="#0a1428" data-change-action="onCustomThemeChange"><span id="ct-panel-val">#0A1428</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-text">Texto general</label>
+                                <div class="color-control"><input id="ct-text" type="color" value="#f1f5f9" data-change-action="onCustomThemeChange"><span id="ct-text-val">#F1F5F9</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-msg-user">Burbuja usuario</label>
+                                <div class="color-control"><input id="ct-msg-user" type="color" value="#1b2352" data-change-action="onCustomThemeChange"><span id="ct-msg-user-val">#1B2352</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-msg-assistant">Burbuja asistente</label>
+                                <div class="color-control"><input id="ct-msg-assistant" type="color" value="#08233b" data-change-action="onCustomThemeChange"><span id="ct-msg-assistant-val">#08233B</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-border">Bordes / brillo</label>
+                                <div class="color-control"><input id="ct-border" type="color" value="#add8ff" data-change-action="onCustomThemeChange"><span id="ct-border-val">#ADD8FF</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-input-bg">Fondo del input</label>
+                                <div class="color-control"><input id="ct-input-bg" type="color" value="#050a19" data-change-action="onCustomThemeChange"><span id="ct-input-bg-val">#050A19</span></div>
+                            </div>
+                        </div>
+                        <div class="mt-3 space-y-3">
+                            <div>
+                                <label class="settings-field-label" for="ct-glass-opacity">Opacidad del cristal <span id="ct-glass-opacity-val">62%</span></label>
+                                <input id="ct-glass-opacity" type="range" min="10" max="95" value="62" class="pref-range" data-change-action="onCustomThemeChange">
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-blur">Desenfoque (blur) <span id="ct-blur-val">24px</span></label>
+                                <input id="ct-blur" type="range" min="0" max="40" value="24" class="pref-range" data-change-action="onCustomThemeChange">
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="ct-radius">Redondez de paneles <span id="ct-radius-val">24px</span></label>
+                                <input id="ct-radius" type="range" min="8" max="40" value="24" class="pref-range" data-change-action="onCustomThemeChange">
+                            </div>
+                        </div>
+                        <div class="mt-4 ct-font-block">
+                            <div class="settings-section-title" style="margin-bottom:8px">
+                                <i class="fa-solid fa-font"></i>
+                                <div>
+                                    <h4>Tipografía</h4>
+                                    <p id="ct-font-count">Fuentes disponibles</p>
+                                </div>
+                            </div>
+                            <label class="settings-field-label" for="ct-font-search">Buscar fuente</label>
+                            <input id="ct-font-search" type="search" class="crystal-input rounded-xl px-3 py-2 text-xs w-full mb-2" placeholder="Escribe: mono, script, pixel, roboto..." autocomplete="off">
+                            <label class="settings-field-label" for="ct-font">Fuente de letra</label>
+                            <select id="ct-font" size="7" class="crystal-input rounded-xl px-2 py-2 text-xs w-full" data-change-action="onCustomThemeChange"></select>
+                            <label class="settings-field-label mt-2" for="ct-font-custom">Otra fuente de Google Fonts (escribe el nombre exacto)</label>
+                            <input id="ct-font-custom" type="text" class="crystal-input rounded-xl px-3 py-2 text-xs w-full" placeholder="Ej: Bellota Text, Lemon, Sofia Sans..." autocomplete="off" spellcheck="false" data-change-action="onCustomThemeChange">
+                            <div class="mt-3">
+                                <label class="settings-field-label" for="ct-font-scale">Tamaño de letra <span id="ct-font-scale-val">100%</span></label>
+                                <input id="ct-font-scale" type="range" min="80" max="140" value="100" class="pref-range" data-change-action="onCustomThemeChange">
+                            </div>
+                            <label class="settings-field-label mt-2" style="display:flex;gap:8px;align-items:center;cursor:pointer">
+                                <input id="ct-font-code" type="checkbox" data-change-action="onCustomThemeChange"> Aplicar también al código y al editor
+                            </label>
+                            <div id="ct-font-preview" class="ct-font-preview mt-2">Así se verá tu texto: ÁÉÍÓÚ ñ ¿Qué tal? 0123456789</div>
+                        </div>
+                        <div id="ct-contrast-box" class="ct-contrast-box hidden mt-4" role="status" aria-live="polite">
+                            <strong><i class="fa-solid fa-triangle-exclamation"></i> Ojo con la legibilidad</strong>
+                            <ul id="ct-contrast-list"></ul>
+                            <button type="button" id="ct-contrast-fix" class="settings-cancel text-xs"><i class="fa-solid fa-wand-magic-sparkles"></i> Corregir automáticamente</button>
+                        </div>
+                        <div id="ct-contrast-ok" class="ct-contrast-ok mt-4 hidden"><i class="fa-solid fa-circle-check"></i> Buena legibilidad en todos los textos.</div>
+                        <div class="mt-4">
+                            <span class="settings-field-label">Estilo de iconos de este tema</span>
+                            <div class="pref-row">
+                                <button type="button" class="pref-chip" data-icon-set="thin">Contorno fino</button>
+                                <button type="button" class="pref-chip" data-icon-set="duo">Bicolor</button>
+                                <button type="button" class="pref-chip" data-icon-set="bold">Trazo grueso</button>
+                                <button type="button" class="pref-chip" data-icon-set="ginger">Android 2.3</button>
+                                <button type="button" class="pref-chip" data-icon-set="animus">Animus</button>
+                                <button type="button" class="pref-chip" data-icon-set="neon">Neón</button>
+                                <button type="button" class="pref-chip" data-icon-set="none">Originales</button>
+                            </div>
+                        </div>
+                        <div class="mt-4 ct-presets">
+                            <span class="settings-field-label">Mis temas guardados</span>
+                            <div class="flex flex-wrap gap-2 items-center">
+                                <input id="preset-name" type="text" maxlength="40" class="crystal-input rounded-xl px-3 py-2 text-xs flex-1 min-w-[10rem]" placeholder="Nombre del tema (ej: Océano nocturno)" autocomplete="off">
+                                <button type="button" id="preset-save" class="settings-cancel text-xs"><i class="fa-solid fa-plus"></i> Guardar tema actual</button>
+                            </div>
+                            <div id="preset-list" class="preset-list" aria-live="polite"></div>
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                <button type="button" id="preset-export-all" class="settings-cancel text-xs"><i class="fa-solid fa-file-export"></i> Exportar todos</button>
+                                <label class="settings-cancel text-xs media-upload-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Importar tema (.json)<input id="preset-import" type="file" accept="application/json,.json" hidden></label>
+                            </div>
+                            <p class="settings-hint">Un tema guarda colores, cristal, tipografía y estilo de iconos. La imagen de fondo no se incluye.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <button type="button" data-action="resetCustomTheme" class="settings-cancel text-xs"><i class="fa-solid fa-rotate-left"></i> Restaurar valores</button>
+                            <button type="button" data-action="randomizeCustomTheme" class="settings-cancel text-xs"><i class="fa-solid fa-dice"></i> Tema aleatorio</button>
+                        </div>
+                    </div>
+                    <p id="theme-description" class="settings-hint mt-3">Tema oscuro original de GhostUe46.</p>
+                    <div id="ac2-lowend-warning" class="lowend-warning hidden" role="alert"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Puede ir mal en dispositivos de gama baja</strong>Este tema dibuja un fondo animado (hélice de ADN, rombos y líneas) sobre paneles con muchas capas. Si notas lentitud, apaga «XLMB» o las «Animaciones de fondo» en Configuración, o elige el tema Predeterminado.</div></div>
+                </section>
+
+                <section class="settings-section" id="media-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-image"></i><div><h4>Imagen de fondo e iconos</h4><p>Funciona con cualquier tema. Se guarda solo en este navegador.</p></div></div>
+
+                    <span class="settings-field-label">Imagen de fondo (JPG, PNG o WebP)</span>
+                    <div id="bg-image-drop" class="media-drop">
+                        <div id="bg-image-preview" class="media-preview">Sin imagen</div>
+                        <div class="media-drop-actions">
+                            <label class="settings-cancel text-xs media-upload-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Elegir imagen<input id="bg-image-file" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" hidden></label>
+                            <button type="button" id="bg-image-remove" class="settings-cancel text-xs" disabled><i class="fa-solid fa-trash-can"></i> Quitar</button>
+                            <label class="media-check"><input id="bg-image-enabled" type="checkbox" checked disabled> Mostrar</label>
+                            <p class="settings-hint">También puedes arrastrar la imagen aquí. <b id="bg-image-info"></b></p>
+                        </div>
+                    </div>
+                    <div class="mt-3 space-y-3">
+                        <div><label class="settings-field-label" for="bg-image-dim">Oscurecer imagen <span id="bg-image-dim-val">35%</span></label><input id="bg-image-dim" type="range" min="0" max="85" value="35" class="pref-range"></div>
+                        <div><label class="settings-field-label" for="ui-glass-range">Transparencia de la interfaz <span id="ui-glass-val">45%</span></label><input id="ui-glass-range" type="range" min="0" max="100" step="1" value="45" class="pref-range">
+                            <p class="settings-hint ui-glass-hint">0 % = la interfaz desaparece y solo ves tu imagen. 100 % = cristal muy borroso y desenfocado. <b id="ui-glass-state"></b></p>
+                            <button type="button" id="ui-glass-reset" class="settings-cancel text-xs" style="margin-top:6px"><i class="fa-solid fa-rotate-left"></i> Usar el cristal original del tema</button></div>
+                        <div><label class="settings-field-label" for="bg-image-blur">Desenfoque de la imagen <span id="bg-image-blur-val">0px</span></label><input id="bg-image-blur" type="range" min="0" max="24" value="0" class="pref-range"></div>
+                    </div>
+
+                    <span class="settings-field-label mt-4">Icono del sitio (pestaña del navegador)</span>
+                    <div id="site-icon-drop" class="media-drop">
+                        <img id="site-icon-preview" class="media-icon-preview" src="assets/site-icon.svg" alt="Icono actual del sitio">
+                        <div class="media-drop-actions">
+                            <label class="settings-cancel text-xs media-upload-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Usar mi imagen<input id="site-icon-file" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" hidden></label>
+                            <button type="button" id="site-icon-remove" class="settings-cancel text-xs" disabled><i class="fa-solid fa-rotate-left"></i> Restaurar</button>
+                            <p class="settings-hint">Se recorta en cuadrado. Por defecto usa el fantasma de GhostUe46.</p>
+                        </div>
+                    </div>
+
+                    <p class="settings-hint mt-4"><i class="fa-solid fa-palette"></i> Cada tema trae su propio set de iconos. Ahora: <b id="icon-set-current">—</b>. En «Personalizado» puedes elegir el estilo.</p>
+                </section>
+
+                <section class="settings-section" id="usage-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-gauge-high"></i><div><h4>Uso por proveedor</h4><p>Mensajes y tokens que llevas. Se guarda solo en este navegador.</p></div></div>
+                    <div id="usage-table" class="usage-table" aria-live="polite"></div>
+                    <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
+                        <div><label for="daily-limit-input" class="settings-field-label">Avisarme al llegar a N mensajes por día (0 = sin aviso)</label><input id="daily-limit-input" type="number" min="0" max="100000" step="1" class="w-full crystal-input rounded-xl p-3 text-xs" placeholder="0"></div>
+                        <button type="button" id="usage-reset" class="settings-cancel text-xs"><i class="fa-solid fa-trash-can"></i> Reiniciar contadores</button>
+                    </div>
+                    <p class="settings-hint mt-2">Los tokens son exactos cuando el proveedor los informa y aproximados (≈ 4 letras por token) cuando no. No es tu factura: consulta siempre el panel de cada proveedor.</p>
+                </section>
+
+                <section class="settings-section" id="backup-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-shield-halved"></i><div><h4>Copia de seguridad y aplicación</h4><p>Lleva todo a otro navegador o recupéralo si limpias los datos.</p></div></div>
+                    <label class="setting-toggle-row" for="backup-include-keys"><span><strong>Incluir mis API Keys en la copia</strong><small>Apagado por defecto. Si lo enciendes, guarda el archivo en un lugar privado.</small></span><input id="backup-include-keys" type="checkbox" class="setting-switch"></label>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <button type="button" id="backup-export" class="settings-cancel text-xs"><i class="fa-solid fa-download"></i> Exportar copia completa</button>
+                        <label class="settings-cancel text-xs media-upload-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Restaurar copia<input id="backup-import" type="file" accept="application/json,.json" hidden></label>
+                    </div>
+                    <p class="settings-hint mt-2">Incluye chats, ajustes, memoria, temas guardados, contadores, imagen de fondo e icono del sitio.</p>
+                    <div class="flex flex-wrap gap-2 mt-3 items-center">
+                        <button type="button" id="pwa-install" class="settings-cancel text-xs" disabled><i class="fa-solid fa-mobile-screen"></i> Instalar como aplicación</button>
+                        <span id="pwa-status" class="settings-hint" style="margin:0"></span>
+                    </div>
+                </section>
+
+                <section class="settings-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-wand-magic-sparkles"></i><div><h4>Apariencia y efectos</h4><p>Modo, burbujas y animaciones. Se aplican al instante.</p></div></div>
+                    <span class="settings-field-label">Modo</span>
+                    <div class="pref-row">
+                        <button type="button" class="pref-chip" data-ui-pref="mode" data-value="dark"><i class="fa-solid fa-moon"></i> Oscuro</button>
+                        <button type="button" class="pref-chip" data-ui-pref="mode" data-value="light"><i class="fa-solid fa-sun"></i> Claro</button>
+                        <button type="button" class="pref-chip" data-ui-pref="mode" data-value="auto"><i class="fa-solid fa-circle-half-stroke"></i> Automático</button>
+                    </div>
+                    <span class="settings-field-label mt-4">Estilo de burbujas del chat</span>
+                    <div class="pref-row">
+                        <button type="button" class="pref-chip" data-ui-pref="bubbleStyle" data-value="glass">Cristal</button>
+                        <button type="button" class="pref-chip" data-ui-pref="bubbleStyle" data-value="neon">Neón</button>
+                        <button type="button" class="pref-chip" data-ui-pref="bubbleStyle" data-value="minimal">Minimal</button>
+                        <button type="button" class="pref-chip" data-ui-pref="bubbleStyle" data-value="soft">Suave</button>
+                        <button type="button" class="pref-chip" data-ui-pref="bubbleStyle" data-value="ghost">Fantasma</button>
+                        <button type="button" class="pref-chip" data-ui-pref="bubbleStyle" data-value="frutiger-aero">Frutiger Aero</button>
+                        <button type="button" class="pref-chip" data-ui-pref="bubbleStyle" data-value="animus">Animus</button>
+                        <button type="button" class="pref-chip" data-ui-pref="bubbleStyle" data-value="synthwave">Synthwave</button>
+                    </div>
+                    <p class="settings-hint">Las burbujas son independientes del tema: puedes usar la de «Animus» o la de «Synthwave» con cualquier tema.</p>
+                    <span class="settings-field-label mt-3">Forma de las burbujas</span>
+                    <div class="pref-row">
+                        <button type="button" class="pref-chip" data-bubble-shape-chip="auto">Según el estilo</button>
+                        <button type="button" class="pref-chip" data-bubble-shape-chip="round">Redonda</button>
+                        <button type="button" class="pref-chip" data-bubble-shape-chip="cut">Esquinas cortadas</button>
+                        <button type="button" class="pref-chip" data-bubble-shape-chip="square">Cuadrada</button>
+                    </div>
+                    <div class="space-y-4 mt-5">
+                        <label class="setting-toggle-row"><span><strong>XLMB · ondas en líneas</strong><small>Las ondas de líneas que cruzan el fondo animado. En Assassin's Creed II se convierten en la hélice de ADN rómbica del Animus.</small></span><input type="checkbox" class="setting-switch" data-ui-pref="xlmbEnabled"></label>
+                        <label class="setting-toggle-row"><span><strong>Partículas con rastro</strong><small>Estrellas que se mueven dejando estela en el fondo.</small></span><input type="checkbox" class="setting-switch" data-ui-pref="particlesEnabled"></label>
+                        <label class="setting-toggle-row"><span><strong>Círculos dinámicos</strong><small>Genera círculos de cristal flotando por el fondo (independiente de las partículas).</small></span><input type="checkbox" class="setting-switch" data-ui-pref="dynamicCircles"></label>
+                        <label class="setting-toggle-row"><span><strong>Animaciones de interfaz</strong><small>Entradas, ventanas, mensajes y botones animados.</small></span><input type="checkbox" class="setting-switch" data-ui-pref="uiAnimations"></label>
+                        <label class="setting-toggle-row"><span><strong>Sonidos de interfaz</strong><small>Clic al pulsar botones y casillas, y un aviso sonoro en las notificaciones.</small></span><input type="checkbox" class="setting-switch" data-ui-pref="uiSoundsEnabled"></label>
+                        <label class="setting-toggle-row"><span><strong>Liquid Glass: distorsión animada</strong><small>El cristal ondula el fondo como agua (solo Chrome/Edge).</small></span><input type="checkbox" class="setting-switch" data-ui-pref="liquidAnimated"></label>
+                        <div><span class="settings-field-label">Intensidad de la distorsión</span><input type="range" min="0" max="70" class="pref-range" data-ui-pref="distortion"></div>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-white/10">
+                        <div class="settings-section-title" style="margin-bottom:12px">
+                            <i class="fa-solid fa-palette"></i>
+                            <div>
+                                <h4>Colores de efectos</h4>
+                                <p>Pinta ondas, partículas con rastro y círculos dinámicos. Por defecto: azul claro, azul marino, verde y blanco.</p>
+                            </div>
+                        </div>
+                        <div class="custom-theme-grid">
+                            <div>
+                                <label class="settings-field-label" for="fx-color-1">Color 1 · Azul claro</label>
+                                <div class="color-control"><input id="fx-color-1" type="color" value="#7dd3fc" data-change-action="onFxColorsChange"><span id="fx-color-1-val">#7DD3FC</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="fx-color-2">Color 2 · Azul marino</label>
+                                <div class="color-control"><input id="fx-color-2" type="color" value="#1e3a8a" data-change-action="onFxColorsChange"><span id="fx-color-2-val">#1E3A8A</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="fx-color-3">Color 3 · Verde</label>
+                                <div class="color-control"><input id="fx-color-3" type="color" value="#22c55e" data-change-action="onFxColorsChange"><span id="fx-color-3-val">#22C55E</span></div>
+                            </div>
+                            <div>
+                                <label class="settings-field-label" for="fx-color-4">Color 4 · Blanco</label>
+                                <div class="color-control"><input id="fx-color-4" type="color" value="#ffffff" data-change-action="onFxColorsChange"><span id="fx-color-4-val">#FFFFFF</span></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <button type="button" data-action="resetFxColors" class="settings-cancel text-xs"><i class="fa-solid fa-rotate-left"></i> Colores por defecto</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="settings-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-volume-high"></i><div><h4>Texto a voz · TTS</h4><p>GhostUe46 puede leer sus respuestas con una voz del dispositivo.</p></div></div>
+                    <label class="setting-toggle-row" for="tts-auto-read-input">
+                        <span><strong>Leer automáticamente las respuestas del bot</strong><small>Solo lee texto normal de GhostUe46. Los bloques y líneas de código se omiten. No lee tus mensajes.</small></span>
+                        <input id="tts-auto-read-input" type="checkbox" class="setting-switch" data-change-action="onTtsAutoChange">
+                    </label>
+                    <div class="mt-3">
+                        <label class="settings-field-label" for="tts-voice-select">Voz de GhostUe46</label>
+                        <select id="tts-voice-select" class="w-full crystal-input rounded-xl p-3 text-xs" data-change-action="onTtsVoiceChange">
+                            <option value="female">Voz femenina</option>
+                            <option value="male">Voz masculina</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <button type="button" class="settings-cancel text-xs" data-action="ttsTest"><i class="fa-solid fa-play"></i> Probar voz</button>
+                        <button type="button" class="settings-cancel text-xs" data-action="ttsPause"><i class="fa-solid fa-pause"></i> Pausar</button>
+                        <button type="button" class="settings-cancel text-xs" data-action="ttsResume"><i class="fa-solid fa-forward"></i> Reanudar</button>
+                        <button type="button" class="settings-cancel text-xs" data-action="ttsStop"><i class="fa-solid fa-stop"></i> Detener</button>
+                    </div>
+                    <p class="settings-hint mt-3">Las voces disponibles dependen de Chrome/Edge y de las voces instaladas en Windows, Android o el dispositivo. Si no hay dos voces españolas instaladas, el sistema intenta diferenciarlas con el tono.</p>
+                    <div class="mt-4 pt-3 border-t border-white/10">
+                        <div class="settings-section-title" style="margin-bottom:8px"><i class="fa-solid fa-image"></i><div><h4>Generación de imágenes</h4><p>Sin Pollinations; se utiliza la herramienta de imágenes de OpenRouter cuando pides explícitamente generar o dibujar una imagen.</p></div></div>
+                        <p class="settings-hint">Requiere proveedor OpenRouter, una API key válida y conexión a Internet. La herramienta de imágenes puede tener coste adicional según el modelo utilizado.</p>
+                    </div>
+                </section>
+
+                <section class="settings-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-globe"></i><div><h4>Búsqueda por internet</h4><p>Autoriza a GhostUe46 a consultar DuckDuckGo.</p></div></div>
+                    <label class="setting-toggle-row" for="web-search-enabled-input">
+                        <span><strong>Permitir búsqueda web</strong><small>Cuando esté activa, las preguntas de investigación intentarán consultar DuckDuckGo. La web puede devolver resúmenes limitados.</small></span>
+                        <input id="web-search-enabled-input" type="checkbox" data-change-action="onWebSearchChange" class="setting-switch">
+                    </label>
+                    <a class="settings-link" href="https://duckduckgo.com/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir DuckDuckGo</a>
+                </section>
+
+                <section class="settings-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-brain"></i><div><h4>Memoria</h4><p>Recuerdos guardados solo en este navegador.</p></div></div>
+                    <label class="setting-toggle-row" for="memory-enabled-input">
+                        <span><strong>Activar memoria</strong><small>Usa las notas guardadas como contexto en futuras respuestas. Escribe “recuerda que…” para añadir una nota automáticamente.</small></span>
+                        <input id="memory-enabled-input" type="checkbox" data-change-action="onMemoryToggle" class="setting-switch">
+                    </label>
+                    <label class="block settings-field-label mt-3" for="memory-notes-input">Notas guardadas <span>una por línea</span></label>
+                    <textarea id="memory-notes-input" rows="4" class="w-full crystal-input rounded-xl p-3 text-xs resize-y" placeholder="Ejemplo: Prefiero respuestas en español.
+Estoy trabajando en GhostUe46."></textarea>
+                    <div class="flex items-center justify-between gap-3 mt-2"><span id="memory-storage-note" class="settings-hint">La memoria está desactivada.</span><button type="button" data-action="clearMemory" class="settings-danger"><i class="fa-solid fa-trash-can"></i> Borrar notas</button></div>
+                </section>
+
+                <section class="settings-section">
+                    <div class="settings-section-title"><i class="fa-solid fa-sliders"></i><div><h4>Conexión de IA</h4><p>Configura el proveedor que genera las respuestas.</p></div></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div><label for="api-provider-select" class="settings-field-label">Proveedor de API</label><select id="api-provider-select" data-change-action="toggleModelInput" class="w-full crystal-input rounded-xl p-3 text-xs"><option value="openrouter">OpenRouter (recomendado)</option><option value="groq">GROQ</option><option value="grok">Grok (xAI)</option><option value="gemini">Google Gemini</option><option value="anthropic">Anthropic (Claude)</option><option value="nvidia">NVIDIA</option><option value="meta">META (Llama API)</option><option value="llama">LLAMA (local · Ollama)</option><option value="openai">OpenAI</option></select></div>
+                        <div><label for="api-model-input" class="settings-field-label">Modelo</label><input type="text" id="api-model-input" placeholder="Ej: openai/gpt-4o-mini" class="w-full crystal-input rounded-xl p-3 text-xs"></div>
+                        <div class="md:col-span-2"><label for="api-key-input" class="settings-field-label">API Key del proveedor</label><input type="password" id="api-key-input" autocomplete="off" class="w-full crystal-input rounded-xl p-3 text-xs text-cyan-300" placeholder="Pega tu API Key aquí"></div>
+                        <div class="md:col-span-2"><label for="custom-endpoint-input" class="settings-field-label">Endpoint personalizado (opcional)</label><input type="text" id="custom-endpoint-input" autocomplete="off" spellcheck="false" class="w-full crystal-input rounded-xl p-3 text-xs" placeholder="Ej: http://localhost:11434/v1/chat/completions (cualquier API compatible con OpenAI)"></div>
+                        <label class="setting-toggle-row md:col-span-2" for="stream-enabled-input"><span><strong>Respuestas en vivo</strong><small>El texto aparece mientras el modelo escribe. Se desactiva solo en modo Lento.</small></span><input id="stream-enabled-input" type="checkbox" class="setting-switch" checked></label>
+                        <div class="md:col-span-2"><label for="system-persona-input" class="settings-field-label">Instrucciones de GhostUe46</label><textarea id="system-persona-input" rows="3" placeholder="Personaliza cómo responde GhostUe46..." class="w-full crystal-input rounded-xl p-3 text-xs resize-y"></textarea></div>
+                    </div>
+                    <p class="settings-hint mt-3">Las claves se guardan en el almacenamiento local de este navegador. No publiques este proyecto con una clave privada incrustada. META usa la API oficial de Llama; LLAMA se conecta a Ollama en tu equipo (sin clave).</p>
+                </section>
+
+                <section class="settings-section settings-small-extras">
+                    <div class="settings-section-title"><i class="fa-solid fa-shield-halved"></i><div><h4>Privacidad y comodidad</h4><p>Controles rápidos para tu sesión.</p></div></div>
+                    <label class="setting-toggle-row" for="animations-enabled-input"><span><strong>Animaciones de fondo</strong><small>Desactívalas si quieres una interfaz más ligera.</small></span><input id="animations-enabled-input" type="checkbox" data-change-action="onAnimationsToggle" class="setting-switch"></label>
+                    <button type="button" data-action="exportChats" class="settings-link-button"><i class="fa-solid fa-file-export"></i> Exportar conversaciones (.json)</button>
+                </section>
+            </div>
+
+            <div class="settings-footer p-4 md:px-6 md:py-4 border-t border-white/10 flex items-center justify-between gap-3 shrink-0">
+                <span id="settings-save-status" class="settings-hint">Los cambios se guardan en este navegador.</span>
+                <div class="flex gap-2"><button data-action="closeConfigModal" class="settings-cancel">Cerrar</button><button data-action="saveConfig" class="settings-save"><i class="fa-solid fa-check"></i> Guardar cambios</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CODE EDITOR & REAL SYNTAX CHECKER MODAL -->
+    <div id="editor-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-black/80 backdrop-blur-xl hidden">
+        <div class="water-glass rounded-3xl w-full max-w-6xl h-[90vh] flex flex-col shadow-2xl relative border border-white/20 overflow-hidden">
+            
+            <div class="p-4 border-b border-white/10 flex items-center justify-between bg-white/5">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-code text-cyan-400 text-lg"></i>
+                    <div>
+                        <h3 class="font-orbitron font-bold text-sm md:text-base text-white">Editor & Verificador de Sintaxis REAL</h3>
+                        <span class="text-[10px] font-mono text-purple-300">JAVA, JAVASCRIPT, HTML, CSS, C, C++, C#, PYTHON · DIRECTX / OPENGL / VULKAN BETA</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <select id="editor-lang-select" data-change-action="onLanguageChange" class="crystal-input rounded-xl px-3 py-1.5 text-xs font-mono text-cyan-300">
+                        <option value="python">Python 3 (Pyodide WASM)</option>
+                        <option value="javascript">JavaScript (Runtime Evaluator)</option>
+                        <option value="html">HTML5 Render</option>
+                        <option value="css">CSS3 Rules</option>
+                        <option value="java">Java Syntax AST</option>
+                        <option value="c">C Linter Engine</option>
+                        <option value="cpp">C++ Linter Engine</option>
+                        <option value="csharp">C# Parser Engine</option>
+                        <option value="directx">DirectX / HLSL (BETA)</option>
+                        <option value="opengl">OpenGL / GLSL (BETA)</option>
+                        <option value="vulkan">Vulkan / GLSL-SPIR-V (BETA)</option>
+                    </select>
+
+                    <button data-action="runRealCode" class="px-4 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-audiowide text-xs shadow-lg hover:scale-105 transition-all flex items-center space-x-1.5">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Ejecutar / Verificar</span>
+                    </button>
+
+                    <button data-action="closeEditorModal" class="text-slate-400 hover:text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Graphics APIs beta picker: uses the three dedicated logo images. -->
+            <div id="beta-api-picker" class="beta-api-picker" aria-label="APIs gráficas en fase beta">
+                <button type="button" class="beta-api-card" data-action="selectBetaApi" data-beta-api="directx" aria-pressed="false">
+                    <img src="assets/directx-logo.png" alt="Logo de DirectX" loading="eager">
+                    <span><strong>DirectX / HLSL</strong><small>FASE BETA</small></span>
+                </button>
+                <button type="button" class="beta-api-card" data-action="selectBetaApi" data-beta-api="opengl" aria-pressed="false">
+                    <img src="assets/opengl-logo.png" alt="Logo de OpenGL" loading="eager">
+                    <span><strong>OpenGL / GLSL</strong><small>FASE BETA</small></span>
+                </button>
+                <button type="button" class="beta-api-card" data-action="selectBetaApi" data-beta-api="vulkan" aria-pressed="false">
+                    <img src="assets/vulkan-logo.png" alt="Logo de Vulkan" loading="eager">
+                    <span><strong>Vulkan / SPIR-V</strong><small>FASE BETA</small></span>
+                </button>
+            </div>
+
+            <!-- Workspace Body -->
+            <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+                <div class="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-white/10 relative">
+                    <div class="bg-black/40 px-4 py-2 text-[11px] font-mono text-slate-400 flex justify-between items-center border-b border-white/10">
+                        <span id="editor-filename">main.py</span>
+                        <span id="editor-live-status" class="live-badge font-audiowide">Verificación activa</span>
+                    </div>
+                    <textarea id="code-editor-input" class="flex-1 bg-slate-950/90 text-cyan-200 font-mono text-xs md:text-sm p-4 resize-none focus:outline-none leading-relaxed" spellcheck="false" placeholder="// Escribe o pega tu código..."></textarea>
+                </div>
+
+                <div class="w-full md:w-5/12 flex flex-col bg-slate-950/95 overflow-hidden">
+                    <div class="flex-1 flex flex-col border-b border-white/10">
+                        <div class="bg-black/40 px-4 py-2 text-[11px] font-mono text-slate-400 flex justify-between items-center border-b border-white/10">
+                            <span>Consola de Salida Real</span>
+                            <button data-action="clearConsole" class="text-slate-500 hover:text-slate-300 text-[10px]">Limpiar</button>
+                        </div>
+                        <div id="editor-console" class="flex-1 p-4 font-mono text-xs text-slate-200 overflow-y-auto space-y-1">
+                            <span class="text-slate-500"># Consola lista para ejecutar o validar código...</span>
+                        </div>
+                    </div>
+
+                    <div class="h-52 flex flex-col bg-black/50 p-3 relative">
+                        <div class="flex items-center space-x-2 text-xs font-audiowide text-purple-300 mb-2">
+                            <i class="fa-solid fa-bug text-pink-400"></i>
+                            <span>Mini Chat de Depuración y Correcciones</span>
+                        </div>
+                        <div id="mini-debug-chat" class="flex-1 overflow-y-auto font-sans text-xs space-y-2 p-2 rounded-xl bg-white/5 border border-white/10">
+                            <p class="text-slate-400 italic">Si se detectan errores de sintaxis, GhostUe46 te explicará el fallo exacto y cómo corregirlo aquí.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Application logic lives in app.js. -->
+    <script src="ui-sounds.js"></script>
+    <script src="fonts-list.js"></script>
+    <script src="app.js"></script>
+    <script src="ui-plus.js"></script>
+    <script src="intelligence.js"></script>
+    <script src="theme-media.js"></script>
+    <script src="extras.js"></script>
+    <script src="tts.js"></script>
+    <script src="adaptive-contrast.js"></script>
+<!-- Contacto flotante de errores: ambos iconos abren el formulario, no envían nada sin confirmación. -->
+    <aside class="g46-report-dock" aria-label="Enviar un reporte de error por Internet o correo electrónico">
+        <span class="g46-report-dock-label">REPORTAR<br>ERROR</span>
+        <span class="g46-report-dock-hint" aria-hidden="true">Envía el reporte por Internet o usa Gmail/Outlook</span>
+        <button type="button" class="g46-report-dock-button gmail" data-g46-report-open="gmail" title="Reportar un error con Gmail" aria-label="Reportar un error con Gmail">
+            <svg viewBox="0 0 48 48" role="img" aria-label="Gmail" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="44" height="44" rx="11" fill="#fff"/>
+                <path d="M8 36V13.5c0-1.5 1.8-2.3 3-1.4L24 22.5l13-10.4c1.2-.9 3-.1 3 1.4V36" fill="none" stroke="#4285F4" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 14l16 12L40 14" fill="none" stroke="#EA4335" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 17v19" fill="none" stroke="#34A853" stroke-width="4.2" stroke-linecap="round"/>
+                <path d="M40 17v19" fill="none" stroke="#FBBC04" stroke-width="4.2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <button type="button" class="g46-report-dock-button outlook" data-g46-report-open="outlook" title="Reportar un error con Outlook" aria-label="Reportar un error con Outlook">
+            <svg viewBox="0 0 48 48" role="img" aria-label="Outlook" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="g46OutlookBack" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#28A8EA"/><stop offset="1" stop-color="#0757B8"/></linearGradient></defs>
+                <rect x="17" y="5" width="28" height="38" rx="5" fill="url(#g46OutlookBack)"/>
+                <path d="M20 15h19v18H20z" fill="#fff" opacity=".96"/>
+                <path d="M20 17l9.5 8L39 17" fill="none" stroke="#1476D4" stroke-width="2.6" stroke-linejoin="round"/>
+                <rect x="3" y="10" width="24" height="28" rx="4" fill="#0B5FB8"/>
+                <path d="M8 16h14v16H8z" fill="#06478F" opacity=".45"/>
+                <text x="15" y="29" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#fff">O</text>
+            </svg>
+        </button>
+    </aside>
+</body>
+</html>
